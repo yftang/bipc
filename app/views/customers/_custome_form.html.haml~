@@ -1,0 +1,17 @@
+=f.label :name
+=f.text_field :name
+
+=f.label :email
+=f.text_field :email
+
+=f.label :tel, "Phone number"
+=f.text_field :tel
+
+=f.label :ins, "Institution"
+=f.text_field :ins
+
+=f.label :city
+=f.text_field :city
+
+=f.label :add, "Address"
+=f.text_field :add
