@@ -1,2 +1,6 @@
-%h1 Customers#edit
-%p Find me in app/views/customers/edit.html.haml
+%h2 Edit customer #{@customer.name}
+
+= form_for(@customer) do |f|
+  = render 'customer_form', f: f
+
+  = f.submit "Save changes"

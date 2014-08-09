@@ -1,6 +1,4 @@
-%h2 New Customer
+%h2 #{@customer.name}
 
 = form_for(@customer) do |f|
   = render 'customer_form', f: f
-
-  = f.submit "Create new customer"
