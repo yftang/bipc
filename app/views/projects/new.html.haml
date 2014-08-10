@@ -1,0 +1,6 @@
+%h2 New Project
+
+= form_for(@project) do |f|
+  = render 'project_form', f: f
+
+  = f.submit "Create new project"

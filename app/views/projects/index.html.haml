@@ -1,0 +1,12 @@
+%h2 All Projects
+%table
+  %tr
+    %th Acc
+    %th Started at
+    %th Ends at
+
+  - @projects.each do |project|
+    %tr
+      %td= project.acc
+      %td= project.start_date
+      %td= project.end_date
