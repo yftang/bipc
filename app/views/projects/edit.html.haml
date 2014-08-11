@@ -1,0 +1,6 @@
+%h2 Edit Project #{@project.acc}
+
+= form_for(@project) do |f|
+  = render 'project_form', f: f
+
+  = f.submit "Save changes"

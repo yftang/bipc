@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  acc: MyString
+  start_date: 2014-08-10
+  end_date: 2014-08-10
+  samples_received_status: false
+  experiments_done_status: false
+  bioinformatics_done_status: false
+  report_finished_status: false
+  report_sent_status: false
+
+two:
+  acc: MyString
+  start_date: 2014-08-10
+  end_date: 2014-08-10
+  samples_received_status: false
+  experiments_done_status: false
+  bioinformatics_done_status: false
+  report_finished_status: false
+  report_sent_status: false

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140808112244) do
+ActiveRecord::Schema.define(version: 20140810080253) do
 
   create_table "customers", force: true do |t|
     t.string   "name"
@@ -20,6 +20,26 @@ ActiveRecord::Schema.define(version: 20140808112244) do
     t.string   "add"
     t.string   "ins"
     t.string   "city"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "project_customers", id: false, force: true do |t|
+    t.integer  "project_id"
+    t.integer  "customer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "projects", force: true do |t|
+    t.string   "acc"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.boolean  "samples_received_status"
+    t.boolean  "experiments_done_status"
+    t.boolean  "bioinformatics_done_status"
+    t.boolean  "report_finished_status"
+    t.boolean  "report_sent_status"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
