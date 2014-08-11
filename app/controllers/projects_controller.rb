@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_filter :set_project, only: [:new, :edit, :show,
+  before_filter :set_project, only: [:edit, :show,
                                      :create, :update, :destroy]
 
   def index
@@ -7,6 +7,7 @@ class ProjectsController < ApplicationController
   end
 
   def new
+    @project = Project.new
   end
 
   def edit
@@ -43,6 +44,10 @@ class ProjectsController < ApplicationController
   end
 
   def set_project
-    @project = Project.where(id: params[:id]).first || Project.new
+    @project = Project.where(id: params[:id]).first
+    if not @project
+      flash[:alert] = "Project not found!"
+      redirect_to projects_path
+    end
   end
 end
