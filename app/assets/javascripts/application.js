@@ -12,6 +12,33 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require_tree .
+function search_projects() {
+  query_acc = $('input#query').val();
+  jQuery.get("/projects/search_projects",
+        { search_project_acc: query_acc },
+        function(data) {
+          if(data == null) {
+            $('#projects_list').html('<p>Project not found.</p>');
+          }else {
+            insert_html = '';
+            jQuery.each(data, function() {
+              insert_html += '<a href="/projects/'+this.id+'">'+this.acc+'</a>\n';
+            });
+            $('#projects_list').html(insert_html);
+          }
+        }
+  );
+  $('#search_result').dialog({
+    title: 'Search result',
+    modal: true,
+    width: 500,
+    close: function() {
+      $('#projects_list').html('');
+      $('#search_result').dialog('destroy');
+    }
+  });
+}

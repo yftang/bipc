@@ -1,6 +1,24 @@
 class ProjectsController < ApplicationController
   before_filter :set_project, only: [:edit, :show,
-                                     :create, :update, :destroy]
+                                     :update, :destroy]
+
+  def search_projects
+    search_acc = params[:search_project_acc].strip
+    search_result = Project.where("acc LIKE ?", search_acc)
+    if search_result
+      projects = []
+      search_result.each do |p|
+        projects << {
+          id:         p.id,
+          acc:        p.acc,
+          start_date: p.start_date
+        }
+      end
+      render :json => projects.to_json
+    else
+      render :json => nil
+    end
+  end
 
   def index
     @projects = Project.all
