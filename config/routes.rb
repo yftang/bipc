@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
+  root 'homepages#welcome'
+  get 'homepages/welcome' => 'homepages#welcome'
   resources :projects
-
   resources :customers
 
   # The priority is based upon order of creation: first created -> highest priority.
