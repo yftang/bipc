@@ -1,11 +1,12 @@
 class CustomersController < ApplicationController
-  before_filter :set_customer, only: [:new, :show, :edit, :destroy, :update]
+  before_filter :set_customer, only: [:show, :edit, :destroy, :update]
 
   def index
     @customers = Customer.all
   end
 
   def new
+    @customer = Customer.new
   end
 
   def show
@@ -43,6 +44,10 @@ class CustomersController < ApplicationController
   end
 
   def set_customer
-    @customer = Customer.where(id: params[:id]).first || Customer.new
+    @customer = Customer.where(id: params[:id]).first
+    if not @customer
+      flash[:alert] = "Customer not found!"
+      redirect_to customers_path
+    end
   end
 end
