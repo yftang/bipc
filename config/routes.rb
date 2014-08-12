@@ -4,11 +4,6 @@ Rails.application.routes.draw do
   resources :projects do
     collection do
       get :search_projects
-      get :show
-      get :new
-      post :create
-      post :update
-      post :destroy
     end
   end
   resources :customers
