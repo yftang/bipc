@@ -1,4 +1,5 @@
 class CustomersController < ApplicationController
+  before_filter :authenticate_user!
   before_filter :set_customer, only: [:show, :edit, :destroy, :update]
 
   def index
