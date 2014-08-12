@@ -27,6 +27,9 @@ class User < ActiveRecord::Base
   has_many :role_users
   has_many :roles, through: :role_users
 
+  has_many :user_projects
+  has_many :projects, through: :user_projects
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable,
