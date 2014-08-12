@@ -1,0 +1,24 @@
+= form_for(@user) do |f|
+  - if @user.errors.any?
+    = pluralize(@user.errors.count, 'eror')
+    , fix and submit again
+    - @user.errors.full_messages.each do |msg|
+      = msg
+
+  = f.label :email
+  = f.text_field :email
+
+  = f.label :name
+  = f.text_field :name
+
+  = f.label :password
+  = f.password_field :password
+
+  = f.label :password_confirmation
+  = f.password_field :password_confirmation
+
+  - for role in Role.all
+    = check_box_tag "user[role_ids][]", role.id, @user.roles.include?(role)
+    = role.name
+
+  = f.submit
