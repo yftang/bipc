@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140812022734) do
+ActiveRecord::Schema.define(version: 20140812054112) do
 
   create_table "customers", force: true do |t|
     t.string   "name"
@@ -40,6 +40,19 @@ ActiveRecord::Schema.define(version: 20140812022734) do
     t.boolean  "bioinformatics_done_status"
     t.boolean  "report_finished_status"
     t.boolean  "report_sent_status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "role_users", id: false, force: true do |t|
+    t.integer  "role_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "roles", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

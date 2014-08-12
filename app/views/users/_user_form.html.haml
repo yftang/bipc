@@ -17,4 +17,8 @@
   = f.label :password_confirmation
   = f.password_field :password_confirmation
 
+  - for role in Role.all
+    = check_box_tag "user[role_ids][]", role.id, @user.roles.include?(role)
+    = role.name
+
   = f.submit
