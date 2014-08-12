@@ -9,6 +9,9 @@
 %body
   = render 'layouts/header'
 
+  .notice.alert-warning= notice
+  .alert.alert-danger= alert
+
   = yield
 
   = render 'layouts/footer'
