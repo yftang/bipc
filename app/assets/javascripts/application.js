@@ -16,6 +16,10 @@
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require_tree .
+$(document).ready(function() {
+  $('.alert').fadeOut(3000);
+});
+
 function search_projects() {
   query_acc = $('input#query').val();
   jQuery.get("/projects/search_projects",
