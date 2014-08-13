@@ -1,7 +1,15 @@
 Rails.application.routes.draw do
+  resources :roles
+
+  devise_for :users
+  resources  :users
   root 'homepages#welcome'
   get 'homepages/welcome' => 'homepages#welcome'
-  resources :projects
+  resources :projects do
+    collection do
+      get :search_projects
+    end
+  end
   resources :customers
 
   # The priority is based upon order of creation: first created -> highest priority.
