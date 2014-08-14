@@ -1,0 +1,29 @@
+#login-modal.modal.fade{ :tabindex => "-1", :role   => "dialog",
+                         :aria     => { :labelledby => "loginModalLabel",
+                                        :hidden     => "true" } }
+  .modal-dialog.modal-sm
+    .modal-content
+      .modal-header
+        %button.close{ :type => "button",
+                       :data => { :dismiss => "modal" } }
+          %span{ :aria => { :hidden => "true" } } &times;
+          %span.sr-only Close
+        %h4#loginModalLabel.modal-title User Login
+      .modal-body
+        %form{ :role => "form" }
+          .form-group
+            = label_tag :email
+            %br
+            = text_field_tag :email, nil, :class => "form-control"
+          .form-group
+            = label_tag :password
+            %br
+            = password_field_tag :password, nil, :class => "form-control",
+                                 :autocomplete => "off"
+          .form-group
+            = check_box_tag :remember_me
+            = label_tag :remember_me
+          = link_to "Log in", "javascript:void(0);",
+                    :class => "btn btn-default btn-primary btn-sm",
+                    :onclick => "userLogin()"
+

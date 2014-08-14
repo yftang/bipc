@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   resources :roles
-
-  devise_for :users
+  devise_for :users, :skip => [:registraions]
   resources  :users
   root 'homepages#welcome'
   get 'homepages/welcome' => 'homepages#welcome'

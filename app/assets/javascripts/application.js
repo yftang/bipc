@@ -19,6 +19,21 @@ $(document).ready(function() {
   $('.alert').fadeOut(3000);
 });
 
+function userLogin() {
+  email = $('#login-modal input#email').val();
+  password = $('#login-modal input#password').val();
+  $.ajax({
+    url: '/users/sign_in',
+    type: 'post',
+    data: 'email='+email+'&password='+password,
+    success: function(result) {
+      alert('done');
+      location.reload();
+    }
+
+  });
+}
+
 function search_projects() {
   query_acc = $('input#query').val();
   jQuery.get("/projects/search_projects",
