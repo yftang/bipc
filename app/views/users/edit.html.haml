@@ -1,3 +1,6 @@
 %h2 Edit user #{@user.name}
 
-= render 'user_form'
+= form_for @user do |f|
+  = render 'user_form', :f => f
+
+  = f.submit "Save changes", :class => "btn btn-primary btn-lg"
