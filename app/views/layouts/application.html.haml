@@ -2,52 +2,53 @@
 %html
 %head
   %title= page_title
-  = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+  = stylesheet_link_tag 'application', :media => 'all', 'data-turbolinks-track' => true
   = javascript_include_tag 'application', 'data-turbolinks-track' => true
   = csrf_meta_tags
 
 %body
   = render 'layouts/header'
 
-  #login-modal.modal.fade{ tabindex: "-1", role: "dialog",
-                           aria: { labelledby: "loginModalLabel",
-                                   hidden:     "true" } }
+  #login-modal.modal.fade{ :tabindex => "-1", :role   => "dialog",
+                           :aria     => { :labelledby => "loginModalLabel",
+                                          :hidden     => "true" } }
     .modal-dialog.modal-sm
       .modal-content
         .modal-header
-          %button.close{ type: "button",
-                         data: { dismiss: "modal" } }
-            %span{ aria: { hidden: "true" } } &times;
+          %button.close{ :type => "button",
+                         :data => { :dismiss => "modal" } }
+            %span{ :aria => { :hidden => "true" } } &times;
             %span.sr-only Close
           %h4#loginModalLabel.modal-title User Login
         .modal-body
-          = form_for :user, url: session_path(:user),
-                            html: { role: "form" } do |f|
+          = form_for :user, :url  => session_path(:user),
+                            :html => { :role => "form" } do |f|
             .form-group
               = f.label :email
               %br
-              = f.text_field :email, class: "form-control"
+              = f.text_field :email, :class => "form-control"
             .form-group
               = f.label :password
               %br
-              = f.password_field :password, autocomplete: "off",
-                                            class:        "form-control"
+              = f.password_field :password,
+                                 :autocomplete => "off",
+                                 :class        => "form-control"
             .form-group
               = f.check_box :remember_me
               = f.label :remember_me
-            = f.submit "Log in", class: "btn btn-default btn-primary btn-sm"
+            = f.submit "Log in", :class => "btn btn-default btn-primary btn-sm"
 
   - if notice
-    .alert.alert-warning.alert-dismissible{ role: "alert" }
-      %button.close{ type: "button", data: { dismiss: "alert" } }
-        %span{ aria: { hidden: "true" } } &times;
+    .alert.alert-warning.alert-dismissible{ :role => "alert" }
+      %button.close{ :type => "button", :data => { :dismiss => "alert" } }
+        %span{ :aria => { :hidden => "true" } } &times;
         %span.sr-only Close
       = notice
 
   - if alert
-    .alert.alert-danger.alert-dismissible{ role: "alert" }
-      %button.close{ type: "button", data: { dismiss: "alert" } }
-        %span{ aria: { hidden: "true" } } &times;
+    .alert.alert-danger.alert-dismissible{ :role => "alert" }
+      %button.close{ :type => "button", :data => { :dismiss => "alert" } }
+        %span{ :aria => { :hidden => "true" } } &times;
         %span.sr-only Close
       = alert
 
