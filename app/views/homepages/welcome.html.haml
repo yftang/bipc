@@ -1,12 +1,11 @@
-.jumbotron.center.col-sm-10.col-sm-offset-1
-  %h2 Welcome to Biocompany Integrative Projects Control (BIPC)
+%h2 Welcome to Biocompany Integrative Projects Control (BIPC)
 
-  %form.form-horizontal{ :role => "form" }
-    .form-group.form-group-lg
-      .col-sm-10
-        = text_field_tag 'search_acc', nil, placeholder: 'Enter project Acc. here', id: 'query', class: "form-control"
-      .col-sm-2
-        = link_to "Search", "javascript:void(0);", onclick: "search_projects()", class: "btn btn-primary btn-lg", id: "search_project_button"
+%form.form-horizontal{ :role => "form" }
+  .form-group.form-group-lg
+    .col-sm-10
+      = text_field_tag 'search_acc', nil, placeholder: 'Enter project Acc. here', id: 'query', class: "form-control"
+    .col-sm-2
+      = link_to "Search", "javascript:void(0);", onclick: "search_projects()", class: "btn btn-primary btn-lg", id: "search_project_button"
 
-  #search_result{ :style => "display:none" }
-    #projects_list
+#search_result{ :style => "display:none" }
+  #projects_list
