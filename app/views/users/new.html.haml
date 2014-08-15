@@ -1,3 +1,11 @@
-%h2 New User
+.col-sm-offset-2.col-sm-8
+  %h2 New User
+  %br
 
-= render 'user_form'
+  = form_for @user, :html => { :class => "form-horizontal",
+                               :role  => "form" } do |f|
+    = render 'user_form', :f => f
+
+    .form-group
+      .col-sm-offset-2.col-sm-6
+        = f.submit "Create", :class => "btn btn-primary btn-lg"

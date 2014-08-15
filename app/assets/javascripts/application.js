@@ -14,10 +14,26 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require bootstrap-sprockets
-//= require turbolinks
 //= require_tree .
 $(document).ready(function() {
   $('.alert').fadeOut(3000);
+
+  $('form#sign_in_user')
+    .bind("ajax:success", function(e, data, status, xhr) {
+      if(data.success == true) {
+        submitBtn = $('form#sign_in_user input[name="commit"]');
+        submitBtn.removeClass("btn-primary");
+        submitBtn.addClass("btn-success");
+        submitBtn.prop('value', 'Done');
+        setTimeout(function(){location.reload();}, 1000);
+      }else {
+        $.each($('form#sign_in_user .form-group'), function(i, ele){
+          $(this).addClass("has-error");
+        });
+        submitBtn = $('form#sign_in_user input[name="commit"]');
+        submitBtn.effect("shake", {direction: "right"});
+      }
+    });
 });
 
 function search_projects() {

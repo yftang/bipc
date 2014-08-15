@@ -1,3 +1,11 @@
-%h2 Edit user #{@user.name}
+.col-sm-offset-2.col-sm-8
+  %h2 Edit User #{@user.name}
+  %br
 
-= render 'user_form'
+  = form_for @user, :html => { :class => "form-horizontal",
+                               :role  => "form" } do |f|
+    = render 'user_form', :f => f
+
+    .form-group
+      .col-sm-offset-2.col-sm-6
+        = f.submit "Save changes", :class => "btn btn-primary btn-lg"
