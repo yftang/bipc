@@ -10,20 +10,23 @@
           %span.sr-only Close
         %h4#loginModalLabel.modal-title User Login
       .modal-body
-        %form{ :role => "form" }
+        = form_for(resource, :as     => resource_name,
+                             :url    => session_path(resource_name),
+                             :format => :json,
+                             :remote => true,
+                             :html   => { :id   => "sign_in_user",
+                                          :role => "form" }) do |f|
           .form-group
-            = label_tag :email
+            = f.label :email
             %br
-            = text_field_tag :email, nil, :class => "form-control"
+            = f.text_field :email, :class => "form-control"
           .form-group
-            = label_tag :password
+            = f.label :password
             %br
-            = password_field_tag :password, nil, :class => "form-control",
-                                 :autocomplete => "off"
+            = f.password_field :password, :class => "form-control",
+                               :autocomplete => "off"
           .form-group
-            = check_box_tag :remember_me
-            = label_tag :remember_me
-          = link_to "Log in", "javascript:void(0);",
-                    :class => "btn btn-default btn-primary btn-sm",
-                    :onclick => "userLogin()"
+            = f.check_box :remember_me
+            = f.label :remember_me
+          = f.submit "Log in", :class => "btn btn-default btn-primary btn-sm"
 

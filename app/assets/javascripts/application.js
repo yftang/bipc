@@ -17,22 +17,24 @@
 //= require_tree .
 $(document).ready(function() {
   $('.alert').fadeOut(3000);
+
+  $('form#sign_in_user')
+    .bind("ajax:success", function(e, data, status, xhr) {
+      if(data.success == true) {
+        submitBtn = $('form#sign_in_user input[name="commit"]');
+        submitBtn.removeClass("btn-primary");
+        submitBtn.addClass("btn-success");
+        submitBtn.prop('value', 'Done');
+        setTimeout(function(){location.reload();}, 1000);
+      }else {
+        $.each($('form#sign_in_user .form-group'), function(i, ele){
+          $(this).addClass("has-error");
+        });
+        submitBtn = $('form#sign_in_user input[name="commit"]');
+        submitBtn.effect("shake", {direction: "right"});
+      }
+    });
 });
-
-function userLogin() {
-  email = $('#login-modal input#email').val();
-  password = $('#login-modal input#password').val();
-  $.ajax({
-    url: '/users/sign_in',
-    type: 'post',
-    data: 'email='+email+'&password='+password,
-    success: function(result) {
-      alert('done');
-      location.reload();
-    }
-
-  });
-}
 
 function search_projects() {
   query_acc = $('input#query').val();
