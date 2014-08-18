@@ -17,5 +17,8 @@
 
 class Project < ActiveRecord::Base
   has_many :project_customers
-  has_many :customers, through: :project_customers
+  has_many :customers, :through => :project_customers
+
+  has_many :project_role_users
+  has_many :role_users, :through => :project_role_users
 end
