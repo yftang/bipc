@@ -31,7 +31,7 @@ $(document).ready(function() {
           $(this).addClass("has-error");
         });
         submitBtn = $('form#sign_in_user input[name="commit"]');
-        submitBtn.effect("shake", {direction: "right"});
+        $('#login-modal').effect("shake", {direction: "right"});
       }
     });
 });
