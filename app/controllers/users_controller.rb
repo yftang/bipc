@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    @user = User.new
   end
 
   def show
@@ -16,7 +17,8 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new({ :password              => 'foobar',
+                       :password_confirmation => 'foobar' }.merge(user_params))
     if @user.save
       redirect_to @user, notice: "User created."
     else

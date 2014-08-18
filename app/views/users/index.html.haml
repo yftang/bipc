@@ -1,10 +1,23 @@
-%h2 All Users
+%h2
+  All Users (
+  = link_to "Need more user?", "#",
+            :data => { :toggle => "modal",
+                       :target => "#new-user-modal" }
+  )
+%br
 
-%table
+%table.table.table-hover
   %tr
     %th Email
     %th Name
+    %th Roles
   - @users.each do |user|
     %tr
       %td= user.email
       %td= user.name
+      %td
+        - user.roles.each do |role|
+          = button_tag role.name, :class => "btn btn-sm btn-primary",
+                       :disabled => "disabled"
+
+= render 'new_user_modal'
