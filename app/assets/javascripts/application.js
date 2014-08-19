@@ -34,6 +34,19 @@ $(document).ready(function() {
         $('#login-modal').effect("shake", {direction: "right"});
       }
     });
+
+  $('form#new_user')
+    .bind("ajax:success", function(e, data, status, xhr) {
+      if(data.success == true) {
+        submitBtn = $('form#new_user input[name="commit"]');
+        submitBtn.removeClass("btn-primary");
+        submitBtn.addClass("btn-success");
+        submitBtn.prop('value', 'Done');
+        setTimeout(function(){location.reload();}, 1000);
+      }else {
+        $('#new_user').effect("shake", {direction: "right"});
+      }
+    });
 });
 
 function search_projects() {

@@ -11,10 +11,14 @@
         %h4#newUserModalLabel.modal-title New User
       .modal-body
         = form_for(@user, :url    => users_path,
+                          :method => 'POST',
                           :format => :json,
                           :remote => true,
                           :html   => { :id   => "new_user",
                                        :role => "form" }) do |f|
+          - if f.object.errors.any?
+            - f.object.errors.full_messages.each do |msg|
+              %p= msg
           .form-group
             = f.label :email
             %br

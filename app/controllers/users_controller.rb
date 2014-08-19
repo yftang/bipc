@@ -17,12 +17,12 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new({ :password              => 'foobar',
-                       :password_confirmation => 'foobar' }.merge(user_params))
+    @user = User.new(user_params)
     if @user.save
-      redirect_to @user, notice: "User created."
+      flash[:notice] = "User created!"
+      return render :json => { :success => true }
     else
-      render 'new'
+      return render :json => { :success => false }
     end
   end
 
@@ -41,8 +41,7 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:email, :name,
-                                 :password, :password_confirmation)
+    params.require(:user).permit(:email, :name)
   end
 
   def set_user
