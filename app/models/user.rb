@@ -37,8 +37,30 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  CRUD   = %w(create read update delete)
+  MODELS = %w(user project customer sample)
+
   def role?(role)
     return !!self.roles.find_by_name(role.to_s.camelize)
+  end
+
+  # need modification
+  def can?(action_name, model_name)
+    if action_name.to_s in CRUD
+      if model_name.to_s in MODELS
+        case model_name
+        when :user
+          
+        when :project
+        when :customer
+        when :sample
+        end
+      else
+        raise "Model #{model_name.to_s} not found!"
+      end
+    else
+        return false
+    end
   end
 
   private
