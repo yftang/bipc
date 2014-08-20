@@ -1,23 +1,35 @@
-%h2
-  All Users (
-  = link_to "Need more user?", "#",
-            :data => { :toggle => "modal",
-                       :target => "#new-user-modal" }
-  )
+%h2 All Users
+%br
+
+.btn-toolbar{ :role => "toolbar" }
+  .btn-group
+    %button.btn.btn-default{ :type => "button",
+                             :data => { :toggle => "modal",
+                                        :target => "#new-user-modal" } }
+      %span.glyphicon.glyphicon-plus
+      New user
+    %button.btn.btn-default{ :type => "button", :disabled => true }
+      %span.glyphicon.glyphicon-minus
+      Remove user
 %br
 
 %table.table.table-hover
   %tr
-    %th Email
+    %th
+    %th Login email
     %th Name
     %th Roles
   - @users.each do |user|
     %tr
+      %td
+        = check_box_tag "user_#{user.id}", user.id
       %td= user.email
       %td= user.name
       %td
         - user.roles.each do |role|
           = button_tag role.name, :class => "btn btn-sm btn-primary",
                        :disabled => "disabled"
+
+= paginate @users
 
 = render 'new_user_modal'
