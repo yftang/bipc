@@ -35,8 +35,11 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy
-    redirect_to users_path
+    if @user.destroy
+      return render :json => { :success => true }
+    else
+      return render :json => { :success => false }
+    end
   end
 
   private
