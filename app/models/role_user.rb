@@ -8,6 +8,11 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
+# Indexes
+#
+#  index_role_users_on_role_id  (role_id)
+#  index_role_users_on_user_id  (user_id)
+#
 
 class RoleUser < ActiveRecord::Base
   belongs_to :user
