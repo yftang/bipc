@@ -15,12 +15,23 @@ class Ability
       can :manage, User do |user|
         user && user.role?(:marketing)
       end
+      can :manage, Project
     elsif user.role? :marketing
+      can :update, Project
+    elsif user.role? :experimentor_admin
+      can :manage, User do |user|
+        user && user.role?(:experimentor)
+      end
+      can :update, Project
+    elsif user.role? :experimentor
+      can :update, Project
     elsif user.role? :bioinformatician_admin
       can :manage, User do |user|
         user && user.role?(:bioinformatician)
       end
+      can :update, Project
     elsif user.role? :bioinformatician
+      can :update, Project
     else
       can :read, :all
     end

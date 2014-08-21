@@ -56,6 +56,9 @@ ActiveRecord::Schema.define(version: 20140818064055) do
     t.datetime "updated_at"
   end
 
+  add_index "role_users", ["role_id"], name: "index_role_users_on_role_id"
+  add_index "role_users", ["user_id"], name: "index_role_users_on_user_id"
+
   create_table "roles", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
