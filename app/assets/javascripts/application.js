@@ -25,6 +25,13 @@ $(document).ready(function() {
       }
     });
   });
+  $.each($('table#projects-table input[type="checkbox"]'), function(i,e) {
+    $(this).change(function() {
+      if($(this).is(":checked")) {
+        $('button#destroy-projects').attr('disabled', false);
+      }
+    });
+  });
 
   $('form#sign_in_user')
     .bind("ajax:success", function(e, data, status, xhr) {
@@ -55,6 +62,18 @@ $(document).ready(function() {
         $('#new_user').effect("shake", {direction: "right"});
       }
     });
+  $('form#new_project')
+    .bind("ajax:success", function(e, data, status, xhr) {
+      if(data.success == true) {
+        submitBtn = $('form#new_project input[name="commit"]');
+        submitBtn.removeClass("btn-primary");
+        submitBtn.addClass("btn-success");
+        submitBtn.prop('value', 'Done');
+        setTimeout(function(){location.reload();}, 1000);
+      }else {
+        $('#new_project').effect("shake", {direction: "right"});
+      }
+    });
 });
 
 function destroy_users() {
@@ -73,6 +92,21 @@ function destroy_users() {
   }
 }
 
+function destroy_projects() {
+  selected_checks = $('table#projects-table input:checked');
+  confirmed = confirm("Are you sure to remove thoses " + 
+                      selected_checks.length+" project(s)?")
+  if(confirmed == true) {
+    $.each(selected_checks, function(i, e) {
+      project_id = $(this).val();
+      $.ajax({
+        type: 'DELETE',
+        url:  '/projects/'+project_id
+      });
+    });
+    location.reload();
+  }
+}
 function search_projects() {
   query_acc = $('input#query').val();
   jQuery.get("/projects/search_projects",

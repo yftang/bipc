@@ -1,12 +1,48 @@
 %h2 All Projects
-%table
-  %tr
-    %th Acc
-    %th Started at
-    %th Ends at
+%br
 
+- if can? :manage, :project
+  .btn-toolbar{ :role => "toolbar" }
+    .btn-group
+      %button.btn.btn-default{ :type => "button",
+                               :data => { :toggle => "modal",
+                                          :target => "#new-project-modal" } }
+        %span.glyphicon.glyphicon-plus
+        New project
+      %button.btn.btn-default#destroy-projects{:type => "button",
+          :disabled => true,
+          :onclick => "destroy_projects()"}
+        %span.glyphicon.glyphicon-minus
+        Remove project(s)
+  %br
+
+%table.table.table-hover#projects-table
+  %tr
+    - if can? :manage, :project
+      %th.col-sm-1
+    %th Acc.
+    %th Starts from
+    %th Deadline
+    %th Ends at
+    %th Samples received
+    %th Experiments
+    %th Analysis
+    %th Report sent
   - @projects.each do |project|
     %tr
+      - if can? :manage, :project
+        %td
+          = check_box_tag "project_#{project.id}", project.id,
+                          false, :class => "project-selection"
       %td= project.acc
       %td= project.start_date
-      %td= project.end_date
+      %td= project.deadline
+      %td= project.report_sent_date
+      %td= project.samples_received_date
+      %td= project.experiments_done_date
+      %td= project.analysis_done_date
+      %td= project.report_sent_date
+
+= paginate @projects
+
+= render 'new_project_modal'
