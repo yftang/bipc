@@ -1,17 +1,44 @@
 %nav.navbar.navbar-default.navbar-fixed-top{ :role => "navigation" }
   .container-fluid
     .navbar-header
-      %button.navbar-toggle{ :type => "button", :data => {:toggle => "collapse"} }
+      %button.navbar-toggle{ :type => "button",
+                             :data => { :toggle => "collapse",
+                                        :target => "#bipc-navbar" } }
         %span.sr-only Toggle navigation
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      %a.navbar-brand{ :href => root_path } BIPC
+      = link_to "BIPC", root_path, :class => "navbar-brand"
     #bipc-navbar.collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right
-        %li
-          %a{ :href => root_path } Home
-        %li
-          %a{ :href => customers_path } Customers
-        %li
-          %a{ :href => projects_path } Projects
+        %li{ :class => "#{current_page?('/') ? 'active' : ''}" }
+          = link_to "Home", root_path
+        %li{ :class => "#{current_page?('/customers') ? 'active' : ''}" }
+          = link_to "Customers", customers_path
+        %li{ :class => "#{current_page?('/projects') ? 'active' : ''}" }
+          = link_to "Projects", projects_path
+        - if user_signed_in?
+          %li.dropdown
+            %a.dropdown-toggle{ :href => "#",
+                                :data => { :toggle => "dropdown" } }
+              = current_user.name || 'Anonymous'
+              %span.caret
+            %ul.dropdown-menu{ :role => "menu" }
+              %li
+                = link_to "Profile", user_path(current_user)
+              %li
+                = link_to "Change password", edit_user_registration_path
+              %li.divider
+              - if current_user.role?(:admin)
+                %li
+                  = link_to "Users management", users_path
+                %li.divider
+              %li
+                = link_to "Logout", destroy_user_session_path,
+                          :method => :delete
+        - else
+          %li
+            %a{ :href => "#",
+                :data => { :toggle => "modal", :target => "#login-modal" } }
+              Login
+
