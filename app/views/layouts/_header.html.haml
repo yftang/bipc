@@ -2,13 +2,13 @@
   .container-fluid
     .navbar-header
       %button.navbar-toggle{ :type => "button",
-                             :data => {:toggle => "collapse",
-                                       :target => "#bipc-navbar"} }
+                             :data => { :toggle => "collapse",
+                                        :target => "#bipc-navbar" } }
         %span.sr-only Toggle navigation
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      = link_to "BIPC", root_path, class: "navbar-brand"
+      = link_to "BIPC", root_path, :class => "navbar-brand"
     #bipc-navbar.collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right
         %li{ :class => "#{current_page?('/') ? 'active' : ''}" }
@@ -19,15 +19,26 @@
           = link_to "Projects", projects_path
         - if user_signed_in?
           %li.dropdown
-            %a.dropdown-toggle{ :href => "#", :data => {:toggle=>"dropdown"} }
-              = current_user.name
+            %a.dropdown-toggle{ :href => "#",
+                                :data => { :toggle => "dropdown" } }
+              = current_user.name || 'Anonymous'
               %span.caret
             %ul.dropdown-menu{ :role => "menu" }
               %li
                 = link_to "Profile", user_path(current_user)
-              %li.divider
               %li
-                = link_to "Logout", destroy_user_session_path, method: :delete
+                = link_to "Change password", edit_user_registration_path
+              %li.divider
+              - if current_user.role?(:admin)
+                %li
+                  = link_to "Users management", users_path
+                %li.divider
+              %li
+                = link_to "Logout", destroy_user_session_path,
+                          :method => :delete
         - else
           %li
-            = link_to "Login", new_user_session_path
+            %a{ :href => "#",
+                :data => { :toggle => "modal", :target => "#login-modal" } }
+              Login
+

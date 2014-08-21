@@ -8,6 +8,7 @@ gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'bootstrap-sass', '~>3.2.0'
 gem 'sass-rails', '~> 4.0.3'
+gem 'kaminari'
 gem 'annotate', '~> 2.6.5'
 gem 'haml-rails'
 # Use Uglifier as compressor for JavaScript assets
@@ -17,6 +18,7 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer',  platforms: :ruby
 gem 'devise'
+gem 'cancan'
 gem 'thin'
 
 # Use jquery as the JavaScript library

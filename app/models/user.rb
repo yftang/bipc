@@ -24,15 +24,29 @@
 #
 
 class User < ActiveRecord::Base
+  before_validation :set_default_password
+
   has_many :role_users
-  has_many :roles, through: :role_users
+  has_many :roles, :through => :role_users
+
+  validates :email, :presence   => true,
+                    :uniqueness => true
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable,
+  devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  CRUD   = %w(create read update delete)
+  MODELS = %w(user project customer sample)
 
   def role?(role)
     return !!self.roles.find_by_name(role.to_s.camelize)
+  end
+
+  private
+  def set_default_password
+    self.password = 'foobar'
+    self.password_confirmation = 'foobar'
   end
 end
