@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :roles
-  devise_for :users, :controllers => { :sessions => 'sessions' }
+  devise_for :users, :controllers => { :sessions      => 'sessions',
+                                       :registrations => 'registrations' }
   resources  :users
   root 'homepages#welcome'
   get 'homepages/welcome' => 'homepages#welcome'
