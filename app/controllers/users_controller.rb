@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   before_filter :set_user, only: [:show, :edit, :update, :destroy]
 
+  load_and_authorize_resource
+
   def index
     @users = User.all.page params[:page]
     @user = User.new
