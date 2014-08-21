@@ -2,17 +2,25 @@
 #
 # Table name: projects
 #
-#  id                         :integer          not null, primary key
-#  acc                        :string(255)
-#  start_date                 :date
-#  end_date                   :date
-#  samples_received_status    :boolean
-#  experiments_done_status    :boolean
-#  bioinformatics_done_status :boolean
-#  report_finished_status     :boolean
-#  report_sent_status         :boolean
-#  created_at                 :datetime
-#  updated_at                 :datetime
+#  id                    :integer          not null, primary key
+#  acc                   :string(255)
+#  start_date            :date
+#  deadline              :date
+#  salesman              :string(255)
+#  salesman_id           :integer
+#  samples_received_date :date
+#  samples_received_by   :string(255)
+#  marketing_id          :integer
+#  experiments_done_date :date
+#  experiments_done_by   :string(255)
+#  experimenter_id       :integer
+#  analysis_done_date    :date
+#  analysis_done_by      :string(255)
+#  bioinformatician_id   :integer
+#  report_sent_date      :date
+#  report_sent_by        :string(255)
+#  created_at            :datetime
+#  updated_at            :datetime
 #
 
 class Project < ActiveRecord::Base
