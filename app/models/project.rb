@@ -6,19 +6,22 @@
 #  acc                   :string(255)
 #  start_date            :date
 #  deadline              :date
+#  creater               :string(255)
+#  creater_id            :integer
 #  salesman              :string(255)
 #  salesman_id           :integer
 #  samples_received_date :date
-#  samples_received_by   :string(255)
-#  marketing_id          :integer
+#  samples_receiver      :string(255)
+#  samples_receiver_id   :integer
 #  experiments_done_date :date
-#  experiments_done_by   :string(255)
+#  experimenter          :string(255)
 #  experimenter_id       :integer
 #  analysis_done_date    :date
-#  analysis_done_by      :string(255)
+#  bioinformatician      :string(255)
 #  bioinformatician_id   :integer
 #  report_sent_date      :date
-#  report_sent_by        :string(255)
+#  marketing             :string(255)
+#  marketing_id          :string(255)
 #  created_at            :datetime
 #  updated_at            :datetime
 #
