@@ -10,12 +10,14 @@ class Ability
       can :manage, User do |user|
         user && user.role?(:salesman)
       end
+      can :set_salesman, Project
     elsif user.role? :salesman
     elsif user.role? :marketing_admin
       can :manage, User do |user|
         user && user.role?(:marketing)
       end
       can :manage, Project
+      can :set_marketing, Project
     elsif user.role? :marketing
       can :update, Project
     elsif user.role? :experimentor_admin
@@ -23,6 +25,7 @@ class Ability
         user && user.role?(:experimentor)
       end
       can :update, Project
+      can :set_experimenter, Project
     elsif user.role? :experimentor
       can :update, Project
     elsif user.role? :bioinformatician_admin
@@ -30,6 +33,7 @@ class Ability
         user && user.role?(:bioinformatician)
       end
       can :update, Project
+      can :set_bioinformatician
     elsif user.role? :bioinformatician
       can :update, Project
     else
