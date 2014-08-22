@@ -8,7 +8,7 @@ module ApplicationHelper
     role = role.to_s.camelize
     gliph_span = "<span class='glyphicon glyphicon-user'></span>" if \
         role.include?('Admin')
-    btn_base = "<button type='button' class='btn btn-sm btn-primary' " + \
+    btn_base = "<button type='button' class='btn btn-sm btn-info' " + \
                "disabled='disabled'>#{gliph_span} %s</button>"
     btn_base = sanitize(btn_base,
                         :tags => ['button', 'span'],

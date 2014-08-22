@@ -48,6 +48,22 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def set_marketing
+
+  end
+
+  def set_salesman
+
+  end
+
+  def set_experimenter
+
+  end
+
+  def set_bioinformatician
+
+  end
+
   def update
     if @project.update_attributes(project_params)
       flash[:success] = "Project updated"
