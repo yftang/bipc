@@ -37,7 +37,10 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @project = Project.new(project_params)
+    @project = Project.new(
+      { :creater    => current_user.name,
+        :creater_id => current_user.id }.merge(project_params)
+    )
     if @project.save
       return render :json => { :success => true }
     else

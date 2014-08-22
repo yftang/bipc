@@ -34,8 +34,7 @@
       %td= user.name
       %td
         - user.roles.each do |role|
-          = button_tag role.name, :class => "btn btn-sm btn-primary",
-                       :disabled => "disabled"
+          = role_tag(role.name, :disabled)
 
 = paginate @users
 

@@ -4,12 +4,15 @@ module ApplicationHelper
     @title_name ? "#{@title_name} - #{base}" : base
   end
 
-  def role_tag(role)
+  def role_tag(role, disabled='')
     role = role.to_s.camelize
     gliph_span = "<span class='glyphicon glyphicon-user'></span>" if \
         role.include?('Admin')
     btn_base = "<button type='button' class='btn btn-sm btn-primary' " + \
                "disabled='disabled'>#{gliph_span} %s</button>"
+    btn_base = sanitize(btn_base,
+                        :tags => ['button', 'span'],
+                        :attributes => ['type', 'class', "#{disabled.to_s}"])
 
     if role.include?('Marketing')
       return btn_base % 'MKT'
