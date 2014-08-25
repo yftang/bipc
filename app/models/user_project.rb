@@ -2,7 +2,6 @@
 #
 # Table name: user_projects
 #
-#  id         :integer          not null, primary key
 #  user_id    :integer
 #  project_id :integer
 #  role_name  :string(255)
