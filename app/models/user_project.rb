@@ -2,10 +2,15 @@
 #
 # Table name: user_projects
 #
+#  id         :integer          not null, primary key
 #  user_id    :integer
 #  project_id :integer
-#  created_at :datetime
-#  updated_at :datetime
+#  role_name  :string(255)
+#
+# Indexes
+#
+#  index_user_projects_on_project_id  (project_id)
+#  index_user_projects_on_user_id     (user_id)
 #
 
 class UserProject < ActiveRecord::Base
