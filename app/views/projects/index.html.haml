@@ -29,7 +29,7 @@
     %th Analysis
     %th Report sent
   - @projects.each do |project|
-    %tr{ :class => "#{'danger' if not project.report_sent_date}" }
+    %tr{ :class => "#{'success' if project.complete?}" }
       - if can? :manage, :project
         %td
           = check_box_tag "project_#{project.id}", project.id,
