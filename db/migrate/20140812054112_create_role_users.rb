@@ -1,12 +1,9 @@
 class CreateRoleUsers < ActiveRecord::Migration
   def change
-    create_table :role_users do |t|
-      t.references :role
-      t.references :user
+    create_table :role_users, :id => false do |t|
+      t.references :role, :user, :index => true
 
       t.timestamps
     end
-    add_index :role_users, :role_id
-    add_index :role_users, :user_id
   end
 end

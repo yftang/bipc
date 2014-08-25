@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140818064055) do
+ActiveRecord::Schema.define(version: 20140825025836) do
 
   create_table "customers", force: true do |t|
     t.string   "name"
@@ -31,25 +31,31 @@ ActiveRecord::Schema.define(version: 20140818064055) do
     t.datetime "updated_at"
   end
 
-  create_table "project_role_users", force: true do |t|
-    t.integer "project_id"
-    t.integer "role_user_id"
-  end
-
   create_table "projects", force: true do |t|
     t.string   "acc"
     t.date     "start_date"
-    t.date     "end_date"
-    t.boolean  "samples_received_status"
-    t.boolean  "experiments_done_status"
-    t.boolean  "bioinformatics_done_status"
-    t.boolean  "report_finished_status"
-    t.boolean  "report_sent_status"
+    t.date     "deadline"
+    t.string   "creater"
+    t.integer  "creater_id"
+    t.string   "salesman"
+    t.integer  "salesman_id"
+    t.date     "samples_received_date"
+    t.string   "samples_receiver"
+    t.integer  "samples_receiver_id"
+    t.date     "experiments_done_date"
+    t.string   "experimenter"
+    t.integer  "experimenter_id"
+    t.date     "analysis_done_date"
+    t.string   "bioinformatician"
+    t.integer  "bioinformatician_id"
+    t.date     "report_sent_date"
+    t.string   "marketing"
+    t.string   "marketing_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "role_users", force: true do |t|
+  create_table "role_users", id: false, force: true do |t|
     t.integer  "role_id"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -64,6 +70,15 @@ ActiveRecord::Schema.define(version: 20140818064055) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "user_projects", id: false, force: true do |t|
+    t.integer "user_id"
+    t.integer "project_id"
+    t.string  "role_name"
+  end
+
+  add_index "user_projects", ["project_id"], name: "index_user_projects_on_project_id"
+  add_index "user_projects", ["user_id"], name: "index_user_projects_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "name"

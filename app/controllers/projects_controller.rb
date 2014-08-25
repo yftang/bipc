@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   before_filter :set_project, only: [:edit, :show,
                                      :update, :destroy]
+  authorize_resource
 
   def search_projects
     search_acc = params[:search_project_acc].strip
@@ -21,7 +22,8 @@ class ProjectsController < ApplicationController
   end
 
   def index
-    @projects = Project.all
+    @projects = Project.all.page params[:page]
+    @project = Project.new
   end
 
   def new
@@ -35,13 +37,31 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @project = Project.new(project_params)
+    @project = Project.new(
+      { :creater    => current_user.name,
+        :creater_id => current_user.id }.merge(project_params)
+    )
     if @project.save
-      flash[:success] = 'New project created!'
-      redirect_to @project
+      return render :json => { :success => true }
     else
-      render 'new'
+      return render :json => { :success => false }
     end
+  end
+
+  def set_marketing
+
+  end
+
+  def set_salesman
+
+  end
+
+  def set_experimenter
+
+  end
+
+  def set_bioinformatician
+
   end
 
   def update
@@ -54,11 +74,12 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
+    @project.destroy
   end
 
   private
   def project_params
-    params.require(:project).permit(:acc, :start_date, :end_date)
+    params.require(:project).permit(:acc, :start_date, :deadline)
   end
 
   def set_project

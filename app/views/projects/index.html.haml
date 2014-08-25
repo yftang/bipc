@@ -1,12 +1,93 @@
 %h2 All Projects
-%table
-  %tr
-    %th Acc
-    %th Started at
-    %th Ends at
+%br
 
+- if can? :manage, :project
+  .btn-toolbar{ :role => "toolbar" }
+    .btn-group
+      %button.btn.btn-default{ :type => "button",
+                               :data => { :toggle => "modal",
+                                          :target => "#new-project-modal" } }
+        %span.glyphicon.glyphicon-plus
+        New project
+      %button.btn.btn-default#destroy-projects{:type => "button",
+          :disabled => true,
+          :onclick => "destroy_projects()"}
+        %span.glyphicon.glyphicon-minus
+        Remove project(s)
+  %br
+
+%table.table.table-striped#projects-table
+  %tr
+    - if can? :manage, :project
+      %th.col-sm-1
+    %th Acc.
+    %th Starts from
+    %th Deadline
+    %th Ends at
+    %th Samples received
+    %th Experiments
+    %th Analysis
+    %th Report sent
   - @projects.each do |project|
-    %tr
-      %td= project.acc
+    %tr{ :class => "#{'danger' if not project.report_sent_date}" }
+      - if can? :manage, :project
+        %td
+          = check_box_tag "project_#{project.id}", project.id,
+                          false, :class => "project-selection"
+
+      %td= link_to project.acc, project
+
       %td= project.start_date
-      %td= project.end_date
+
+      %td= project.deadline
+
+      - if project.report_sent_date
+        %td= project.report_sent_date
+      - else
+        %td.danger
+          = link_to role_tag(:marketing),
+                    user_path(project.creater_id),
+                    :title => "Contact #{project.creater}"
+
+      - if project.samples_received_date
+        %td= project.samples_received_date
+      - elsif project.samples_receiver && project.samples_receiver_id
+        %td.danger
+          = link_to project.samples_receiver,
+                    user_path(project.samples_receiver_id)
+      - else
+        %td On the way
+
+      - if project.experiments_done_date
+        %td= project.experiments_done_date
+      - elsif project.experimenter && project.experimenter_id
+        %td.danger
+          = link_to project.experimenter,
+                    user_path(project.experimenter_id)
+      - else
+        - if can? :set_experimenter, :project
+          %td= link_to "Set", "#"
+        - else
+          %td Nah
+
+      - if project.analysis_done_date
+        %td= project.analysis_done_date
+      - elsif project.bioinformatician && project.bioinformatician_id
+        %td.danger
+          = link_to project.bioinformatician,
+                    user_path(project.bioinformatician_id)
+      - else
+        %td Nah
+
+      - if project.report_sent_date
+        %td= project.report_sent_date
+      - elsif project.marketing && project.marketing_id
+        %td.danger
+          = link_to project.marketing,
+                    user_path(project.marketing_id)
+      - else
+        %td Nah
+
+= paginate @projects
+
+= render 'new_project_modal'

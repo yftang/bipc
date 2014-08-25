@@ -29,6 +29,9 @@ class User < ActiveRecord::Base
   has_many :role_users
   has_many :roles, :through => :role_users
 
+  has_many :user_projects
+  has_many :projects, :through => :user_projects
+
   validates :email, :presence   => true,
                     :uniqueness => true
 
