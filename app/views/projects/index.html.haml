@@ -1,7 +1,7 @@
 %h2 All Projects
 %br
 
-- if can? :manage, :project
+- if can? :manage, @projects
   .btn-toolbar{ :role => "toolbar" }
     .btn-group
       %button.btn.btn-default{ :type => "button",
@@ -18,7 +18,7 @@
 
 %table.table.table-striped#projects-table
   %tr
-    - if can? :manage, :project
+    - if can? :manage, @projects
       %th.col-sm-1
     %th Acc.
     %th Starts from
@@ -30,7 +30,7 @@
     %th Report sent
   - @projects.each do |project|
     %tr{ :class => "#{'success' if project.complete?}" }
-      - if can? :manage, :project
+      - if can? :manage, project
         %td
           = check_box_tag "project_#{project.id}", project.id,
                           false, :class => "project-selection"
@@ -44,49 +44,54 @@
       - if project.report_sent_date
         %td= project.report_sent_date
       - else
-        %td.danger
-          = link_to role_tag(:marketing),
+        %td=link_to project.creater,
                     user_path(project.creater_id),
                     :title => "Contact #{project.creater}"
 
       - if project.samples_received_date
         %td= project.samples_received_date
       - elsif project.samples_receiver && project.samples_receiver_id
-        %td.danger
-          = link_to project.samples_receiver,
-                    user_path(project.samples_receiver_id)
+        %td= link_to  project.samples_receiver,
+                      user_path(project.samples_receiver_id),
+                      :title => "Contact #{project.creater}"
       - else
-        %td On the way
+        %td Pending...
 
       - if project.experiments_done_date
         %td= project.experiments_done_date
       - elsif project.experimenter && project.experimenter_id
-        %td.danger
-          = link_to project.experimenter,
-                    user_path(project.experimenter_id)
+        %td=link_to project.experimenter,
+                    user_path(project.experimenter_id),
+                    :title => "Contact #{project.experimenter}"
       - else
-        - if can? :set_experimenter, :project
+        - if can? :set_experimenter, project
           %td= link_to "Set", "#"
         - else
-          %td Nah
+          %td Pending...
 
       - if project.analysis_done_date
         %td= project.analysis_done_date
       - elsif project.bioinformatician && project.bioinformatician_id
-        %td.danger
-          = link_to project.bioinformatician,
-                    user_path(project.bioinformatician_id)
+        %td=link_to project.bioinformatician,
+                    user_path(project.bioinformatician_id),
+                    :title => "Contact #{project.bioinformatician}"
       - else
-        %td Nah
+        - if can? :set_bioinformatician, project
+          %td= link_to "Set", "#"
+        - else
+          %td Pending...
 
       - if project.report_sent_date
         %td= project.report_sent_date
       - elsif project.marketing && project.marketing_id
-        %td.danger
-          = link_to project.marketing,
-                    user_path(project.marketing_id)
+        %td=link_to "project.marketing",
+                    user_path(project.marketing_id),
+                    :title => "Contact #{project.marketing}"
       - else
-        %td Nah
+        - if can? :set_marketing, project
+          %td= link_to "Set", "#"
+        - else
+          %td Pending...
 
 = paginate @projects
 

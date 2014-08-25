@@ -1,24 +1,15 @@
 class RolesController < ApplicationController
   before_action :set_role, only: [:show, :edit, :update, :destroy]
 
-  # GET /roles
-  # GET /roles.json
-  def index
-    @roles = Role.all
-  end
-
-  # GET /roles/1
-  # GET /roles/1.json
-  def show
-  end
-
-  # GET /roles/new
-  def new
-    @role = Role.new
-  end
-
-  # GET /roles/1/edit
-  def edit
+  def get_users
+    tmp_users = []
+    self.users.each do |u|
+      tmp_users << {
+        :id   => u.id,
+        :name => u.name
+      }
+    end
+    return render :json => { :users => tmp_users}
   end
 
   # POST /roles

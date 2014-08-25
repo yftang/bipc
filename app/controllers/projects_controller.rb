@@ -48,10 +48,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def set_marketing
-
-  end
-
   def set_salesman
 
   end
