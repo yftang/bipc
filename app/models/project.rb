@@ -33,4 +33,7 @@ class Project < ActiveRecord::Base
   has_many :user_projects
   has_many :users, :through => :user_projects
 
+  validates_presence_of :start_date, :deadline, :creater, :creater_id
+  validates :acc, :presence => true, :uniqueness => true
+
 end
