@@ -65,7 +65,9 @@
                     :title => "Contact #{project.experimenter}"
       - else
         - if can? :set_experimenter, project
-          %td= link_to "Set", "#"
+          %td= link_to "Set", "javascript:{void}",
+                              :onclick => "set_operator(event);",
+                              :class   => "set-experimenter"
         - else
           %td Pending...
 
@@ -77,7 +79,9 @@
                     :title => "Contact #{project.bioinformatician}"
       - else
         - if can? :set_bioinformatician, project
-          %td= link_to "Set", "#"
+          %td= link_to "Set", nil,
+                              :onclick => "set_operator(event);",
+                              :class   => "set-bioinformatician"
         - else
           %td Pending...
 
@@ -88,10 +92,7 @@
                     user_path(project.marketing_id),
                     :title => "Contact #{project.marketing}"
       - else
-        - if can? :set_marketing, project
-          %td= link_to "Set", "#"
-        - else
-          %td Pending...
+        %td Pending...
 
 = paginate @projects
 

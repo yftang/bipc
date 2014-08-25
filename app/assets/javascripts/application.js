@@ -76,9 +76,13 @@ $(document).ready(function() {
     });
 });
 
+function set_operator(event) {
+  alert(event.target.class);
+}
+
 function destroy_users() {
   selected_checks = $('table#users-table input:checked');
-  confirmed = confirm("Are you sure to remove thoses " + 
+  confirmed = confirm("Are you sure to remove thoses " +
                       selected_checks.length+" user(s)?")
   if(confirmed == true) {
     $.each(selected_checks, function(i, e) {
@@ -94,7 +98,7 @@ function destroy_users() {
 
 function destroy_projects() {
   selected_checks = $('table#projects-table input:checked');
-  confirmed = confirm("Are you sure to remove thoses " + 
+  confirmed = confirm("Are you sure to remove thoses " +
                       selected_checks.length+" project(s)?")
   if(confirmed == true) {
     $.each(selected_checks, function(i, e) {
