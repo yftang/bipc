@@ -33,11 +33,16 @@ body {
   padding-top: 60px;
 }
 
-table#projects-table a{
-  text-decoration: underline;
-  &:hover {
-    background-color: transparent;
-    color: black;
+table#projects-table {
+  a {
+    text-decoration: underline;
+    &:hover {
+      background-color: transparent;
+      color: black;
+    }
+  }
+  select {
+    padding: 0px;
   }
 }
 
