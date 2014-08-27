@@ -2,7 +2,6 @@
 #
 # Table name: role_users
 #
-#  id         :integer          not null, primary key
 #  role_id    :integer
 #  user_id    :integer
 #  created_at :datetime
