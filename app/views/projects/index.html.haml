@@ -1,7 +1,7 @@
 %h2 All Projects
 %br
 
-- if can? :manage, :project
+- if can? :manage, @projects
   .btn-toolbar{ :role => "toolbar" }
     .btn-group
       %button.btn.btn-default{ :type => "button",
@@ -18,7 +18,7 @@
 
 %table.table.table-striped#projects-table
   %tr
-    - if can? :manage, :project
+    - if can? :manage, @projects
       %th.col-sm-1
     %th Acc.
     %th Starts from
@@ -29,65 +29,21 @@
     %th Analysis
     %th Report sent
   - @projects.each do |project|
-    %tr{ :class => "#{'danger' if not project.report_sent_date}" }
-      - if can? :manage, :project
-        %td
-          = check_box_tag "project_#{project.id}", project.id,
-                          false, :class => "project-selection"
-
-      %td= link_to project.acc, project
-
-      %td= project.start_date
-
-      %td= project.deadline
-
-      - if project.report_sent_date
-        %td= project.report_sent_date
-      - else
-        %td.danger
-          = link_to role_tag(:marketing),
-                    user_path(project.creater_id),
-                    :title => "Contact #{project.creater}"
-
-      - if project.samples_received_date
-        %td= project.samples_received_date
-      - elsif project.samples_receiver && project.samples_receiver_id
-        %td.danger
-          = link_to project.samples_receiver,
-                    user_path(project.samples_receiver_id)
-      - else
-        %td On the way
-
-      - if project.experiments_done_date
-        %td= project.experiments_done_date
-      - elsif project.experimenter && project.experimenter_id
-        %td.danger
-          = link_to project.experimenter,
-                    user_path(project.experimenter_id)
-      - else
-        - if can? :set_experimenter, :project
-          %td= link_to "Set", "#"
-        - else
-          %td Nah
-
-      - if project.analysis_done_date
-        %td= project.analysis_done_date
-      - elsif project.bioinformatician && project.bioinformatician_id
-        %td.danger
-          = link_to project.bioinformatician,
-                    user_path(project.bioinformatician_id)
-      - else
-        %td Nah
-
-      - if project.report_sent_date
-        %td= project.report_sent_date
-      - elsif project.marketing && project.marketing_id
-        %td.danger
-          = link_to project.marketing,
-                    user_path(project.marketing_id)
-      - else
-        %td Nah
+    = render 'project', :project => project
 
 = paginate @projects
 
 = render 'new_project_modal'
+
+= select_tag  "set-experimenter",
+              options_for_select(@exp_role.get_users_options),
+              :prompt => "Select one",
+              :class  => "form-control input-sm hidden"
+= select_tag  "set-bioinformatician",
+              options_for_select(@bin_role.get_users_options),
+              :prompt => "Select one",
+              :class  => "form-control input-sm hidden"
+= select_tag  "set-marketing",
+              options_for_select(@mkt_role.get_users_options),
+              :prompt => "Select one",
+              :class  => "form-control input-sm hidden"
