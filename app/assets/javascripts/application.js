@@ -15,10 +15,13 @@
 //= require jquery-ui/dialog
 //= require jquery-ui/effect-fade
 //= require jquery-ui/effect-shake
+//= require bootstrap-datepicker/core
 //= require bootstrap-sprockets
 //= require_tree .
 $(document).ready(function() {
   $(".alert").fadeOut(3000);
+
+  $("input.datepicker").datepicker();
 
   $.each($("table#users-table input[type='checkbox']"), function(i,e) {
     $(this).change(function() {
