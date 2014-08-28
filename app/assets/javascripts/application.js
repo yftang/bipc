@@ -12,7 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui
+//= require jquery-ui/dialog
+//= require jquery-ui/effect-fade
+//= require jquery-ui/effect-shake
 //= require bootstrap-sprockets
 //= require_tree .
 $(document).ready(function() {
