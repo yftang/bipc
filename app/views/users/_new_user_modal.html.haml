@@ -1,0 +1,36 @@
+#new-user-modal.modal.fade{ :tabindex => "-1", :role   => "dialog",
+                            :aria     => { :labelledby => "newUserModalLabel",
+                                           :hidden     => "true" } }
+  .modal-dialog.modal-sm
+    .modal-content
+      .modal-header
+        %button.close{ :type => "button",
+                       :data => { :dismiss => "modal" } }
+          %span{ :aria => { :hidden => "true" } } &times;
+          %span.sr-only Close
+        %h4#newUserModalLabel.modal-title New User
+      .modal-body
+        = form_for(@user, :url    => users_path,
+                          :method => 'POST',
+                          :format => :json,
+                          :remote => true,
+                          :html   => { :id   => "new_user",
+                                       :role => "form" }) do |f|
+          - if f.object.errors.any?
+            - f.object.errors.full_messages.each do |msg|
+              %p= msg
+          .form-group
+            = f.label :email
+            %br
+            = f.text_field :email, :class => "form-control"
+          .form-group
+            = f.label :name
+            %br
+            = f.text_field :name, :class => "form-control"
+          .form-group
+            = f.label :role
+            %br
+            - Role.all.each do |role|
+              = check_box_tag "user[role_ids][]", role.id
+              = role.name
+          = f.submit "Create", :class => "btn btn-default btn-primary btn-sm"

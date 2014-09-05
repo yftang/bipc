@@ -1,12 +1,49 @@
 %h2 All Projects
-%table
-  %tr
-    %th Acc
-    %th Started at
-    %th Ends at
+%br
 
+- if can? :manage, @projects
+  .btn-toolbar{ :role => "toolbar" }
+    .btn-group
+      %button.btn.btn-default{ :type => "button",
+                               :data => { :toggle => "modal",
+                                          :target => "#new-project-modal" } }
+        %span.glyphicon.glyphicon-plus
+        New project
+      %button.btn.btn-default#destroy-projects{:type => "button",
+          :disabled => true,
+          :onclick => "destroy_projects()"}
+        %span.glyphicon.glyphicon-minus
+        Remove project(s)
+  %br
+
+%table.table.table-striped#projects-table
+  %tr
+    - if can? :manage, @projects
+      %th.col-sm-1
+    %th Acc.
+    %th Starts from
+    %th Deadline
+    %th Ends at
+    %th Samples received
+    %th Experiments
+    %th Analysis
+    %th Report sent
   - @projects.each do |project|
-    %tr
-      %td= project.acc
-      %td= project.start_date
-      %td= project.end_date
+    = render 'project', :project => project
+
+= paginate @projects
+
+= render 'new_project_modal'
+
+= select_tag  "set-experimenter",
+              options_for_select(@exp_role.get_users_options),
+              :prompt => "Select one",
+              :class  => "form-control input-sm hidden"
+= select_tag  "set-bioinformatician",
+              options_for_select(@bin_role.get_users_options),
+              :prompt => "Select one",
+              :class  => "form-control input-sm hidden"
+= select_tag  "set-marketing",
+              options_for_select(@mkt_role.get_users_options),
+              :prompt => "Select one",
+              :class  => "form-control input-sm hidden"
