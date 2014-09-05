@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   before_filter :set_project, only: [:edit, :show,
                                      :update, :destroy]
+  authorize_resource
 
   def search_projects
     search_acc = params[:search_project_acc].strip
@@ -21,7 +22,11 @@ class ProjectsController < ApplicationController
   end
 
   def index
-    @projects = Project.all
+    @projects = Project.all.page params[:page]
+    @project = Project.new
+    @exp_role = Role.find_by_name('Experimenter')
+    @bin_role = Role.find_by_name('Bioinformatician')
+    @mkt_role = Role.find_by_name('Marketing')
   end
 
   def new
@@ -35,13 +40,27 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    @project = Project.new(project_params)
+    @project = Project.new(
+      { :creater    => current_user.name,
+        :creater_id => current_user.id }.merge(project_params)
+    )
     if @project.save
-      flash[:success] = 'New project created!'
-      redirect_to @project
+      return render :json => { :success => true }
     else
-      render 'new'
+      return render :json => { :success => false }
     end
+  end
+
+  def set_salesman
+    set_participant('salesman', params)
+  end
+
+  def set_experimenter
+    set_participant('experimenter', params)
+  end
+
+  def set_bioinformatician
+    set_participant('bioinformatician', params)
   end
 
   def update
@@ -54,11 +73,12 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
+    @project.destroy
   end
 
   private
   def project_params
-    params.require(:project).permit(:acc, :start_date, :end_date)
+    params.require(:project).permit(:acc, :start_date, :deadline)
   end
 
   def set_project
@@ -66,6 +86,24 @@ class ProjectsController < ApplicationController
     if not @project
       flash[:alert] = "Project not found!"
       redirect_to projects_path
+    end
+  end
+
+  def set_participant(role, params)
+    if params[:id] && params[:user_name] && params[:user_id]
+      user_name, user_id = params[:user_name], params[:user_id]
+      if tmp_project = Project.where(:id => params[:id]).first
+        tmp_project.update_attributes(role.to_sym         => user_name,
+                                      "#{role}_id".to_sym => user_id)
+        UserProject.create(:user_id    => user_id,
+                           :project_id => params[:id],
+                           :role_name  => role.camelize)
+        return render :json => { :success => true }
+      else
+        return render :json => { :success => false }
+      end
+    else
+      return render :json => { :success => false }
     end
   end
 end

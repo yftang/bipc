@@ -10,7 +10,7 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require jquery-ui
+ *= require jquery-ui/dialog
  *= require_tree .
  *= require_self
  */
@@ -31,6 +31,19 @@
 
 body {
   padding-top: 60px;
+}
+
+table#projects-table {
+  a {
+    text-decoration: underline;
+    &:hover {
+      background-color: transparent;
+      color: black;
+    }
+  }
+  select {
+    padding: 0px;
+  }
 }
 
 #footer {

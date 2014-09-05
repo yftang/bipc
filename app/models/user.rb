@@ -29,16 +29,17 @@ class User < ActiveRecord::Base
   has_many :role_users
   has_many :roles, :through => :role_users
 
+  has_many :user_projects
+  has_many :projects, :through => :user_projects
+
   validates :email, :presence   => true,
                     :uniqueness => true
+  validates :name,  :presence   => true
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-
-  CRUD   = %w(create read update delete)
-  MODELS = %w(user project customer sample)
 
   def role?(role)
     return !!self.roles.find_by_name(role.to_s.camelize)
