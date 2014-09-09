@@ -21,7 +21,7 @@
 $(document).ready(function() {
   $(".alert").fadeOut(3000);
 
-  $("input.datepicker").datepicker();
+  $("input.datepicker").datepicker({ format: "yyyy-mm-dd" });
 
   $.each($("table#users-table input[type='checkbox']"), function(i,e) {
     $(this).change(function() {
