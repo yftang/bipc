@@ -3,23 +3,23 @@
   .panel-body
     .form-group
       = f.label :acc, "Accession",
-                :class => "col-sm-2 col-sm-offset-1 control-label"
-      .col-sm-6.col-sm-offset-4.input-group
+                :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
         = f.text_field :acc, :class => "form-control"
         %span.input-group-addon
           %span.glyphicon.glyphicon-pencil
     .form-group
       = f.label :start_date, "Start date",
-                :class => "col-sm-2 col-sm-offset-1 control-label"
-      .col-sm-6.col-sm-offset-4.input-group
+                :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
         = f.text_field :start_date, :class => "form-control datepicker"
         %span.input-group-addon
           %span.glyphicon.glyphicon-calendar
     .form-group
       = f.label :deadline,
-                :class => "col-sm-2 col-sm-offset-1 control-label"
-      .col-sm-6.col-sm-offset-4.input-group
-        = f.text_field  :deadline, :class => "form-control datepicker"
+                :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.text_field :deadline, :class => "form-control datepicker"
         %span.input-group-addon
           %span.glyphicon.glyphicon-calendar
 
@@ -29,4 +29,16 @@
 .panel.panel-primary
   .panel-heading Setting customers
   .panel-body
+    .form-group
+      = f.label :customer_ids,
+                "Customers",
+                :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.select  :customer_ids,
+                    options_for_select(@customers.pluck(:name)),
+                    {},
+                    { :class => "form-control",
+                      :prompt => "Please select" }
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-user
 

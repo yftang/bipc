@@ -30,7 +30,9 @@ class ProjectsController < ApplicationController
   end
 
   def new
-    @project = Project.new
+    @project   = Project.new
+    @customers = Customer.all
+    @customer  = Customer.new
   end
 
   def edit
