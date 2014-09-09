@@ -47,9 +47,15 @@ class ProjectsController < ApplicationController
         :creater_id => current_user.id }.merge(project_params)
     )
     if @project.save
-      return render :json => { :success => true }
+      customer_ids = params[:project][:customer_ids]
+      customer_ids.each do |id|
+        ProjectCustomer.create(:project_id  => @project.id,
+                               :customer_id => id)
+      end
+      flash[:success] = 'Project created'
+      redirect_to @project
     else
-      return render :json => { :success => false }
+      render 'new'
     end
   end
 

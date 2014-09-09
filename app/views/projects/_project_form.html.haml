@@ -34,11 +34,13 @@
                 "Customers",
                 :class => "col-sm-4 control-label"
       .col-sm-6.input-group
-        = f.select  :customer_ids,
-                    options_for_select(@customers.pluck(:name)),
-                    {},
-                    { :class => "form-control",
-                      :prompt => "Please select" }
+        %select.form-control{ :name => "project[customer_ids][]",
+                              :multiple => true }
+          %option Please select
+          - @customers.pluck(:city).uniq.each do |city|
+            %optgroup{ :label => city }
+              - @customers.select { |c| c.city == city }.each do |customer|
+                %option{ :value => customer.id } #{customer.name}
         %span.input-group-addon
           %span.glyphicon.glyphicon-user
 

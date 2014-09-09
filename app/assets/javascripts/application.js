@@ -67,18 +67,6 @@ $(document).ready(function() {
         $("#new_user").effect("shake", {direction: "right"});
       }
     });
-  $("form#new_project")
-    .bind("ajax:success", function(e, data, status, xhr) {
-      if(data.success == true) {
-        submitBtn = $("form#new_project input[name='commit']");
-        submitBtn.removeClass("btn-primary");
-        submitBtn.addClass("btn-success");
-        submitBtn.prop("value", "Done");
-        setTimeout(function(){location.reload();}, 1000);
-      }else {
-        $("#new_project").effect("shake", {direction: "right"});
-      }
-    });
 
   $(document).on("change", "table#projects-table select.action", function() {
     select_tag = $(this);
