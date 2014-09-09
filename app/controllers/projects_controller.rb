@@ -63,6 +63,10 @@ class ProjectsController < ApplicationController
     set_participant('bioinformatician', params)
   end
 
+  def set_marketing
+    set_participant('marketing', params)
+  end
+
   def update
     if @project.update_attributes(project_params)
       flash[:success] = "Project updated"
