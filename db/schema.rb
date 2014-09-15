@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20140825025836) do
     t.string   "email"
     t.string   "add"
     t.string   "ins"
-    t.string   "city"
+    t.string   "pro"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
