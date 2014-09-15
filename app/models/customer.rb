@@ -8,7 +8,7 @@
 #  email      :string(255)
 #  add        :string(255)
 #  ins        :string(255)
-#  city       :string(255)
+#  pro        :string(255)
 #  created_at :datetime
 #  updated_at :datetime
 #

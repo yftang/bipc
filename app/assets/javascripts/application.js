@@ -15,10 +15,13 @@
 //= require jquery-ui/dialog
 //= require jquery-ui/effect-fade
 //= require jquery-ui/effect-shake
+//= require bootstrap-datepicker/core
 //= require bootstrap-sprockets
 //= require_tree .
 $(document).ready(function() {
   $(".alert").fadeOut(3000);
+
+  $("input.datepicker").datepicker({ format: "yyyy-mm-dd" });
 
   $.each($("table#users-table input[type='checkbox']"), function(i,e) {
     $(this).change(function() {
@@ -62,18 +65,6 @@ $(document).ready(function() {
         setTimeout(function(){location.reload();}, 1000);
       }else {
         $("#new_user").effect("shake", {direction: "right"});
-      }
-    });
-  $("form#new_project")
-    .bind("ajax:success", function(e, data, status, xhr) {
-      if(data.success == true) {
-        submitBtn = $("form#new_project input[name='commit']");
-        submitBtn.removeClass("btn-primary");
-        submitBtn.addClass("btn-success");
-        submitBtn.prop("value", "Done");
-        setTimeout(function(){location.reload();}, 1000);
-      }else {
-        $("#new_project").effect("shake", {direction: "right"});
       }
     });
 

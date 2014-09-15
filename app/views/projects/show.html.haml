@@ -1,4 +1,6 @@
 %h2 #{@project.acc}
 
-= form_for(@project) do |f|
-  = render 'project_form', f: f
+start_date: #{@project.start_date}
+Deadline: #{@project.deadline}
+
+Customers: #{@project.customers.pluck(:name)}
