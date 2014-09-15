@@ -15,13 +15,18 @@
 //= require jquery-ui/dialog
 //= require jquery-ui/effect-fade
 //= require jquery-ui/effect-shake
-//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker
 //= require bootstrap-sprockets
 //= require_tree .
 $(document).ready(function() {
   $(".alert").fadeOut(3000);
 
-  $("input.datepicker").datepicker({ format: "yyyy-mm-dd" });
+  $("input.datepicker").datepicker({
+    format: "yyyy-mm-dd",
+    autoclose: true,
+    todayHighlight: true,
+    todayBtn: true
+  });
 
   $.each($("table#users-table input[type='checkbox']"), function(i,e) {
     $(this).change(function() {
