@@ -15,11 +15,11 @@ ActiveRecord::Schema.define(version: 20140825025836) do
 
   create_table "customers", force: true do |t|
     t.string   "name"
-    t.string   "tel"
+    t.string   "phone"
     t.string   "email"
-    t.string   "add"
-    t.string   "ins"
-    t.string   "pro"
+    t.string   "address"
+    t.string   "organization"
+    t.string   "province"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
