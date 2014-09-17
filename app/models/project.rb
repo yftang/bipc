@@ -40,4 +40,8 @@ class Project < ActiveRecord::Base
     samples_received_date && experiments_done_date &&
       analysis_done_date && report_sent_date
   end
+
+  def to_param
+    "#{id}-#{created_at.to_i}"
+  end
 end

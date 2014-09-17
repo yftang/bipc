@@ -17,4 +17,8 @@ class Customer < ActiveRecord::Base
   has_many :project_customers
   has_many :projects, :through => :project_customers
   validates_presence_of :name, :email, :organization, :phone
+
+  def to_param
+    "#{id}-#{created_at.to_i}"
+  end
 end
