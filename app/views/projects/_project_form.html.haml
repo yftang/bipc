@@ -23,8 +23,6 @@
         %span.input-group-addon
           %span.glyphicon.glyphicon-calendar
 
-
-
 %br
 .panel.panel-primary
   .panel-heading Setting customers
@@ -36,11 +34,13 @@
       .col-sm-6.input-group
         %select.form-control{ :name => "project[customer_ids][]",
                               :multiple => true }
-          %option Please select
-          - @customers.pluck(:city).uniq.each do |city|
-            %optgroup{ :label => city }
-              - @customers.select { |c| c.city == city }.each do |customer|
+          - @customers.pluck(:pro).uniq.each do |pro|
+            %optgroup{ :label => pro }
+              - @customers.select { |c| c.pro == pro }.each do |customer|
                 %option{ :value => customer.id } #{customer.name}
         %span.input-group-addon
           %span.glyphicon.glyphicon-user
+
+    = link_to "Need new customer?", new_customer_path,
+              :class => "col-sm-offset-4"
 

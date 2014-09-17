@@ -32,7 +32,6 @@ class ProjectsController < ApplicationController
   def new
     @project   = Project.new
     @customers = Customer.all
-    @customer  = Customer.new
   end
 
   def edit
@@ -52,9 +51,11 @@ class ProjectsController < ApplicationController
         ProjectCustomer.create(:project_id  => @project.id,
                                :customer_id => id)
       end
-      flash[:success] = 'Project created'
+      flash[:notice] = 'Project created'
       redirect_to @project
     else
+      flash[:notice] = 'Project not created'
+      @customers = Customer.all
       render 'new'
     end
   end
