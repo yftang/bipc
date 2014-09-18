@@ -1,0 +1,30 @@
+.panel.panel-primary
+  .panel-heading Setting properties
+  .panel-body
+    .form-group
+      = f.label :name, "Sample name",
+                :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.text_field :name, :class => "form-control"
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-pencil
+    .form-group
+      = f.label :received_date, :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.text_field :received_date, :class => "form-control datepicker"
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-calendar
+    .form-group
+      = f.label :receiver_id, "Receiver",
+                :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.text_field :receiver_id, :class => "form-control"
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-user
+    .form-group
+      = f.label :express_number, "Express", :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.text_field :express_number, :class => "form-control"
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-barcode
+

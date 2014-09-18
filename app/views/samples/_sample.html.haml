@@ -1,0 +1,14 @@
+%tr{ :id => "#{sample.id}" }
+  - if can? :manage, sample
+    %td
+      = check_box_tag "sample_#{sample.id}", sample.id,
+                      false, :class => "sample-selection"
+
+  %td= link_to sample.name, sample
+
+  %td= sample.received_date
+
+  %td= link_to sample.receiver_id, user_path(sample.receiver_id)
+
+  %td= sample.express_number
+
