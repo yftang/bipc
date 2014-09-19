@@ -8,7 +8,11 @@
 
   %td= sample.received_date
 
-  %td= link_to sample.receiver_id, user_path(sample.receiver_id)
+  - if sample.receiver_id
+    %td= link_to  sample.receiver_id,
+                  user_path(User.find_by_id(sample.receiver_id))
+  - else
+    %td
 
   %td= sample.express_number
 

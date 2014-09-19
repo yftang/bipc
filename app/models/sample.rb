@@ -13,6 +13,9 @@
 #
 
 class Sample < ActiveRecord::Base
+  has_many :project_samples
+  has_many :projects, :through => :project_samples
+
   validates_presence_of :name
 
   def to_param
