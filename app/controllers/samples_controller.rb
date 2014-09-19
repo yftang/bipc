@@ -1,6 +1,9 @@
 class SamplesController < ApplicationController
   before_filter :set_sample, :only => [:update, :destroy,
                                        :edit, :receive, :show]
+
+  authorize_resource
+
   def index
     @samples = Sample.all.page params[:page]
   end
