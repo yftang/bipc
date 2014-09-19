@@ -15,10 +15,18 @@
 //= require jquery-ui/dialog
 //= require jquery-ui/effect-fade
 //= require jquery-ui/effect-shake
+//= require bootstrap-datepicker
 //= require bootstrap-sprockets
 //= require_tree .
 $(document).ready(function() {
   $(".alert").fadeOut(3000);
+
+  $("input.datepicker").datepicker({
+    format: "yyyy-mm-dd",
+    autoclose: true,
+    todayHighlight: true,
+    todayBtn: true
+  });
 
   $.each($("table#users-table input[type='checkbox']"), function(i,e) {
     $(this).change(function() {
@@ -31,6 +39,14 @@ $(document).ready(function() {
     $(this).change(function() {
       if($(this).is(":checked")) {
         $("button#destroy-projects").attr("disabled", false);
+      }
+    });
+  });
+
+  $.each($("table#customers-table input[type='checkbox']"), function(i,e) {
+    $(this).change(function() {
+      if($(this).is(":checked")) {
+        $("button#destroy-customers").attr("disabled", false);
       }
     });
   });
@@ -62,18 +78,6 @@ $(document).ready(function() {
         setTimeout(function(){location.reload();}, 1000);
       }else {
         $("#new_user").effect("shake", {direction: "right"});
-      }
-    });
-  $("form#new_project")
-    .bind("ajax:success", function(e, data, status, xhr) {
-      if(data.success == true) {
-        submitBtn = $("form#new_project input[name='commit']");
-        submitBtn.removeClass("btn-primary");
-        submitBtn.addClass("btn-success");
-        submitBtn.prop("value", "Done");
-        setTimeout(function(){location.reload();}, 1000);
-      }else {
-        $("#new_project").effect("shake", {direction: "right"});
       }
     });
 
@@ -119,6 +123,22 @@ function destroy_users() {
       $.ajax({
         type: "DELETE",
         url:  "/users/"+user_id
+      });
+    });
+    location.reload();
+  }
+}
+
+function destroy_customers() {
+  selected_checks = $("table#customers-table input:checked");
+  confirmed = confirm("Are you sure to remove thoses " +
+                      selected_checks.length+" customer(s)?")
+  if(confirmed == true) {
+    $.each(selected_checks, function(i, e) {
+      customer_id = $(this).val();
+      $.ajax({
+        type: "DELETE",
+        url:  "/customers/"+customer_id
       });
     });
     location.reload();

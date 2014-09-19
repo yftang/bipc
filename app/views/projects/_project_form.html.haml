@@ -1,8 +1,46 @@
-= f.label :acc, "Accession"
-= f.text_field :acc
+.panel.panel-primary
+  .panel-heading Setting properties
+  .panel-body
+    .form-group
+      = f.label :acc, "Accession",
+                :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.text_field :acc, :class => "form-control"
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-pencil
+    .form-group
+      = f.label :start_date, "Start date",
+                :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.text_field :start_date, :class => "form-control datepicker"
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-calendar
+    .form-group
+      = f.label :deadline,
+                :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.text_field :deadline, :class => "form-control datepicker"
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-calendar
 
-= f.label :start_date, "Started at"
-= f.date_field :start_date
+%br
+.panel.panel-primary
+  .panel-heading Setting customers
+  .panel-body
+    .form-group
+      = f.label :customer_ids,
+                "Customers",
+                :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        %select.form-control{ :name => "project[customer_ids][]",
+                              :multiple => true }
+          - @customers.pluck(:province).uniq.each do |pro|
+            %optgroup{ :label => pro }
+              - @customers.select { |c| c.province == pro }.each do |customer|
+                %option{ :value => customer.id } #{customer.name}
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-user
 
-= f.label :deadline
-= f.date_field :deadline
+    = link_to "Need new customer?", new_customer_path,
+              :class => "col-sm-offset-4"
+

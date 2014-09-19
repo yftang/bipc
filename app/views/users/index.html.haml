@@ -4,12 +4,12 @@
 - if can? :manage, :user
   .btn-toolbar{ :role => "toolbar" }
     .btn-group
-      %button.btn.btn-default{ :type => "button",
+      %button.btn.btn-primary{ :type => "button",
                                :data => { :toggle => "modal",
                                           :target => "#new-user-modal" } }
         %span.glyphicon.glyphicon-plus
         New user
-      %button.btn.btn-default#destroy-users{ :type => "button",
+      %button.btn.btn-primary#destroy-users{ :type => "button",
                                              :disabled => true,
                                              :onclick => "destroy_users()" }
         %span.glyphicon.glyphicon-minus

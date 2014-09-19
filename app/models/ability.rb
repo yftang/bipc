@@ -56,7 +56,9 @@ class Ability
       can :show,   User
       can :edit,   User, :id => user.id
     else
-      can :read, :all
+      can :show, Project
+      can :search_projects, Project
+      can :show, User
     end
   end
 end

@@ -45,6 +45,10 @@ class User < ActiveRecord::Base
     return !!self.roles.find_by_name(role.to_s.camelize)
   end
 
+  def to_param
+    "#{id}-#{created_at.to_i}"
+  end
+
   private
   def set_default_password
     self.password = 'foobar'
