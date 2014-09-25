@@ -25,7 +25,7 @@
 
 %br
 .panel.panel-primary
-  .panel-heading Setting customers
+  .panel-heading Adding customers
   .panel-body
     .form-group
       = f.label :customer_ids,
@@ -42,5 +42,24 @@
           %span.glyphicon.glyphicon-user
 
     = link_to "Need new customer?", new_customer_path,
+              :class => "col-sm-offset-4"
+
+%br
+.panel.panel-primary
+  .panel-heading Adding samples
+  .panel-body
+    .form-group
+      = f.label :sample_ids,
+                "Samples",
+                :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        %select.form-control{ :name => "project[sample_ids][]",
+                              :multiple => true }
+          - @samples.each do |sample|
+            %option{ :value => sample.id } #{sample.name}
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-leaf
+
+    = link_to "Need new sample?", new_sample_path,
               :class => "col-sm-offset-4"
 

@@ -14,14 +14,14 @@
     %td= project.report_sent_date
   - else
     %td=link_to project.creater,
-                user_path(project.creater_id),
+                user_path(User.find_by_id(project.creater_id)),
                 :title => "Contact #{project.creater}"
 
   - if project.samples_received_date
     %td= project.samples_received_date
   - elsif project.samples_receiver && project.samples_receiver_id
     %td= link_to  project.samples_receiver,
-                  user_path(project.samples_receiver_id),
+                  user_path(User.find_by_id(project.samples_receiver_id)),
                   :title => "Contact #{project.creater}"
   - else
     %td Pending...
@@ -30,7 +30,7 @@
     %td= project.experiments_done_date
   - elsif project.experimenter && project.experimenter_id
     %td=link_to project.experimenter,
-                user_path(project.experimenter_id),
+                user_path(User.find_by_id(project.experimenter_id)),
                 :title => "Contact #{project.experimenter}"
   - else
     - if can? :set_experimenter, project
@@ -44,7 +44,7 @@
     %td= project.analysis_done_date
   - elsif project.bioinformatician && project.bioinformatician_id
     %td=link_to project.bioinformatician,
-                user_path(project.bioinformatician_id),
+                user_path(User.find_by_id(project.bioinformatician_id)),
                 :title => "Contact #{project.bioinformatician}"
   - else
     - if can? :set_bioinformatician, project
@@ -58,7 +58,7 @@
     %td= project.report_sent_date
   - elsif project.marketing && project.marketing_id
     %td=link_to project.marketing,
-                user_path(project.marketing_id),
+                user_path(User.find_by_id(project.marketing_id)),
                 :title => "Contact #{project.marketing}"
   - else
     - if can? :set_marketing, project

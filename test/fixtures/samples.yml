@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  received_date: 2014-09-18
+  receiver: MyString
+  receiver_id: 1
+  express_number: MyString
+
+two:
+  name: MyString
+  received_date: 2014-09-18
+  receiver: MyString
+  receiver_id: 1
+  express_number: MyString

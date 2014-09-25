@@ -1,0 +1,10 @@
+%h2.center New sample
+%br
+
+.row
+  .col-sm-8.col-sm-offset-2
+    = form_for(@sample, :html => {  :class => "form-horizontal",
+                                    :role  => "form" }) do |f|
+      = render "sample_form", :f => f
+
+      = f.submit "Create", :class => "btn btn-primary btn-lg"
