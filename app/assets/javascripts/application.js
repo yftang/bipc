@@ -15,6 +15,7 @@
 //= require jquery-ui/dialog
 //= require jquery-ui/effect-fade
 //= require jquery-ui/effect-shake
+//= require jquery-ui/autocomplete
 //= require bootstrap-datepicker
 //= require bootstrap-sprockets
 //= require_tree .

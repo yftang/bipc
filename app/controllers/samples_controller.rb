@@ -10,6 +10,7 @@ class SamplesController < ApplicationController
 
   def new
     @sample = Sample.new
+    @project_accs = Project.all.pluck(:acc)
   end
 
   def show
@@ -29,7 +30,13 @@ class SamplesController < ApplicationController
 
   def create
     @sample = Sample.new(sample_params)
+    project_acc = params[:sample][:project]
     if @sample.save
+      if project_acc
+        project = Project.find_by_acc(project_acc)
+        ProjectSample.create(:project_id => project.id,
+                             :sample_id  => @sample.id)
+      end
       flash[:notice] = "Sample created!"
       redirect_to @sample
     else

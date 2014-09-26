@@ -14,17 +14,19 @@
         = f.text_field :received_date, :class => "form-control datepicker"
         %span.input-group-addon
           %span.glyphicon.glyphicon-calendar
-    .form-group
-      = f.label :receiver_id, "Receiver",
-                :class => "col-sm-4 control-label"
-      .col-sm-6.input-group
-        = f.text_field :receiver_id, :class => "form-control"
-        %span.input-group-addon
-          %span.glyphicon.glyphicon-user
+    = f.hidden_field :receiver_id, :value => current_user.id
+    = f.hidden_field :receiver,    :value => current_user.name
     .form-group
       = f.label :express_number, "Express", :class => "col-sm-4 control-label"
       .col-sm-6.input-group
         = f.text_field :express_number, :class => "form-control"
         %span.input-group-addon
           %span.glyphicon.glyphicon-barcode
+    .form-group
+      = label_tag "sample[project]", "Project",
+                  :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = text_field_tag "sample[project]", nil, :class => "form-control"
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-file
 
