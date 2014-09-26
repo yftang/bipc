@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140825025836) do
+ActiveRecord::Schema.define(version: 20140919051010) do
 
   create_table "customers", force: true do |t|
     t.string   "name"
-    t.string   "tel"
+    t.string   "phone"
     t.string   "email"
-    t.string   "add"
-    t.string   "ins"
-    t.string   "pro"
+    t.string   "address"
+    t.string   "organization"
+    t.string   "province"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -27,6 +27,13 @@ ActiveRecord::Schema.define(version: 20140825025836) do
   create_table "project_customers", id: false, force: true do |t|
     t.integer  "project_id"
     t.integer  "customer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "project_samples", id: false, force: true do |t|
+    t.integer  "project_id"
+    t.integer  "sample_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -67,6 +74,16 @@ ActiveRecord::Schema.define(version: 20140825025836) do
 
   create_table "roles", force: true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "samples", force: true do |t|
+    t.string   "name"
+    t.date     "received_date"
+    t.string   "receiver"
+    t.integer  "receiver_id"
+    t.string   "express_number"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

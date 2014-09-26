@@ -1,10 +1,10 @@
-%h2.center Edit #{@customer.name || Anonymous}
+%h2.center Edit #{@sample.name}
 %br
 
 .row
   .col-sm-8.col-sm-offset-2
-    = form_for(@customer,:html => { :class => "form-horizontal",
+    = form_for(@sample,:html => { :class => "form-horizontal",
                                     :role  => "form" }) do |f|
-      = render "customer_form", :f => f
+      = render "sample_form", :f => f
 
       = f.submit "Update", :class => "btn btn-primary btn-lg"
