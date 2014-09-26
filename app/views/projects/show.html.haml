@@ -1,6 +1,30 @@
 %h2 #{@project.acc}
 
-start_date: #{@project.start_date}
-Deadline: #{@project.deadline}
+%p
+  %strong Customer:
+  - @project.customers.each do |customer|
+    = link_to customer.name, customer
+    ,
+%p
+  %strong Starting date:
+  =@project.start_date
+%p
+  %strong Deadline:
+  =@project.deadline
+%br
 
-Customers: #{@project.customers.pluck(:name)}
+#project-procedures.row
+  .procedure.bg-success.col-sm-2
+    Samples receivement
+  .arrow.col-sm-1
+    ===>
+  .procedure.col-sm-2
+    Samples receivement
+  .arrow.col-sm-1
+    ===>
+  .procedure.col-sm-2
+    Samples receivement
+  .arrow.col-sm-1
+    ===>
+  .procedure.col-sm-2
+    Samples receivement
