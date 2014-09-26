@@ -16,3 +16,7 @@
 
   %td= sample.express_number
 
+  %td
+    - sample.projects.each do |project|
+      =link_to project.acc, project
+      ,
