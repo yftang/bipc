@@ -9,10 +9,14 @@
   %td= sample.received_date
 
   - if sample.receiver_id
-    %td= link_to  sample.receiver_id,
+    %td= link_to  sample.receiver,
                   user_path(User.find_by_id(sample.receiver_id))
   - else
     %td
 
   %td= sample.express_number
 
+  %td
+    - sample.projects.each do |project|
+      =link_to project.acc, project
+      ,

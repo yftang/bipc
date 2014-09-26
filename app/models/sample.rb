@@ -16,7 +16,9 @@ class Sample < ActiveRecord::Base
   has_many :project_samples
   has_many :projects, :through => :project_samples
 
-  validates_presence_of :name
+  validates_presence_of :name, :received_date,
+                        :receiver, :receiver_id,
+                        :express_number
 
   def to_param
     "#{id}-#{created_at.to_i}"

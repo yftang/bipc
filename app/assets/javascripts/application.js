@@ -15,6 +15,7 @@
 //= require jquery-ui/dialog
 //= require jquery-ui/effect-fade
 //= require jquery-ui/effect-shake
+//= require jquery-ui/autocomplete
 //= require bootstrap-datepicker
 //= require bootstrap-sprockets
 //= require_tree .
@@ -47,6 +48,14 @@ $(document).ready(function() {
     $(this).change(function() {
       if($(this).is(":checked")) {
         $("button#destroy-customers").attr("disabled", false);
+      }
+    });
+  });
+
+  $.each($("table#samples-table input[type='checkbox']"), function(i,e) {
+    $(this).change(function() {
+      if($(this).is(":checked")) {
+        $("button#destroy-samples").attr("disabled", false);
       }
     });
   });
@@ -139,6 +148,22 @@ function destroy_customers() {
       $.ajax({
         type: "DELETE",
         url:  "/customers/"+customer_id
+      });
+    });
+    location.reload();
+  }
+}
+
+function destroy_samples() {
+  selected_checks = $("table#samples-table input:checked");
+  confirmed = confirm("Are you sure to remove thoses " +
+                      selected_checks.length+" sample(s)?")
+  if(confirmed == true) {
+    $.each(selected_checks, function(i, e) {
+      sample_id = $(this).val();
+      $.ajax({
+        type: "DELETE",
+        url:  "/samples/"+sample_id
       });
     });
     location.reload();
