@@ -1,5 +1,5 @@
 %tr{ :class => "#{'success' if project.complete?}", :id => "#{project.id}" }
-  - if can? :manage, project
+  - if can? :destroy, project
     %td
       = check_box_tag "project_#{project.id}", project.id,
                       false, :class => "project-selection"

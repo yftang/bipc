@@ -1,7 +1,7 @@
 %h2 All Samples
 %br
 
-- if can? :manage, @samples
+- if can?(:create, Sample) || can?(:destroy, Sample)
   .btn-toolbar{ :role => "toolbar" }
     .btn-group
       %a.btn.btn-primary{ :href => new_sample_path }
@@ -16,7 +16,7 @@
 
 %table.table.table-striped#samples-table
   %tr
-    - if can? :manage, Project
+    - if can? :destroy, Sample
       %th.col-sm-1
     %th Name
     %th Received date
