@@ -95,8 +95,9 @@ class Ability
       can :show, User
 
       can :show, Project
+      can :search_projects, Project
 
-      can [:index, :show], Sample
+      can :show, Sample
 
       can :show, Customer
     end
