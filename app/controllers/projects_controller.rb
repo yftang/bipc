@@ -46,7 +46,7 @@ class ProjectsController < ApplicationController
       { :creater    => current_user.name,
         :creater_id => current_user.id }.merge(project_params)
     )
-    if @project.save
+    if params[:project][:customer_ids] && @project.save
       customer_ids = params[:project][:customer_ids]
       customer_ids.each do |id|
         ProjectCustomer.create(:project_id  => @project.id,
