@@ -4,7 +4,25 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @users = User.all.page params[:page]
+    if current_user.role? :admin
+      @users = User.all.page params[:page]
+    elsif current_user.role? :salesman_admin
+      @users = Kaminari::paginate_array(
+        User.all.select { |u| u.role?(:salesman) }
+      ).page params[:page]
+    elsif current_user.role? :marketing_admin
+      @users = Kaminari::paginate_array(
+        User.all.select { |u| u.role?(:marketing) }
+      ).page params[:page]
+    elsif current_user.role? :experimenter_admin
+      @users = Kaminari::paginate_array(
+        User.all.select { |u| u.role?(:experimenter) }
+      ).page params[:page]
+    elsif current_user.role? :bioinformatician_admin
+      @users = Kaminari::paginate_array(
+        User.all.select { |u| u.role?(:bioinformatician) }
+      ).page params[:page]
+    end
     @user = User.new
   end
 

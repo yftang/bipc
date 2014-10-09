@@ -49,7 +49,7 @@ class Ability
       can :manage, Sample
 
       can [:index, :new, :edit, :show, :create, :update], Customer
-    elsif user.role? :experimentor_admin
+    elsif user.role? :experimenter_admin
       can [:create, :destroy], User do |user|
         user && user.role?(:experimentor)
       end
@@ -61,7 +61,7 @@ class Ability
       can [:index, :show], Sample
 
       can :show, Customer
-    elsif user.role? :experimentor
+    elsif user.role? :experimenter
       can :show, User
       can :edit, User, :id => user.id
 
