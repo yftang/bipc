@@ -1,0 +1,67 @@
+#procedure-details
+  .row#samples-procedure{ :style => "display: none" }
+    - samples = @project.samples
+    %h4 All belonging samples:
+    %table.table.table-striped#samples-table
+      %tr
+        %th Name
+        %th Received date
+        %th Receiver
+        %th Express
+        %th Project(s) 
+      - samples.each do |sample|
+        = render '/samples/sample', :sample => sample
+  #experiments-procedure{ :style => "display: none" }
+    %h4 Experiments information:
+    %p
+      %strong Experimenter: 
+      - if @project.experimenter_id
+        = link_to @project.experimenter,
+                  User.find_by_id(@project.experimenter_id)
+      - else
+        Not set, contact 
+        = link_to @project.creater,
+                  User.find_by_id(@project.creater_id)
+    - if @project.experiments_done_date?
+      %p
+        %strong Complete date:
+        = @project.experiments_done_date
+    - else
+      %p
+        %strong Not complete!
+  #analysis-procedure{ :style => "display: none" }
+    %h4 Analysis information:
+    %p
+      %strong Bioinformatician: 
+      - if @project.bioinformatician_id
+        = link_to @project.bioinformatician,
+                  User.find_by_id(@project.bioinformatician_id)
+      - else
+        Not set, contact 
+        = link_to @project.creater,
+                  User.find_by_id(@project.creater_id)
+    - if @project.analysis_done_date?
+      %p
+        %strong Complete date:
+        = @project.analysis_done_date
+    - else
+      %p
+        %strong Not complete!
+  #report-procedure{ :style => "display: none" }
+    %h4 Report generation status:
+    %p
+      %strong College in charge: 
+      - if @project.marketing_id
+        = link_to @project.marketing,
+                  User.find_by_id(@project.marketing_id)
+      - else
+        Not set, contact 
+        = link_to @project.creater,
+                  User.find_by_id(@project.creater_id)
+    - if @project.report_sent_date?
+      %p
+        %strong Complete date:
+        = @project.report_sent_date
+    - else
+      %p
+        %strong Not complete!

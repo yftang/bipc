@@ -20,8 +20,10 @@
               customers
               %span.caret
             %ul.dropdown-menu{ :role => "menu" }
-              %li= link_to "All customers", customers_path
-              %li= link_to "New customer",  new_customer_path
+              - if can? :index, Customer
+                %li= link_to "All customers", customers_path
+              - if can? :create, Customer
+                %li= link_to "New customer",  new_customer_path
         - if can?(:index, Project) || can?(:create, Project)
           %li.dropdown
             %a.dropdown-toggle{ :href => "#",
@@ -29,8 +31,10 @@
               Projects
               %span.caret
             %ul.dropdown-menu{ :role => "menu" }
-              %li= link_to "All projects", projects_path
-              %li= link_to "New project",  new_project_path
+              - if can? :index, Project
+                %li= link_to "All projects", projects_path
+              - if can? :create, Project
+                %li= link_to "New project",  new_project_path
         - if can?(:index, Sample) || can?(:new, Sample)
           %li.dropdown
             %a.dropdown-toggle{ :href => "#",
@@ -38,8 +42,10 @@
               Samples
               %span.caret
             %ul.dropdown-menu{ :role => "menu" }
-              %li= link_to "All samples", samples_path
-              %li= link_to "New sample",  new_sample_path
+              - if can? :index, Sample
+                %li= link_to "All samples", samples_path
+              - if can? :create, Sample
+                %li= link_to "New sample",  new_sample_path
         - if user_signed_in?
           %li.dropdown
             %a.dropdown-toggle{ :href => "#",

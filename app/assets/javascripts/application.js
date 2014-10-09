@@ -72,7 +72,6 @@ $(document).ready(function() {
         $.each($("form#sign_in_user .form-group"), function(i, e){
           $(this).addClass("has-error");
         });
-        submitBtn = $("form#sign_in_user input[name='commit']");
         $("#login-modal").effect("shake", {direction: "right"});
       }
     });
@@ -86,7 +85,10 @@ $(document).ready(function() {
         submitBtn.prop("value", "Done");
         setTimeout(function(){location.reload();}, 1000);
       }else {
-        $("#new_user").effect("shake", {direction: "right"});
+        $.each($("form#new_user .form-group"), function(i, e){
+          $(this).addClass("has-error");
+        });
+        $("#new-user-modal").effect("shake", {direction: "right"});
       }
     });
 
