@@ -100,6 +100,7 @@ $(document).ready(function() {
     user_name = option_tag.text();
     user_id = option_tag.attr("value");
     project_id = $(this).closest("tr").attr("id");
+    if(user_name == "Select one") return false;
     confirmed = confirm("Are you sure to set "+user_name+"?");
     if(confirmed == true) {
       $.ajax({
