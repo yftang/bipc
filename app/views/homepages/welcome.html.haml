@@ -1,28 +1,70 @@
-.jumbotron
-  %h2.center Welcome to Biocompany Integrative Projects Control (BIPC)
+- if user_signed_in? && current_user.role?(:admin)
+  .jumbotron
+    %h2.text-center Use menus above
+- elsif user_signed_in?
+  .text-center
+    %h1 To make each day count!
   %br
+  .row
+    .col-sm-4
+      .panel.panel-default
+        .panel-heading #{current_user.name}
+        %ul.list-group
+          %li.list-group-item
+            \#{current_user.roles.first.name.camelize}, 
+            joined from #{current_user.created_at.to_date}.
+            %br
+            Email: #{current_user.email}
+            %br
+            Tel:   
+          %li.list-group-item
+            All #{@user_projects.count} project(s), 
+            \#{@ongoing_projects.count} not complete
+    .col-sm-8
+      .panel.panel-default
+        .panel-heading
+          Ongoing projects
+          %span.badge.pull-right #{@ongoing_projects.count}
+        .panel-body
+          %em Make sure you finish tasks on time, contact leader if necessary.
+        %table.table
+          %tr
+            %th Acc.
+            %th Start time
+            %th Deadline
+            %th Complete
+          - @ongoing_projects.each do |project|
+            %tr
+              %td= link_to project.acc, project
+              %td= project.start_date
+              %td= project.deadline
+              %td
+- else
+  .jumbotron
+    %h2.text-center Welcome to Biocompany Integrative Projects Control (BIPC)
+    %br
 
-  %form.form-horizontal{ :role => "form" }
-    .form-group.form-group-lg
-      .col-sm-6.col-sm-offset-2
-        = text_field_tag 'search_acc', nil,
-                         :placeholder => 'Enter project Acc. here',
-                         :id          => 'query',
-                         :class       => "form-control"
-      .col-sm-2
-        = link_to "Search", "javascript:void(0);",
-                  :onclick => "search_projects()",
-                  :class   => "btn btn-primary btn-lg",
-                  :id      =>  "search_project_button"
+    %form.form-horizontal{ :role => "form" }
+      .form-group.form-group-lg
+        .col-sm-6.col-sm-offset-2
+          = text_field_tag 'search_acc', nil,
+                           :placeholder => 'Enter project Acc. here',
+                           :id          => 'query',
+                           :class       => "form-control"
+        .col-sm-2
+          = link_to "Search", "javascript:void(0);",
+                    :onclick => "search_projects()",
+                    :class   => "btn btn-primary btn-lg",
+                    :id      =>  "search_project_button"
 
-.modal.fade#search_result
-  .modal-dialog
-    .modal-content
-      .modal-header
-        %button.close{ :data => { :dismiss => "modal" } }
-          %span{ :aria => { :hidden => "true" } } &times;
-          %span.sr-only Close
-        %h2.modal-title Search result
-      .modal-body
-      .modal-footer
+  .modal.fade#search_result
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{ :data => { :dismiss => "modal" } }
+            %span{ :aria => { :hidden => "true" } } &times;
+            %span.sr-only Close
+          %h2.modal-title Search result
+        .modal-body
+        .modal-footer
 
