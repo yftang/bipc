@@ -1,7 +1,7 @@
 %h2 All Customers
 %br
 
-- if can? :manage, @customerss
+- if can?(:create, Customer) || can?(:destroy, Customer)
   .btn-toolbar{ :role => "toolbar" }
     .btn-group
       %a.btn.btn-primary{ :href => new_customer_path }
@@ -16,7 +16,7 @@
 
 %table.table.table-striped#customers-table
   %tr
-    - if can? :manage, Project
+    - if can? :destroy, Customer
       %th.col-sm-1
     %th Name
     %th Phone number

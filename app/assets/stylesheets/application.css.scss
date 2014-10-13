@@ -11,6 +11,7 @@
  * file per style scope.
  *
  *= require jquery-ui/dialog
+ *= require jquery-ui/autocomplete
  *= require bootstrap-datepicker3
  *= require_tree .
  *= require_self
@@ -20,10 +21,6 @@
 
 .auth-nav-link {
   background-color: #5bc0de;
-}
-
-.container {
-  width: 980px;
 }
 
 .center {
