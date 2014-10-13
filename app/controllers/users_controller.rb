@@ -27,6 +27,8 @@ class UsersController < ApplicationController
   end
 
   def show
+    @user_projects = @user.projects
+    @ongoing_projects = @user_projects.reject(&:complete?)
   end
 
   def create
