@@ -1,17 +1,41 @@
-= f.label :name
-= f.text_field :name
-
-= f.label :email
-= f.text_field :email
-
-= f.label :tel, "Phone number"
-= f.text_field :tel
-
-= f.label :ins, "Institution"
-= f.text_field :ins
-
-= f.label :city
-= f.text_field :city
-
-= f.label :add, "Address"
-= f.text_field :add
+.panel.panel-primary
+  .panel-heading Setting properties
+  .panel-body
+    .form-group
+      = f.label :name, "Contact name",
+                :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.text_field :name, :class => "form-control"
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-user
+    .form-group
+      = f.label :phone, "Phone number", :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.telephone_field :phone, :class => "form-control"
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-earphone
+    .form-group
+      = f.label :email, "Email address",
+                :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.email_field :email, :class => "form-control"
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-envelope
+    .form-group
+      = f.label :address, :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.text_field :address, :class => "form-control"
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-home
+    .form-group
+      = f.label :organization, :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.text_field :organization, :class => "form-control"
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-briefcase
+    .form-group
+      = f.label :province, :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.text_field :province, :class => "form-control"
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-globe

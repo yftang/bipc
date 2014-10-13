@@ -30,14 +30,34 @@ class Project < ActiveRecord::Base
   has_many :project_customers
   has_many :customers, :through => :project_customers
 
+  has_many :project_samples
+  has_many :samples, :through => :project_samples
+
   has_many :user_projects
   has_many :users, :through => :user_projects
 
   validates_presence_of :start_date, :deadline, :creater, :creater_id
   validates :acc, :presence => true, :uniqueness => true
 
-  def complete?
-    samples_received_date && experiments_done_date &&
-      analysis_done_date && report_sent_date
+  def samples_received?
+    samples.any?
   end
+
+  def experiments_done?
+    samples_received? && experiments_done_date
+  end
+
+  def analysis_done?
+    experiments_done? && analysis_done_date
+  end
+
+  def report_sent?
+    analysis_done? && report_sent_date
+  end
+
+  def to_param
+    "#{id}-#{created_at.to_i}"
+  end
+
+  alias_method :complete?, :report_sent?
 end

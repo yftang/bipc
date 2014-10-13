@@ -1,15 +1,13 @@
 %h2 All Projects
 %br
 
-- if can? :manage, @projects
+- if can?(:destroy, Project) && can?(:create, Project)
   .btn-toolbar{ :role => "toolbar" }
     .btn-group
-      %button.btn.btn-default{ :type => "button",
-                               :data => { :toggle => "modal",
-                                          :target => "#new-project-modal" } }
+      %a.btn.btn-primary{ :href => new_project_path }
         %span.glyphicon.glyphicon-plus
         New project
-      %button.btn.btn-default#destroy-projects{:type => "button",
+      %button.btn.btn-primary#destroy-projects{:type => "button",
           :disabled => true,
           :onclick => "destroy_projects()"}
         %span.glyphicon.glyphicon-minus
@@ -18,7 +16,7 @@
 
 %table.table.table-striped#projects-table
   %tr
-    - if can? :manage, @projects
+    - if can? :destroy, Project
       %th.col-sm-1
     %th Acc.
     %th Starts from
@@ -32,8 +30,6 @@
     = render 'project', :project => project
 
 = paginate @projects
-
-= render 'new_project_modal'
 
 = select_tag  "set-experimenter",
               options_for_select(@exp_role.get_users_options),

@@ -15,5 +15,14 @@
                   :class   => "btn btn-primary btn-lg",
                   :id      =>  "search_project_button"
 
-#search_result{ :style => "display:none" }
-  #projects_list
+.modal.fade#search_result
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{ :data => { :dismiss => "modal" } }
+          %span{ :aria => { :hidden => "true" } } &times;
+          %span.sr-only Close
+        %h2.modal-title Search result
+      .modal-body
+      .modal-footer
+
