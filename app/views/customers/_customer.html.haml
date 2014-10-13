@@ -3,8 +3,6 @@
     %td
       = check_box_tag "customer_#{customer.id}", customer.id,
                       false, :class => "customer-selection"
-  - else
-    %td
 
   %td= link_to customer.name, customer
 
