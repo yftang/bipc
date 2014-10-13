@@ -7,19 +7,7 @@
   %br
   .row
     .col-sm-4
-      .panel.panel-default
-        .panel-heading #{current_user.name}
-        %ul.list-group
-          %li.list-group-item
-            \#{current_user.roles.first.name.camelize}, 
-            joined from #{current_user.created_at.to_date}.
-            %br
-            Email: #{current_user.email}
-            %br
-            Tel:   
-          %li.list-group-item
-            All #{@user_projects.count} project(s), 
-            \#{@ongoing_projects.count} not complete
+      = render 'users/user_card', :user => current_user
     .col-sm-8
       .panel.panel-default
         .panel-heading
