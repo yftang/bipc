@@ -1,9 +1,9 @@
 - if user_signed_in? && current_user.role?(:admin)
   .jumbotron
-    %h2.text-center Use menus above
+    %h2.text-center You control the world, just use menus above.
 - elsif user_signed_in?
   .text-center
-    %h1 To make each day count!
+    %h2 To make each day count!
   %br
   .row
     .col-sm-4
@@ -14,7 +14,10 @@
           Ongoing projects
           %span.badge.pull-right #{@ongoing_projects.count}
         .panel-body
-          %em Make sure you finish tasks on time, contact leader if necessary.
+          - if @ongoing_projects.any?
+            %em Finish tasks on time, contact leader if necessary.
+          - else
+            %em No ongoing projects! Maybe you should ask for some :)
         %table.table
           %tr
             %th Acc.

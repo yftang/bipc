@@ -15,16 +15,17 @@
     = link_to @user.email.gsub('@', '(at)'), "mailto:#{@user.email}"
     %br
     %span.glyphicon.glyphicon-earphone
-    021-50277728
+    = @user.phone
     %hr
     \#{@user_projects.count} projects in charge<br>
     \#{@ongoing_projects.count} not complete
   .col-sm-8
     %strong Job description
-    %blockquote
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    %br
+    - if @user.jd
+      %blockquote= @user.jd
+    - elsif user_signed_in? && (current_user == @user)
+      You have not described it, please 
+      \#{link_to "make one", edit_user_registration_path(@user)}.
+    - else
+      This person is too lazy, he hasn't make any description :(

@@ -28,6 +28,10 @@
             %br
             = f.text_field :name, :class => "form-control"
           .form-group
+            = f.label :phone, "Phone number"
+            %br
+            = f.text_field :phone, :class => "form-control"
+          .form-group
             = f.label :role
             %br
             - Role.all.each do |role|
