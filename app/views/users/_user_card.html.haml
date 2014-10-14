@@ -1,16 +1,13 @@
-.panel.panel-default
-  .panel-heading User info
-  .list-group
-    .list-group-item.media
-      %a.pull-left{ :href => "#{user_path(user)}" }
-        %img.media-object{ :src => "http://static.oschina.net/uploads/user/279/558071_50.jpg?t=1372576765000" }
-      .media-body
-        .media-heading
-          %strong #{user.name}<br>
-        =link_to "View profile", user_path(user)
-    .list-group-item
-      - tmp_projects = user.projects
-      - tmp_ongoing_projects = tmp_projects.reject(&:complete?)
-      All #{tmp_projects.count} project(s)<br>
-      \#{tmp_ongoing_projects.count} not complete
+.media
+  %a.pull-left{ :href => "#{user_path(user)}" }
+    %img.media-object{ :src => "http://static.oschina.net/uploads/user/279/558071_50.jpg?t=1372576765000" }
+  .media-body
+    .media-heading
+      %strong #{user.name}<br>
+    =link_to "View profile", user_path(user)
+  %hr
+  - tmp_projects = user.projects
+  - tmp_ongoing_projects = tmp_projects.reject(&:complete?)
+  \#{tmp_projects.count} project(s) in charge<br>
+  \#{tmp_ongoing_projects.count} not complete
     
