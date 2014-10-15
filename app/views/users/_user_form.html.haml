@@ -20,30 +20,36 @@
       = f.label :phone, "Phone number", :class => "col-sm-4 control-label"
       .col-sm-6
         .input-group
-          = f.telephone_field :phone, :class => "form-control"
+          = f.text_field :phone, :class => "form-control"
           %span.input-group-addon
             %span.glyphicon.glyphicon-earphone
     .form-group
-      = f.label :password, :class => "col-sm-4 control-label"
+      = f.label :password, "New password", :class => "col-sm-4 control-label"
       .col-sm-6
         .input-group
-          = f.password_field :password, :class => "form-control"
+          = f.password_field  :password,
+                              :class => "form-control",
+                              :autocomplete => "off"
           %span.input-group-addon
-            %span.glyphicon.glyphicon-lock
+            %span.glyphicon.glyphicon-eye-close
         %span.help-block Leave it empty if you don't need to change.
     .form-group
       = f.label :password_confirmation, :class => "col-sm-4 control-label"
       .col-sm-6
         .input-group
-          = f.password_field :password_confirmation, :class => "form-control"
+          = f.password_field  :password_confirmation,
+                              :class => "form-control",
+                              :autocomplete => "off"
           %span.input-group-addon
-            %span.glyphicon.glyphicon-lock
+            %span.glyphicon.glyphicon-eye-close
         %span.help-block Confirm above new password or leave it empty.
     .form-group
       = f.label :current_password, :class => "col-sm-4 control-label"
       .col-sm-6
         .input-group
-          = f.password_field :current_password, :class => "form-control"
+          = f.password_field  :current_password,
+                              :class => "form-control",
+                              :autocomplete => "off"
           %span.input-group-addon
-            %span.glyphicon.glyphicon-globe
+            %span.glyphicon.glyphicon-lock
         %span.help-block We need you current password to confirm modification.
