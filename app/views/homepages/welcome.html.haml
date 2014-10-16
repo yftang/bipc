@@ -1,32 +1,23 @@
 - if user_signed_in? && current_user.role?(:admin)
   .jumbotron
-    %h2.text-center Use menus above
+    %h2.text-center You control the world, just use menus above.
 - elsif user_signed_in?
   .text-center
-    %h1 To make each day count!
+    %h2 To make each day count!
   %br
   .row
     .col-sm-4
-      .panel.panel-default
-        .panel-heading #{current_user.name}
-        %ul.list-group
-          %li.list-group-item
-            \#{current_user.roles.first.name.camelize}, 
-            joined from #{current_user.created_at.to_date}.
-            %br
-            Email: #{current_user.email}
-            %br
-            Tel:   
-          %li.list-group-item
-            All #{@user_projects.count} project(s), 
-            \#{@ongoing_projects.count} not complete
+      = render 'users/user_card', :user => current_user
     .col-sm-8
       .panel.panel-default
         .panel-heading
           Ongoing projects
           %span.badge.pull-right #{@ongoing_projects.count}
         .panel-body
-          %em Make sure you finish tasks on time, contact leader if necessary.
+          - if @ongoing_projects.any?
+            %em Finish tasks on time, contact leader if necessary.
+          - else
+            %em No ongoing projects! Maybe you should ask for some :)
         %table.table
           %tr
             %th Acc.
