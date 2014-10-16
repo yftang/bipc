@@ -27,6 +27,8 @@ class UsersController < ApplicationController
   end
 
   def show
+    @user_projects = @user.projects
+    @ongoing_projects = @user_projects.reject(&:complete?)
   end
 
   def create
@@ -57,7 +59,7 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:email, :name)
+    params.require(:user).permit(:email, :name, :phone)
   end
 
   def set_user
