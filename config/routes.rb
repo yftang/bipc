@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources  :users
   root 'homepages#welcome'
   get 'homepages/welcome' => 'homepages#welcome'
+  get 'homepages/goto_project' => 'homepages#goto_project'
   resources :projects do
     collection do
       get  :search_projects

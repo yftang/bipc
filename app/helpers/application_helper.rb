@@ -1,7 +1,7 @@
 module ApplicationHelper
   def page_title
     base = 'BIPC'
-    @title_name ? "#{@title_name} - #{base}" : base
+    @title? "#{@title} - #{base}" : base
   end
 
   def role_tag(role, disabled='')

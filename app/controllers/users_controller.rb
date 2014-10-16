@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   def index
+    @title = 'User management'
     if current_user.role? :admin
       @users = User.all.page params[:page]
     elsif current_user.role? :salesman_admin
@@ -27,6 +28,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @title = @user.name
     @user_projects = @user.projects
     @ongoing_projects = @user_projects.reject(&:complete?)
   end

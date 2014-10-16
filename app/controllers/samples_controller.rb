@@ -5,18 +5,22 @@ class SamplesController < ApplicationController
   authorize_resource
 
   def index
+    @title = 'Samples management'
     @samples = Sample.all.page params[:page]
   end
 
   def new
+    @title = 'Create new sample'
     @sample = Sample.new
     @project_accs = Project.all.pluck(:acc)
   end
 
   def show
+    @title = @sample.name
   end
 
   def edit
+    @title = "Edit #{@sample.anme}"
   end
 
   def update
