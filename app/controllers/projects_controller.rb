@@ -22,6 +22,7 @@ class ProjectsController < ApplicationController
   end
 
   def index
+    @title = 'Projects management'
     @projects = Project.all.page params[:page]
     @project = Project.new
     @exp_role = Role.find_by_name('Experimenter')
@@ -30,15 +31,18 @@ class ProjectsController < ApplicationController
   end
 
   def new
+    @title = 'Create new project'
     @project   = Project.new
     @customers = Customer.all
     @samples   = Sample.all
   end
 
   def edit
+    @title = "Edit #{@project.acc}"
   end
 
   def show
+    @title = @project.acc
   end
 
   def create
