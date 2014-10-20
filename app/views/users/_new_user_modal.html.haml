@@ -34,7 +34,7 @@
           .form-group
             = f.label :role
             %br
-            - Role.all.each do |role|
+            - @usable_roles.each do |role|
               = radio_button_tag "user[role_id]", role.id
               = role.name
               %br
