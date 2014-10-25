@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140825025836) do
+ActiveRecord::Schema.define(version: 20141014015454) do
 
   create_table "customers", force: true do |t|
     t.string   "name"
-    t.string   "tel"
+    t.string   "phone"
     t.string   "email"
-    t.string   "add"
-    t.string   "ins"
-    t.string   "city"
+    t.string   "address"
+    t.string   "organization"
+    t.string   "province"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -27,6 +27,13 @@ ActiveRecord::Schema.define(version: 20140825025836) do
   create_table "project_customers", id: false, force: true do |t|
     t.integer  "project_id"
     t.integer  "customer_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "project_samples", id: false, force: true do |t|
+    t.integer  "project_id"
+    t.integer  "sample_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -71,6 +78,16 @@ ActiveRecord::Schema.define(version: 20140825025836) do
     t.datetime "updated_at"
   end
 
+  create_table "samples", force: true do |t|
+    t.string   "name"
+    t.date     "received_date"
+    t.string   "receiver"
+    t.integer  "receiver_id"
+    t.string   "express_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "user_projects", id: false, force: true do |t|
     t.integer "user_id"
     t.integer "project_id"
@@ -94,6 +111,8 @@ ActiveRecord::Schema.define(version: 20140825025836) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "phone"
+    t.text     "jd"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

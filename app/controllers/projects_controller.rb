@@ -22,6 +22,7 @@ class ProjectsController < ApplicationController
   end
 
   def index
+    @title = 'Projects management'
     @projects = Project.all.page params[:page]
     @project = Project.new
     @exp_role = Role.find_by_name('Experimenter')
@@ -30,13 +31,18 @@ class ProjectsController < ApplicationController
   end
 
   def new
-    @project = Project.new
+    @title = 'Create new project'
+    @project   = Project.new
+    @customers = Customer.all
+    @samples   = Sample.all
   end
 
   def edit
+    @title = "Edit #{@project.acc}"
   end
 
   def show
+    @title = @project.acc
   end
 
   def create
@@ -44,10 +50,18 @@ class ProjectsController < ApplicationController
       { :creater    => current_user.name,
         :creater_id => current_user.id }.merge(project_params)
     )
-    if @project.save
-      return render :json => { :success => true }
+    if params[:project][:customer_ids] && @project.save
+      customer_ids = params[:project][:customer_ids]
+      customer_ids.each do |id|
+        ProjectCustomer.create(:project_id  => @project.id,
+                               :customer_id => id)
+      end
+      flash[:notice] = 'Project created'
+      redirect_to @project
     else
-      return render :json => { :success => false }
+      flash[:notice] = 'Project not created'
+      @customers = Customer.all
+      render 'new'
     end
   end
 
@@ -61,6 +75,10 @@ class ProjectsController < ApplicationController
 
   def set_bioinformatician
     set_participant('bioinformatician', params)
+  end
+
+  def set_marketing
+    set_participant('marketing', params)
   end
 
   def update

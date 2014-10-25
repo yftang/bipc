@@ -1,19 +1,61 @@
-.jumbotron
-  %h2.center Welcome to Biocompany Integrative Projects Control (BIPC)
+- if user_signed_in? && current_user.role?(:admin)
+  .jumbotron
+    %h2.text-center You control the world, just use menus above.
+- elsif user_signed_in?
+  .text-center
+    %h2 To make each day count!
   %br
+  .row
+    .col-sm-4
+      = render 'users/user_card', :user => current_user
+    .col-sm-8
+      .panel.panel-default
+        .panel-heading
+          Ongoing projects
+          %span.badge.pull-right #{@ongoing_projects.count}
+        .panel-body
+          - if @ongoing_projects.any?
+            %em Finish tasks on time, contact leader if necessary.
+          - else
+            %em No ongoing projects! Maybe you should ask for some :)
+        %table.table
+          %tr
+            %th Acc.
+            %th Start time
+            %th Deadline
+            %th Complete
+          - @ongoing_projects.each do |project|
+            %tr
+              %td= link_to project.acc, project
+              %td= project.start_date
+              %td= project.deadline
+              %td
+- else
+  .jumbotron
+    %h2.text-center Welcome to Biocompany Integrative Projects Control (BIPC)
+    %br
 
-  %form.form-horizontal{ :role => "form" }
-    .form-group.form-group-lg
-      .col-sm-6.col-sm-offset-2
-        = text_field_tag 'search_acc', nil,
-                         :placeholder => 'Enter project Acc. here',
-                         :id          => 'query',
-                         :class       => "form-control"
-      .col-sm-2
-        = link_to "Search", "javascript:void(0);",
-                  :onclick => "search_projects()",
-                  :class   => "btn btn-primary btn-lg",
-                  :id      =>  "search_project_button"
+    %form.form-horizontal{ :role => "form" }
+      .form-group.form-group-lg
+        .col-sm-6.col-sm-offset-2
+          = text_field_tag 'search_acc', nil,
+                           :placeholder => 'Enter project Acc. here',
+                           :id          => 'query',
+                           :class       => "form-control"
+        .col-sm-2
+          = link_to "Search", "javascript:void(0);",
+                    :onclick => "search_projects()",
+                    :class   => "btn btn-primary btn-lg",
+                    :id      =>  "search_project_button"
 
-#search_result{ :style => "display:none" }
-  #projects_list
+  .modal.fade#search_result
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{ :data => { :dismiss => "modal" } }
+            %span{ :aria => { :hidden => "true" } } &times;
+            %span.sr-only Close
+          %h2.modal-title Search result
+        .modal-body
+        .modal-footer
+

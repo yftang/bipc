@@ -1,15 +1,15 @@
 %h2 All Users
 %br
 
-- if can? :manage, :user
+- if can?(:create, User) || can?(:destroy, User)
   .btn-toolbar{ :role => "toolbar" }
     .btn-group
-      %button.btn.btn-default{ :type => "button",
+      %button.btn.btn-primary{ :type => "button",
                                :data => { :toggle => "modal",
                                           :target => "#new-user-modal" } }
         %span.glyphicon.glyphicon-plus
         New user
-      %button.btn.btn-default#destroy-users{ :type => "button",
+      %button.btn.btn-primary#destroy-users{ :type => "button",
                                              :disabled => true,
                                              :onclick => "destroy_users()" }
         %span.glyphicon.glyphicon-minus
@@ -18,23 +18,13 @@
 
 %table.table.table-hover#users-table
   %tr
-    - if can? :manage, :user
+    - if can? :destroy, User
       %th.col-sm-1
     %th Login email
     %th Name
     %th Roles
   - @users.each do |user|
-    %tr
-      - if can? :manage, :user
-        %td
-          - if not user.role?(:admin)
-            = check_box_tag "user_#{user.id}", user.id,
-                            false, :class => "user-selection"
-      %td= user.email
-      %td= user.name
-      %td
-        - user.roles.each do |role|
-          = role_tag(role.name, :disabled)
+    = render 'user', :user => user
 
 = paginate @users
 

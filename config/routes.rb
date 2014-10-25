@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources  :users
   root 'homepages#welcome'
   get 'homepages/welcome' => 'homepages#welcome'
+  get 'homepages/goto_project' => 'homepages#goto_project'
   resources :projects do
     collection do
       get  :search_projects
@@ -15,6 +16,11 @@ Rails.application.routes.draw do
     end
   end
   resources :customers
+  resources :samples do
+    collection do
+      post :receive
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -28,9 +28,14 @@
             %br
             = f.text_field :name, :class => "form-control"
           .form-group
+            = f.label :phone, "Phone number"
+            %br
+            = f.text_field :phone, :class => "form-control"
+          .form-group
             = f.label :role
             %br
-            - Role.all.each do |role|
-              = check_box_tag "user[role_ids][]", role.id
+            - @usable_roles.each do |role|
+              = radio_button_tag "user[role_id]", role.id
               = role.name
+              %br
           = f.submit "Create", :class => "btn btn-default btn-primary btn-sm"
