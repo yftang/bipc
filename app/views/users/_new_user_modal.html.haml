@@ -28,9 +28,13 @@
             %br
             = f.text_field :name, :class => "form-control"
           .form-group
+            = f.label :phone, "Phone number"
+            %br
+            = f.text_field :phone, :class => "form-control"
+          .form-group
             = f.label :role
             %br
-            - Role.all.each do |role|
+            - @usable_roles.each do |role|
               = radio_button_tag "user[role_id]", role.id
               = role.name
               %br

@@ -1,27 +1,63 @@
-= render 'shared/error_messages', :object => f.object
-
-.form-group{ :class => "#{has_error?(f.object, :email)}" }
-  = f.label :email, :class => "col-sm-2 control-label"
-  .col-sm-4
-    = f.text_field :email, :class => "form-control"
-.form-group{ :class => "#{has_error?(f.object, :name)}" }
-  = f.label :name, :class => "col-sm-2 control-label"
-  .col-sm-4
-    = f.text_field :name, :class => "form-control"
-.form-group{ :class => "#{has_error?(f.object, :password)}" }
-  = f.label :password, :class => "col-sm-2 control-label"
-  .col-sm-4
-    = f.password_field :password, :class => "form-control"
-.form-group{ :class => "#{has_error?(f.object, :password_confirmation)}" }
-  = f.label :password_confirmation, "Confirmation",
-            :class => "col-sm-2 control-label"
-  .col-sm-4
-    = f.password_field :password_confirmation, :class => "form-control"
-.form-group
-  = label_tag "Role", nil, :class => "col-sm-2 control-label"
-  .col-sm-4
-    - for role in Role.all
-      .col-sm-12
-        = check_box_tag "user[role_ids][]", role.id, @user.roles.include?(role)
-        = role.name
-
+.panel.panel-primary
+  .panel-heading Setting properties
+  .panel-body
+    .form-group
+      = f.label :name, :class => "col-sm-4 control-label"
+      .col-sm-6
+        .input-group
+          = f.text_field :name, :class => "form-control"
+          %span.input-group-addon
+            %span.glyphicon.glyphicon-user
+    .form-group
+      = f.label :email, "Email address",
+                :class => "col-sm-4 control-label"
+      .col-sm-6
+        .input-group
+          = f.email_field :email, :class => "form-control"
+          %span.input-group-addon
+            %span.glyphicon.glyphicon-envelope
+    .form-group
+      = f.label :phone, "Phone number", :class => "col-sm-4 control-label"
+      .col-sm-6
+        .input-group
+          = f.text_field :phone, :class => "form-control"
+          %span.input-group-addon
+            %span.glyphicon.glyphicon-earphone
+    .form-group
+      = f.label :password, "New password", :class => "col-sm-4 control-label"
+      .col-sm-6
+        .input-group
+          = f.password_field  :password,
+                              :class => "form-control",
+                              :autocomplete => "off"
+          %span.input-group-addon
+            %span.glyphicon.glyphicon-eye-close
+        %span.help-block Leave it empty if you don't need to change.
+    .form-group
+      = f.label :password_confirmation, :class => "col-sm-4 control-label"
+      .col-sm-6
+        .input-group
+          = f.password_field  :password_confirmation,
+                              :class => "form-control",
+                              :autocomplete => "off"
+          %span.input-group-addon
+            %span.glyphicon.glyphicon-eye-close
+        %span.help-block Confirm above new password or leave it empty.
+    .form-group
+      = f.label :jd, "Job description", :class => "col-sm-4 control-label"
+      .col-sm-6
+        .input-group
+          = f.text_area :jd, :class => "form-control"
+          %span.input-group-addon
+            %span.glyphicon.glyphicon-tasks
+    .form-group
+      = f.label :current_password, "Current password *",
+                :class => "col-sm-4 control-label"
+      .col-sm-6
+        .input-group
+          = f.password_field  :current_password,
+                              :class => "form-control",
+                              :autocomplete => "off"
+          %span.input-group-addon
+            %span.glyphicon.glyphicon-lock
+        %span.help-block We need you current password to confirm modification.

@@ -4,17 +4,21 @@ class CustomersController < ApplicationController
   authorize_resource
 
   def index
+    @title = 'Customers management'
     @customers = Customer.all.page params[:page]
   end
 
   def new
+    @title = 'Create new customer'
     @customer = Customer.new
   end
 
   def show
+    @title = @customer.name
   end
 
   def edit
+    @title = "Edit #{@customer.name}"
   end
 
   def update
