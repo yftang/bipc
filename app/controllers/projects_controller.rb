@@ -116,7 +116,9 @@ class ProjectsController < ApplicationController
         UserProject.create(:user_id    => user_id,
                            :project_id => params[:id],
                            :role_name  => role.camelize)
-        return render :json => { :success => true }
+        tmp_user = User.find_by_id(user_id)
+        return render :json => {  :success => true,
+                                  :param   => tmp_user.to_param }
       else
         return render :json => { :success => false }
       end
