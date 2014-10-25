@@ -44,7 +44,15 @@
             %span.glyphicon.glyphicon-eye-close
         %span.help-block Confirm above new password or leave it empty.
     .form-group
-      = f.label :current_password, :class => "col-sm-4 control-label"
+      = f.label :jd, "Job description", :class => "col-sm-4 control-label"
+      .col-sm-6
+        .input-group
+          = f.text_area :jd, :class => "form-control"
+          %span.input-group-addon
+            %span.glyphicon.glyphicon-tasks
+    .form-group
+      = f.label :current_password, "Current password *",
+                :class => "col-sm-4 control-label"
       .col-sm-6
         .input-group
           = f.password_field  :current_password,
