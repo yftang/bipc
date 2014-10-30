@@ -40,7 +40,7 @@ class Project < ActiveRecord::Base
   validates :acc, :presence => true, :uniqueness => true
 
   def samples_received?
-    samples.any?
+    samples_received_date
   end
 
   def experiments_done?

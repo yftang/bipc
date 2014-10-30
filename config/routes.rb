@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       post :set_marketing
       post :set_experimenter
       post :set_bioinformatician
+      post :set_complete
     end
   end
   resources :customers

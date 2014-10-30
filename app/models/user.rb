@@ -47,6 +47,17 @@ class User < ActiveRecord::Base
     return self.roles.any? && (self.roles.first.name == role.to_s.camelize)
   end
 
+  def role_one_of?(roles)
+    if self.roles.any?
+      roles.each do |role|
+        return true if self.roles.first.name == role.to_s.camelize
+      end
+      return false
+    else
+      return false
+    end
+  end
+
   def to_param
     "#{id}-#{created_at.to_i}"
   end

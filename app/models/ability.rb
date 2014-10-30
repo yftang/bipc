@@ -35,7 +35,7 @@ class Ability
       can :edit, User, :id => user.id
 
       can [:index, :new, :edit, :show,
-           :create, :update, :set_marketing], Project
+           :create, :update, :set_marketing, :set_complete], Project
 
       can :manage, Sample
 
@@ -44,7 +44,8 @@ class Ability
       can :show, User
       can :edit, User, :id => user.id
 
-      can [:index, :new, :edit, :show, :create, :update], Project
+      can [:index, :new, :edit, :show,
+           :create, :update, :set_complete], Project
 
       can :manage, Sample
 
@@ -56,7 +57,7 @@ class Ability
       can [:show, :index], User
       can :edit, User, :id => user.id
 
-      can [:index, :show, :set_experimenter], Project
+      can [:index, :show, :set_experimenter, :set_complete], Project
 
       can [:index, :show], Sample
 
@@ -65,7 +66,7 @@ class Ability
       can :show, User
       can :edit, User, :id => user.id
 
-      can [:index, :show], Project
+      can [:index, :show, :set_complete], Project
 
       can [:index, :show], Sample
 
@@ -77,7 +78,7 @@ class Ability
       can [:show, :index], User
       can :edit, User, :id => user.id
 
-      can [:index, :show, :set_bioinformatician], Project
+      can [:index, :show, :set_bioinformatician, :set_complete], Project
 
       can [:index, :show], Sample
 
@@ -86,7 +87,7 @@ class Ability
       can :show, User
       can :edit, User, :id => user.id
 
-      can [:index, :show], Project
+      can [:index, :show, :set_complete], Project
 
       can [:index, :show], Sample
 

@@ -65,6 +65,23 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def set_complete
+    if current_user.role_one_of?(
+        [:marketing, :marketing_admin])
+      if self.analysis_done?
+        set_complete_date('report')
+      else
+        set_complete_date('sample')
+      end
+    elsif current_user.role_one_of?(
+        [:experimenter, :experimenter_admin])
+      set_complete_date('experiment')
+    elsif current_user.role_one_of?(
+        [:bioinformatician, :bioinformatician_admin])
+      set_complete_date('analysis')
+    end
+  end
+
   def set_salesman
     set_participant('salesman', params)
   end
@@ -124,6 +141,42 @@ class ProjectsController < ApplicationController
       end
     else
       return render :json => { :success => false }
+    end
+  end
+
+  def set_complete_date(procedure)
+    complete_date = Time.now.to_date
+    if procedure.is_a?(String) && complete_date && params[:id]
+      project = Project.find_by_id params[:id]
+      if !project
+        flash[:notice] = 'Project not found!'
+        redirect_to root_path
+      end
+
+      case procedure
+      when 'sample'
+        if project.update_attribute(:samples_received_date, complete_date)
+          flash[:notice] = 'Well done!'
+        end
+      when 'experiment'
+        if project.update_attribute(:experiments_done_date, complete_date)
+          flash[:notice] = 'Well done!'
+        end
+      when 'analysis'
+        if project.update_attribute(:analysis_done_date, complete_date)
+          flash[:notice] = 'Well done!'
+        end
+      when 'report'
+        if project.update_attribute(:report_sent_date, complete_date)
+          flash[:notice] = 'Well done!'
+        end
+      else
+        flash[:notice] ='Something wrong happened, try again!'
+      end
+      redirect_to root_path
+    else
+      flash[:notice] ='Something wrong happened, try again!'
+      redirect_to root_path
     end
   end
 end

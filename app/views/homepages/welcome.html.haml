@@ -25,11 +25,15 @@
             %th Deadline
             %th Complete
           - @ongoing_projects.each do |project|
-            %tr
+            %tr{ :id => "project-#{project.id}" }
               %td= link_to project.acc, project
               %td= project.start_date
               %td= project.deadline
-              %td
+              %td= link_to 'Finish', { :controller => 'projects',
+                  :action => 'set_complete',
+                  :id     => project.id },
+                :method => :post,
+                :data   => { :confirm => 'You sure?' }
 - else
   .jumbotron
     %h2.text-center Welcome to Biocompany Integrative Projects Control (BIPC)
