@@ -94,8 +94,12 @@ class ProjectsController < ApplicationController
     set_participant('bioinformatician', params)
   end
 
-  def set_marketing
-    set_participant('marketing', params)
+  def set_samples_receiver
+    set_participant('samples_receiver', params)
+  end
+
+  def set_report_sender
+    set_participant('report_sender', params)
   end
 
   def update
@@ -124,10 +128,12 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def set_participant(role, params)
+  def set_participant(operator, params)
     if params[:id] && params[:user_name] && params[:user_id]
       user_name, user_id = params[:user_name], params[:user_id]
       if tmp_project = Project.where(:id => params[:id]).first
+        role = ['samples_receiver', 'report_sender'].include?(operator) ? \
+            'marketing' : operator
         tmp_project.update_attributes(role.to_sym         => user_name,
                                       "#{role}_id".to_sym => user_id)
         UserProject.create(:user_id    => user_id,

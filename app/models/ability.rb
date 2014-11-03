@@ -34,8 +34,9 @@ class Ability
       can [:show, :index], User
       can :edit, User, :id => user.id
 
-      can [:index, :new, :edit, :show,
-           :create, :update, :set_marketing, :set_complete], Project
+      can [:index, :new, :edit, :show, :create, :update,
+           :set_samples_receiver, :set_report_sender,
+           :set_complete, :destroy], Project
 
       can :manage, Sample
 
