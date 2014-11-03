@@ -35,6 +35,7 @@ class ProjectsController < ApplicationController
     @project   = Project.new
     @customers = Customer.all
     @samples   = Sample.all
+    @salesmen  = Role.find_by_name('Salesman').users
   end
 
   def edit
@@ -46,12 +47,17 @@ class ProjectsController < ApplicationController
   end
 
   def create
+    customer_ids = params[:project][:customer_ids]
+    salesman_id = params[:project][:salesman_id]
     @project = Project.new(
-      { :creater    => current_user.name,
-        :creater_id => current_user.id }.merge(project_params)
+      { :creater     => current_user.name,
+        :creater_id  => current_user.id,
+        :salesman    => User.find_by_id(salesman_id).name
+      }.merge(project_params)
     )
-    if params[:project][:customer_ids] && @project.save
-      customer_ids = params[:project][:customer_ids]
+    if customer_ids && salesman_id && @project.save
+      UserProject.create(:user_id    => salesman_id,
+                         :project_id => @project.id)
       customer_ids.each do |id|
         ProjectCustomer.create(:project_id  => @project.id,
                                :customer_id => id)
@@ -59,8 +65,9 @@ class ProjectsController < ApplicationController
       flash[:notice] = 'Project created'
       redirect_to @project
     else
-      flash[:notice] = 'Project not created'
+      flash[:danger] = 'Project not created'
       @customers = Customer.all
+      @salesmen  = Role.find_by_name('Salesman').users
       render 'new'
     end
   end
@@ -117,7 +124,7 @@ class ProjectsController < ApplicationController
 
   private
   def project_params
-    params.require(:project).permit(:acc, :start_date, :deadline)
+    params.require(:project).permit(:acc, :salesman_id, :start_date, :deadline)
   end
 
   def set_project
