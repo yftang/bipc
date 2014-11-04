@@ -2,32 +2,32 @@
   .panel-heading Setting properties
   .panel-body
     .form-group
-      = f.label :acc, "Accession",
-                :class => "col-sm-4 control-label"
+      = f.label :acc, "Accession", :class => "col-sm-4 control-label"
       .col-sm-6.input-group
         = f.text_field :acc, :class => "form-control"
         %span.input-group-addon
           %span.glyphicon.glyphicon-pencil
+
     .form-group
-      = f.label :salesman,
-                :class => "col-sm-4 control-label"
+      = f.label :salesman, :class => "col-sm-4 control-label"
       .col-sm-6.input-group
-        = f.select :salesman_id,
-                   @salesmen.collect{ |s| [s.name, s.id] },
-                   { :include_blank => true },
-                   :class => "form-control"
+        %select.form-control{ :name => "project[salesman_id]" }
+          %option
+          - @salesmen.each do |salesman|
+            - selected_tag = (f.object.salesman_id == salesman.id) ? true : false
+            %option{ :value => salesman.id, :selected => selected_tag }= salesman.name
         %span.input-group-addon
           %span.glyphicon.glyphicon-user
+
     .form-group
-      = f.label :start_date, "Start date",
-                :class => "col-sm-4 control-label"
+      = f.label :start_date, "Start date", :class => "col-sm-4 control-label"
       .col-sm-6.input-group
         = f.text_field :start_date, :class => "form-control datepicker"
         %span.input-group-addon
           %span.glyphicon.glyphicon-calendar
+
     .form-group
-      = f.label :deadline,
-                :class => "col-sm-4 control-label"
+      = f.label :deadline, :class => "col-sm-4 control-label"
       .col-sm-6.input-group
         = f.text_field :deadline, :class => "form-control datepicker"
         %span.input-group-addon
@@ -38,16 +38,15 @@
   .panel-heading Adding customers
   .panel-body
     .form-group
-      = f.label :customer_ids,
-                "Customers",
-                :class => "col-sm-4 control-label"
+      = f.label :customer_ids, "Customers", :class => "col-sm-4 control-label"
       .col-sm-6.input-group
-        %select.form-control{ :name => "project[customer_ids][]",
-                              :multiple => true }
+        - current_customer_ids = @project.customers.pluck(:id)
+        %select.form-control{ :name => "project[customer_ids][]", :multiple => true }
           - @customers.pluck(:province).uniq.each do |pro|
             %optgroup{ :label => pro }
               - @customers.select { |c| c.province == pro }.each do |customer|
-                %option{ :value => customer.id } #{customer.name}
+                - selected_tag = current_customer_ids.include?(customer.id)? true : false;
+                %option{ :value => customer.id, :selected => selected_tag } #{customer.name}
         %span.input-group-addon
           %span.glyphicon.glyphicon-user
 

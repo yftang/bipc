@@ -40,6 +40,8 @@ class ProjectsController < ApplicationController
 
   def edit
     @title = "Edit #{@project.acc}"
+    @customers = Customer.all
+    @salesmen  = Role.find_by_name('Salesman').users
   end
 
   def show
@@ -111,7 +113,7 @@ class ProjectsController < ApplicationController
 
   def update
     if @project.update_attributes(project_params)
-      flash[:success] = "Project updated"
+      flash[:notice] = "Project updated"
       redirect_to @project
     else
       render 'edit'

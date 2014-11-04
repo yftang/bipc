@@ -1,6 +1,12 @@
-%h2 Edit Project #{@project.acc}
+%h2.text-center Edit Project #{@project.acc}
+%br
 
-= form_for(@project) do |f|
-  = render 'project_form', f: f
+.row
+  .col-sm-8.col-sm-offset-2
+    = form_for(@project, :html => { :class => "form-horizontal",
+                                    :role  => "form" }) do |f|
+      = render "project_form", :f => f
 
-  = f.submit "Save changes"
+      = f.submit "Save changes", :class => "btn btn-primary btn-lg"
+
+.customers{ :data => { :customers => @customers } }
