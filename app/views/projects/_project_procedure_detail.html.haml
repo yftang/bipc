@@ -51,9 +51,9 @@
     %h4 Report generation status:
     %p
       %strong College in charge: 
-      - if @project.marketing_id
-        = link_to @project.marketing,
-                  User.find_by_id(@project.marketing_id)
+      - if @project.report_sender
+        = link_to @project.report_sender,
+                  User.find_by_id(@project.report_sender_id)
       - else
         Not set, contact 
         = link_to @project.creater,

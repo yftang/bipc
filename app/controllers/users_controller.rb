@@ -7,22 +7,27 @@ class UsersController < ApplicationController
     @title = 'User management'
     if current_user.role? :admin
       @users = User.all.page params[:page]
+      @usable_roles = Role.all
     elsif current_user.role? :salesman_admin
       @users = Kaminari::paginate_array(
         User.all.select { |u| u.role?(:salesman) }
       ).page params[:page]
+      @usable_roles = Role.where(:name => 'Salesman')
     elsif current_user.role? :marketing_admin
       @users = Kaminari::paginate_array(
         User.all.select { |u| u.role?(:marketing) }
       ).page params[:page]
+      @usable_roles = Role.where(:name => 'Marketing')
     elsif current_user.role? :experimenter_admin
       @users = Kaminari::paginate_array(
         User.all.select { |u| u.role?(:experimenter) }
       ).page params[:page]
+      @usable_roles = Role.where(:name => 'Experimenter')
     elsif current_user.role? :bioinformatician_admin
       @users = Kaminari::paginate_array(
         User.all.select { |u| u.role?(:bioinformatician) }
       ).page params[:page]
+      @usable_roles = Role.where(:name => 'Bioinformatician')
     end
     @user = User.new
   end

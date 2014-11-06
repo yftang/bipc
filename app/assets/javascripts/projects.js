@@ -33,7 +33,7 @@ $(document).on("change", "table#projects-table select.action", function() {
       success: function(data) {
         if(data.success == true) {
           select_tag.closest("td").html(
-            "<a href='/users/"+user_id+"'>"+user_name+"</a>");
+            "<a href='/users/"+data.param+"'>"+user_name+"</a>");
         }
       }
     });

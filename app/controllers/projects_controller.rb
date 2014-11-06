@@ -35,10 +35,13 @@ class ProjectsController < ApplicationController
     @project   = Project.new
     @customers = Customer.all
     @samples   = Sample.all
+    @salesmen  = Role.find_by_name('Salesman').users
   end
 
   def edit
     @title = "Edit #{@project.acc}"
+    @customers = Customer.all
+    @salesmen  = Role.find_by_name('Salesman').users
   end
 
   def show
@@ -46,12 +49,18 @@ class ProjectsController < ApplicationController
   end
 
   def create
+    customer_ids = params[:project][:customer_ids]
+    salesman_id = params[:project][:salesman_id]
     @project = Project.new(
-      { :creater    => current_user.name,
-        :creater_id => current_user.id }.merge(project_params)
+      { :creater     => current_user.name,
+        :creater_id  => current_user.id,
+        :salesman    => User.find_by_id(salesman_id).name
+      }.merge(project_params)
     )
-    if params[:project][:customer_ids] && @project.save
-      customer_ids = params[:project][:customer_ids]
+    if customer_ids && salesman_id && @project.save
+      UserProject.create(:user_id    => salesman_id,
+                         :project_id => @project.id,
+                         :role_name  => 'Salesman')
       customer_ids.each do |id|
         ProjectCustomer.create(:project_id  => @project.id,
                                :customer_id => id)
@@ -59,9 +68,27 @@ class ProjectsController < ApplicationController
       flash[:notice] = 'Project created'
       redirect_to @project
     else
-      flash[:notice] = 'Project not created'
+      flash[:danger] = 'Project not created'
       @customers = Customer.all
+      @salesmen  = Role.find_by_name('Salesman').users
       render 'new'
+    end
+  end
+
+  def set_complete
+    if current_user.role_one_of?(
+        [:marketing, :marketing_admin])
+      if self.analysis_done?
+        set_complete_date('report')
+      else
+        set_complete_date('sample')
+      end
+    elsif current_user.role_one_of?(
+        [:experimenter, :experimenter_admin])
+      set_complete_date('experiment')
+    elsif current_user.role_one_of?(
+        [:bioinformatician, :bioinformatician_admin])
+      set_complete_date('analysis')
     end
   end
 
@@ -77,13 +104,17 @@ class ProjectsController < ApplicationController
     set_participant('bioinformatician', params)
   end
 
-  def set_marketing
-    set_participant('marketing', params)
+  def set_samples_receiver
+    set_participant('samples_receiver', params)
+  end
+
+  def set_report_sender
+    set_participant('report_sender', params)
   end
 
   def update
     if @project.update_attributes(project_params)
-      flash[:success] = "Project updated"
+      flash[:notice] = "Project updated"
       redirect_to @project
     else
       render 'edit'
@@ -96,7 +127,7 @@ class ProjectsController < ApplicationController
 
   private
   def project_params
-    params.require(:project).permit(:acc, :start_date, :deadline)
+    params.require(:project).permit(:acc, :salesman_id, :start_date, :deadline)
   end
 
   def set_project
@@ -107,21 +138,61 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def set_participant(role, params)
+  def set_participant(operator, params)
     if params[:id] && params[:user_name] && params[:user_id]
       user_name, user_id = params[:user_name], params[:user_id]
       if tmp_project = Project.where(:id => params[:id]).first
+        role = ['samples_receiver', 'report_sender'].include?(operator) ? \
+            'marketing' : operator
         tmp_project.update_attributes(role.to_sym         => user_name,
                                       "#{role}_id".to_sym => user_id)
         UserProject.create(:user_id    => user_id,
                            :project_id => params[:id],
                            :role_name  => role.camelize)
-        return render :json => { :success => true }
+        tmp_user = User.find_by_id(user_id)
+        return render :json => {  :success => true,
+                                  :param   => tmp_user.to_param }
       else
         return render :json => { :success => false }
       end
     else
       return render :json => { :success => false }
+    end
+  end
+
+  def set_complete_date(procedure)
+    complete_date = Time.now.to_date
+    if procedure.is_a?(String) && complete_date && params[:id]
+      project = Project.find_by_id params[:id]
+      if !project
+        flash[:notice] = 'Project not found!'
+        redirect_to root_path
+      end
+
+      case procedure
+      when 'sample'
+        if project.update_attribute(:samples_received_date, complete_date)
+          flash[:notice] = 'Well done!'
+        end
+      when 'experiment'
+        if project.update_attribute(:experiments_done_date, complete_date)
+          flash[:notice] = 'Well done!'
+        end
+      when 'analysis'
+        if project.update_attribute(:analysis_done_date, complete_date)
+          flash[:notice] = 'Well done!'
+        end
+      when 'report'
+        if project.update_attribute(:report_sent_date, complete_date)
+          flash[:notice] = 'Well done!'
+        end
+      else
+        flash[:notice] ='Something wrong happened, try again!'
+      end
+      redirect_to root_path
+    else
+      flash[:notice] ='Something wrong happened, try again!'
+      redirect_to root_path
     end
   end
 end

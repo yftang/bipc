@@ -14,9 +14,16 @@ class Role < ActiveRecord::Base
 
   def get_users_options
     tmp_users = []
+    if !self.name.include?('admin')
+      tmp_role = Role.find_by_name (self.name+'_admin').camelize
+      tmp_role.users.each do |u|
+        tmp_users << [u.name, u.id.to_s]
+      end
+    end
     self.users.each do |u|
       tmp_users << [u.name, u.id.to_s]
     end
+
     return tmp_users
   end
 
