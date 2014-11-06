@@ -59,7 +59,8 @@ class ProjectsController < ApplicationController
     )
     if customer_ids && salesman_id && @project.save
       UserProject.create(:user_id    => salesman_id,
-                         :project_id => @project.id)
+                         :project_id => @project.id,
+                         :role_name  => 'Salesman')
       customer_ids.each do |id|
         ProjectCustomer.create(:project_id  => @project.id,
                                :customer_id => id)
