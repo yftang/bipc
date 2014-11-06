@@ -18,8 +18,8 @@ class CreateProjects < ActiveRecord::Migration
       t.string  :bioinformatician
       t.integer :bioinformatician_id
       t.date    :report_sent_date
-      t.string  :marketing
-      t.string  :marketing_id
+      t.string  :report_sender
+      t.string  :report_sender_id
 
       t.timestamps
     end

@@ -22,6 +22,13 @@
 $(document).ready(function() {
   $(".alert").fadeOut(3000);
 
+  $(".pop-over").hover(function() {
+    $(this).popover("show");
+  });
+  $(".pop-over").mouseleave(function() {
+    $(this).popover("hide");
+  });
+
   $("input.datepicker").datepicker({
     format: "yyyy-mm-dd",
     autoclose: true,

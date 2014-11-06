@@ -13,25 +13,57 @@
   - if project.report_sent_date
     %td= project.report_sent_date
   - else
-    %td=link_to project.creater,
-                user_path(User.find_by_id(project.creater_id)),
-                :title => "Contact #{project.creater}"
+    - tmp_user = User.find_by_id project.creater_id
+    %td= link_to  project.creater,
+                  "#",
+                  :class => "pop-over",
+                  :tabindex => "0",
+                  :role => "button",
+                  :data => {:toggle    => "popover",
+                            :trigger   => "hover",
+                            :placement => "bottom",
+                            :content   => [tmp_user.phone,
+                                           tmp_user.email].join("\n")},
+                  :title => "Contact creater"
 
   - if project.samples_received_date
     %td= project.samples_received_date
   - elsif project.samples_receiver && project.samples_receiver_id
+    - tmp_user = User.find_by_id project.samples_receiver_id
     %td= link_to  project.samples_receiver,
-                  user_path(User.find_by_id(project.samples_receiver_id)),
-                  :title => "Contact #{project.creater}"
+                  "#",
+                  :class => "pop-over",
+                  :tabindex => "0",
+                  :role => "button",
+                  :data => {:toggle    => "popover",
+                            :trigger   => "hover",
+                            :placement => "bottom",
+                            :content   => [tmp_user.phone,
+                                           tmp_user.email].join("\n")},
+                  :title => "Contact marketing"
   - else
-    %td Pending...
+    - if can? :set_samples_receiver, project
+      %td= link_to "Set", "javscript:void(0)",
+                          :onclick => "set_checkbox(this);",
+                          :class   => "set-samples-receiver"
+    - else
+      %td Pending...
 
   - if project.experiments_done_date
     %td= project.experiments_done_date
   - elsif project.experimenter && project.experimenter_id
-    %td=link_to project.experimenter,
-                user_path(User.find_by_id(project.experimenter_id)),
-                :title => "Contact #{project.experimenter}"
+    - tmp_user = User.find_by_id project.experimenter_id
+    %td= link_to  project.experimenter,
+                  "#",
+                  :class => "pop-over",
+                  :tabindex => "0",
+                  :role => "button",
+                  :data => {:toggle    => "popover",
+                            :trigger   => "hover",
+                            :placement => "bottom",
+                            :content   => [tmp_user.phone,
+                                           tmp_user.email].join("\n")},
+                  :title => "Contact experimenter"
   - else
     - if can? :set_experimenter, project
       %td= link_to "Set", "javscript:void(0)",
@@ -43,9 +75,18 @@
   - if project.analysis_done_date
     %td= project.analysis_done_date
   - elsif project.bioinformatician && project.bioinformatician_id
-    %td=link_to project.bioinformatician,
-                user_path(User.find_by_id(project.bioinformatician_id)),
-                :title => "Contact #{project.bioinformatician}"
+    - tmp_user = User.find_by_id project.bioinformatician_id
+    %td= link_to  project.bioinformatician,
+                  "#",
+                  :class => "pop-over",
+                  :tabindex => "0",
+                  :role => "button",
+                  :data => {:toggle    => "popover",
+                            :trigger   => "focus",
+                            :placement => "bottom",
+                            :content   => [tmp_user.phone,
+                                           tmp_user.email].join(" ")},
+                  :title => "Contact bioinformatician"
   - else
     - if can? :set_bioinformatician, project
       %td= link_to "Set", "javscript:void(0)",
@@ -56,14 +97,23 @@
 
   - if project.report_sent_date
     %td= project.report_sent_date
-  - elsif project.marketing && project.marketing_id
-    %td=link_to project.marketing,
-                user_path(User.find_by_id(project.marketing_id)),
-                :title => "Contact #{project.marketing}"
+  - elsif project.report_sender && project.report_sender_id
+    - tmp_user = User.find_by_id project.report_sender_id
+    %td= link_to  project.report_sender,
+                  "#",
+                  :class => "pop-over",
+                  :tabindex => "0",
+                  :role => "button",
+                  :data => {:toggle    => "popover",
+                            :trigger   => "hover",
+                            :placement => "bottom",
+                            :content   => [tmp_user.phone,
+                                           tmp_user.email].join("\n")},
+                  :title => "Contact marketing"
   - else
-    - if can? :set_marketing, project
+    - if can? :set_report_sender, project
       %td= link_to "Set", "javscript:void(0)",
                           :onclick => "set_checkbox(this);",
-                          :class   => "set-marketing"
+                          :class   => "set-report-sender"
     - else
       %td Pending...

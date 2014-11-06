@@ -22,7 +22,10 @@ class Ability
       can :show, User
       can :edit, User, :id => user.id
 
-      can [:index, :show], Project
+      can :index, Project
+      can :show, Project do |project|
+        project && project.salesman_id==user.id
+      end
 
       can :show, Customer
 
@@ -34,8 +37,9 @@ class Ability
       can [:show, :index], User
       can :edit, User, :id => user.id
 
-      can [:index, :new, :edit, :show,
-           :create, :update, :set_marketing], Project
+      can [:index, :new, :edit, :show, :create, :update,
+           :set_samples_receiver, :set_report_sender,
+           :set_complete, :destroy], Project
 
       can :manage, Sample
 
@@ -44,7 +48,8 @@ class Ability
       can :show, User
       can :edit, User, :id => user.id
 
-      can [:index, :new, :edit, :show, :create, :update], Project
+      can [:index, :new, :edit, :show,
+           :create, :update, :set_complete], Project
 
       can :manage, Sample
 
@@ -56,7 +61,7 @@ class Ability
       can [:show, :index], User
       can :edit, User, :id => user.id
 
-      can [:index, :show, :set_experimenter], Project
+      can [:index, :show, :set_experimenter, :set_complete], Project
 
       can [:index, :show], Sample
 
@@ -65,7 +70,7 @@ class Ability
       can :show, User
       can :edit, User, :id => user.id
 
-      can [:index, :show], Project
+      can [:index, :show, :set_complete], Project
 
       can [:index, :show], Sample
 
@@ -77,7 +82,7 @@ class Ability
       can [:show, :index], User
       can :edit, User, :id => user.id
 
-      can [:index, :show, :set_bioinformatician], Project
+      can [:index, :show, :set_bioinformatician, :set_complete], Project
 
       can [:index, :show], Sample
 
@@ -86,7 +91,7 @@ class Ability
       can :show, User
       can :edit, User, :id => user.id
 
-      can [:index, :show], Project
+      can [:index, :show, :set_complete], Project
 
       can [:index, :show], Sample
 

@@ -20,8 +20,8 @@
 #  bioinformatician      :string(255)
 #  bioinformatician_id   :integer
 #  report_sent_date      :date
-#  marketing             :string(255)
-#  marketing_id          :string(255)
+#  report_sender         :string(255)
+#  report_sender_id      :string(255)
 #  created_at            :datetime
 #  updated_at            :datetime
 #
@@ -40,7 +40,7 @@ class Project < ActiveRecord::Base
   validates :acc, :presence => true, :uniqueness => true
 
   def samples_received?
-    samples.any?
+    samples_received_date
   end
 
   def experiments_done?
