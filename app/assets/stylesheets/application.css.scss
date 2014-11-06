@@ -23,21 +23,12 @@
   background-color: #5bc0de;
 }
 
-body {
-  padding-bottom: 70px;
+a.navbar-brand img {
+  height: 30px;
 }
 
-table#projects-table {
-  a {
-    text-decoration: underline;
-    &:hover {
-      background-color: transparent;
-      color: black;
-    }
-  }
-  select {
-    padding: 0px;
-  }
+body {
+  padding-bottom: 70px;
 }
 
 .container .credit {
