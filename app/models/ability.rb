@@ -22,7 +22,10 @@ class Ability
       can :show, User
       can :edit, User, :id => user.id
 
-      can [:index, :show], Project
+      can :index, Project
+      can :show, Project do |project|
+        project && project.salesman_id==user.id
+      end
 
       can :show, Customer
 
