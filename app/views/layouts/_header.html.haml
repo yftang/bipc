@@ -8,7 +8,8 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      = link_to "BIPC", root_path, :class => "navbar-brand"
+      %a.navbar-brand{ :href => "#{root_path}", :title => "BIPC" }
+        %img{ :src => "bipc.png" }
     #bipc-navbar.collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right
         - if current_page?(root_path) && user_signed_in?
@@ -21,32 +22,12 @@
                   %input.form-control#go_to_project{ :type => "text",
                       :placeholder => "Go to project",
                       :name => "project_acc" }
-        %li= link_to "Home", root_path
-        - if user_signed_in? && (current_user.role? :admin)
-          %li.dropdown
-            %a.dropdown-toggle{ :href => "#",
-                                :data => { :toggle => "dropdown" } }
-              Customers
-              %span.caret
-            %ul.dropdown-menu{ :role => "menu" }
-              %li= link_to "All customers", customers_path
-              %li= link_to "New customer",  new_customer_path
-          %li.dropdown
-            %a.dropdown-toggle{ :href => "#",
-                                :data => { :toggle => "dropdown" } }
-              Projects
-              %span.caret
-            %ul.dropdown-menu{ :role => "menu" }
-              %li= link_to "All projects", projects_path
-              %li= link_to "New project",  new_project_path
-          %li.dropdown
-            %a.dropdown-toggle{ :href => "#",
-                                :data => { :toggle => "dropdown" } }
-              Samples
-              %span.caret
-            %ul.dropdown-menu{ :role => "menu" }
-              %li= link_to "All samples", samples_path
-              %li= link_to "New sample",  new_sample_path
+        - if can? :index, Customer
+          %li= link_to "Customers", customers_path
+        - if can? :index, Project
+          %li= link_to "Projects", projects_path
+        - if can? :index, Sample
+          %li= link_to "Samples", samples_path
         - if user_signed_in?
           %li.dropdown
             %a.dropdown-toggle{ :href => "#",
