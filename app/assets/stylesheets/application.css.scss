@@ -19,6 +19,14 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+    background-color: transparent;
+  }
+}
+
 .auth-nav-link {
   background-color: #5bc0de;
 }

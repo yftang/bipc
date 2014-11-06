@@ -22,8 +22,7 @@ class Ability
       can :show, User
       can :edit, User, :id => user.id
 
-      can :index, Project
-      can :show, Project do |project|
+      can [:index, :show], Project do |project|
         project && project.salesman_id==user.id
       end
 
@@ -37,9 +36,7 @@ class Ability
       can [:show, :index], User
       can :edit, User, :id => user.id
 
-      can [:index, :new, :edit, :show, :create, :update,
-           :set_samples_receiver, :set_report_sender,
-           :set_complete, :destroy], Project
+      can :manage, Project
 
       can :manage, Sample
 
@@ -56,7 +53,7 @@ class Ability
       can [:index, :new, :edit, :show, :create, :update], Customer
     elsif user.role? :experimenter_admin
       can [:create, :destroy], User do |user|
-        user && user.role?(:experimentor)
+        user && user.role?(:experimenter)
       end
       can [:show, :index], User
       can :edit, User, :id => user.id
@@ -70,7 +67,9 @@ class Ability
       can :show, User
       can :edit, User, :id => user.id
 
-      can [:index, :show, :set_complete], Project
+      can [:index, :show, :set_complete], Project do |project|
+        project && project.experimenter_id==user.id
+      end
 
       can [:index, :show], Sample
 
@@ -91,7 +90,9 @@ class Ability
       can :show, User
       can :edit, User, :id => user.id
 
-      can [:index, :show, :set_complete], Project
+      can [:index, :show, :set_complete], Project do |project|
+        project && project.bioinformatician_id==user.id
+      end
 
       can [:index, :show], Sample
 

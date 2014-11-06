@@ -23,8 +23,14 @@ class ProjectsController < ApplicationController
 
   def index
     @title = 'Projects management'
-    @projects = Project.all.page params[:page]
-    @project = Project.new
+    if current_user.role_one_of?([
+        :admin, :salesman_admin, :marketing_admin,
+        :experimenter_admin, :bioinformatician_admin])
+      @projects = Project.all.page params[:page]
+    else
+      @projects = current_user.projects.page params[:page]
+    end
+
     @exp_role = Role.find_by_name('Experimenter')
     @bin_role = Role.find_by_name('Bioinformatician')
     @mkt_role = Role.find_by_name('Marketing')
