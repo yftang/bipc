@@ -20,7 +20,7 @@ class SamplesController < ApplicationController
   end
 
   def edit
-    @title = "Edit #{@sample.anme}"
+    @title = "Edit #{@sample.name}"
   end
 
   def update

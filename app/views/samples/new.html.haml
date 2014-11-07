@@ -1,8 +1,7 @@
-%h2.center New sample
-%br
-
 .row
   .col-sm-8.col-sm-offset-2
+    %h2.text-center New Sample
+    %br
     = form_for(@sample, :html => {  :class => "form-horizontal",
                                     :role  => "form" }) do |f|
       = render "sample_form", :f => f
