@@ -81,21 +81,20 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def set_complete
-    if current_user.role_one_of?(
-        [:marketing, :marketing_admin])
-      if self.analysis_done?
-        set_complete_date('report')
-      else
-        set_complete_date('sample')
-      end
-    elsif current_user.role_one_of?(
-        [:experimenter, :experimenter_admin])
-      set_complete_date('experiment')
-    elsif current_user.role_one_of?(
-        [:bioinformatician, :bioinformatician_admin])
-      set_complete_date('analysis')
-    end
+  def set_samples_complete
+    set_complete_date('sample')
+  end
+
+  def set_experiments_complete
+    set_complete_date('experiment')
+  end
+
+  def set_analysis_complete
+    set_complete_date('analysis')
+  end
+
+  def set_report_complete
+    set_complete_date('report')
   end
 
   def set_salesman
@@ -177,7 +176,9 @@ class ProjectsController < ApplicationController
 
       case procedure
       when 'sample'
-        if project.update_attribute(:samples_received_date, complete_date)
+        if project.update_attributes(
+            :samples_received_date => complete_date,
+            :samples_receiver      => current_user.name)
           flash[:notice] = 'Well done!'
         end
       when 'experiment'

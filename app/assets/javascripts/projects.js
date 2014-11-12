@@ -83,7 +83,7 @@ function destroy_projects() {
 
 function set_checkbox(obj) {
   tmp_class = $(obj).attr("class");
-  tmp_select = $("select[name="+tmp_class+"]").clone()
+  tmp_select = $("select[name="+tmp_class+"].hidden").clone()
     .removeClass("hidden").addClass("action")
   $(obj).replaceWith(tmp_select);
 }
