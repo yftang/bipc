@@ -15,20 +15,21 @@
         Remove project(s)
 %br
 
-%table.table.table-striped#projects-table
-  %tr
-    - if can? :destroy, Project
-      %th.col-sm-1
-    %th Acc.
-    %th Starts from
-    %th Deadline
-    %th Ends at
-    %th Samples received
-    %th Experiments
-    %th Analysis
-    %th Report sent
-  - @projects.each do |project|
-    = render 'project', :project => project
+.table-responsive
+  %table.table#projects-table
+    %tr
+      - if can? :destroy, Project
+        %th
+      %th Acc.
+      %th Starts from
+      %th Deadline
+      %th Ends at
+      %th Samples received
+      %th Experiments
+      %th Analysis
+      %th Report sent
+    - @projects.each do |project|
+      = render 'project', :project => project
 
 = paginate @projects
 
