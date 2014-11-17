@@ -1,4 +1,7 @@
-%h2 #{@project.acc}
+%h2
+  =@project.acc
+  - if can? :edit, @project
+    (#{link_to "Edit", edit_project_path(@project)})
 
 %p
   %strong Customer:

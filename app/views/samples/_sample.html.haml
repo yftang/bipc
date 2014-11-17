@@ -1,5 +1,5 @@
 %tr{ :id => "#{sample.id}" }
-  - if can?(:manage, sample) && current_page?("/projects")
+  - if can?(:destroy, sample) && current_page?("/samples")
     %td
       = check_box_tag "sample_#{sample.id}", sample.id,
                       false, :class => "sample-selection"

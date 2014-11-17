@@ -22,32 +22,51 @@ class ProjectsController < ApplicationController
   end
 
   def index
-    @projects = Project.all.page params[:page]
-    @project = Project.new
+    @title = 'Projects management'
+    if current_user.role_one_of?([
+        :admin, :salesman_admin, :marketing_admin,
+        :experimenter_admin, :bioinformatician_admin])
+      @projects = Project.all.page params[:page]
+    else
+      @projects = current_user.projects.page params[:page]
+    end
+
     @exp_role = Role.find_by_name('Experimenter')
     @bin_role = Role.find_by_name('Bioinformatician')
     @mkt_role = Role.find_by_name('Marketing')
   end
 
   def new
+    @title = 'Create new project'
     @project   = Project.new
     @customers = Customer.all
     @samples   = Sample.all
+    @salesmen  = Role.find_by_name('Salesman').users
   end
 
   def edit
+    @title = "Edit #{@project.acc}"
+    @customers = Customer.all
+    @salesmen  = Role.find_by_name('Salesman').users
   end
 
   def show
+    @title = @project.acc
   end
 
   def create
+    customer_ids = params[:project][:customer_ids]
+    salesman_id = params[:project][:salesman_id]
     @project = Project.new(
-      { :creater    => current_user.name,
-        :creater_id => current_user.id }.merge(project_params)
+      { :creater     => current_user.name,
+        :creater_id  => current_user.id,
+        :salesman    => User.find_by_id(salesman_id).name
+      }.merge(project_params)
     )
-    if @project.save
-      customer_ids = params[:project][:customer_ids]
+    if customer_ids && salesman_id && @project.save
+      UserProject.create(:user_id    => salesman_id,
+                         :project_id => @project.id,
+                         :role_name  => 'Salesman')
       customer_ids.each do |id|
         ProjectCustomer.create(:project_id  => @project.id,
                                :customer_id => id)
@@ -55,10 +74,27 @@ class ProjectsController < ApplicationController
       flash[:notice] = 'Project created'
       redirect_to @project
     else
-      flash[:notice] = 'Project not created'
+      flash[:danger] = 'Project not created'
       @customers = Customer.all
+      @salesmen  = Role.find_by_name('Salesman').users
       render 'new'
     end
+  end
+
+  def set_samples_complete
+    set_complete_date('sample')
+  end
+
+  def set_experiments_complete
+    set_complete_date('experiment')
+  end
+
+  def set_analysis_complete
+    set_complete_date('analysis')
+  end
+
+  def set_report_complete
+    set_complete_date('report')
   end
 
   def set_salesman
@@ -73,13 +109,17 @@ class ProjectsController < ApplicationController
     set_participant('bioinformatician', params)
   end
 
-  def set_marketing
-    set_participant('marketing', params)
+  def set_samples_receiver
+    set_participant('samples_receiver', params)
+  end
+
+  def set_report_sender
+    set_participant('report_sender', params)
   end
 
   def update
     if @project.update_attributes(project_params)
-      flash[:success] = "Project updated"
+      flash[:notice] = "Project updated"
       redirect_to @project
     else
       render 'edit'
@@ -92,7 +132,7 @@ class ProjectsController < ApplicationController
 
   private
   def project_params
-    params.require(:project).permit(:acc, :start_date, :deadline)
+    params.require(:project).permit(:acc, :salesman_id, :start_date, :deadline)
   end
 
   def set_project
@@ -112,12 +152,52 @@ class ProjectsController < ApplicationController
         UserProject.create(:user_id    => user_id,
                            :project_id => params[:id],
                            :role_name  => role.camelize)
-        return render :json => { :success => true }
+        tmp_user = User.find_by_id(user_id)
+        return render :json => {  :success => true,
+                                  :param   => tmp_user.to_param }
       else
         return render :json => { :success => false }
       end
     else
       return render :json => { :success => false }
+    end
+  end
+
+  def set_complete_date(procedure)
+    complete_date = Time.now.to_date
+    if procedure.is_a?(String) && complete_date && params[:id]
+      project = Project.find_by_id params[:id]
+      if !project
+        flash[:notice] = 'Project not found!'
+        redirect_to root_path
+      end
+
+      case procedure
+      when 'sample'
+        if project.update_attributes(
+            :samples_received_date => complete_date,
+            :samples_receiver      => current_user.name)
+          flash[:notice] = 'Well done!'
+        end
+      when 'experiment'
+        if project.update_attribute(:experiments_done_date, complete_date)
+          flash[:notice] = 'Well done!'
+        end
+      when 'analysis'
+        if project.update_attribute(:analysis_done_date, complete_date)
+          flash[:notice] = 'Well done!'
+        end
+      when 'report'
+        if project.update_attribute(:report_sent_date, complete_date)
+          flash[:notice] = 'Well done!'
+        end
+      else
+        flash[:notice] ='Something wrong happened, try again!'
+      end
+      redirect_to root_path
+    else
+      flash[:notice] ='Something wrong happened, try again!'
+      redirect_to root_path
     end
   end
 end

@@ -1,8 +1,7 @@
-%h2.center New customer
-%br
-
 .row
   .col-sm-8.col-sm-offset-2
+    %h2.text-center New Customer
+    %br
     = form_for(@customer,:html => { :class => "form-horizontal",
                                     :role  => "form" }) do |f|
       = render "customer_form", :f => f

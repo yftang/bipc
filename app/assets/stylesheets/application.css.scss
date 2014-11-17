@@ -19,33 +19,34 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+    background-color: transparent;
+  }
+}
+
 .auth-nav-link {
   background-color: #5bc0de;
 }
 
-.center {
-  text-align: center;
+a.navbar-brand img {
+  height: 30px;
 }
 
 body {
-  padding-top: 60px;
-  padding-bottom: 60px;
-}
-
-table#projects-table {
-  a {
-    text-decoration: underline;
-    &:hover {
-      background-color: transparent;
-      color: black;
-    }
-  }
-  select {
-    padding: 0px;
-  }
+  padding-bottom: 70px;
 }
 
 .container .credit {
   margin: 20px 0;
 }
 
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}

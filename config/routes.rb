@@ -5,13 +5,16 @@ Rails.application.routes.draw do
   resources  :users
   root 'homepages#welcome'
   get 'homepages/welcome' => 'homepages#welcome'
+  get 'homepages/goto_project' => 'homepages#goto_project'
   resources :projects do
     collection do
       get  :search_projects
       post :set_salesman
-      post :set_marketing
+      post :set_samples_receiver
       post :set_experimenter
       post :set_bioinformatician
+      post :set_report_sender
+      post :set_complete
     end
   end
   resources :customers

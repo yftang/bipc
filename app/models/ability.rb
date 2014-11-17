@@ -7,65 +7,125 @@ class Ability
     if user.role? :admin
       can :manage, :all
     elsif user.role? :salesman_admin
-      can :manage, User do |user|
-        user && user.role?(:salesman)
+      can [:create, :destroy], User do |user|
+        user.role?(:salesman)
       end
-      can :show,   User
-      can :edit,   User, :id => user.id
-      can :index,  Project
-      can :set_salesman, Project
-      can :index,  Sample
+      can [:show, :index], User
+      can :edit, User, :id => user.id
+
+      can [:index, :show, :set_salesman], Project
+
+      can :show, Customer
+
+      can [:show, :index], Sample
     elsif user.role? :salesman
-      can :show,   User
-      can :edit,   User, :id => user.id
-      can :index,  Project
+      can :show, User
+      can :edit, User, :id => user.id
+
+      can [:index, :show], Project do |project|
+        project.salesman_id==user.id
+      end
+
+      can :show, Customer
+
+      can :show, Sample
     elsif user.role? :marketing_admin
-      can :manage, User do |user|
-        user && user.role?(:marketing)
+      can [:create, :destroy], User do |user|
+        user.role?(:marketing)
       end
-      can :show,   User
-      can :edit,   User, :id => user.id
+      can [:show, :index], User
+      can :edit, User, :id => user.id
+
       can :manage, Project
+      can :set_samples_complete, Project
+      can :set_report_complete, Project do |p|
+        p.analysis_done?
+      end
+      cannot [:set_experiments_complete, :set_analysis_complete], Project
+
       can :manage, Sample
+
+      can :manage, Customer
     elsif user.role? :marketing
-      can :update, Project
-      can :show,   User
-      can :edit,   User, :id => user.id
+      can :show, User
+      can :edit, User, :id => user.id
+
+      can [:index, :new, :edit, :show,
+           :create, :update, :set_samples_complete], Project
+      can :set_report_complete, Project do |p|
+        p.analysis_done?
+      end
+
       can :manage, Sample
-    elsif user.role? :experimentor_admin
-      can :manage, User do |user|
-        user && user.role?(:experimentor)
+
+      can [:index, :new, :edit, :show, :create, :update], Customer
+    elsif user.role? :experimenter_admin
+      can [:create, :destroy], User do |user|
+        user.role?(:experimenter)
       end
-      can :show,   User
-      can :edit,   User, :id => user.id
-      can :index,  Project
-      can :update, Project
-      can :set_experimenter, Project
-      can :index,  Sample
-    elsif user.role? :experimentor
-      can :update, Project
-      can :show,   User
-      can :edit,   User, :id => user.id
-      can :index,  Sample
+      can [:show, :index], User
+      can :edit, User, :id => user.id
+
+      can [:index, :show, :set_experimenter], Project
+      can :set_experiments_complete, Project do |p|
+        p.samples_received?
+      end
+
+      can [:index, :show], Sample
+
+      can :show, Customer
+    elsif user.role? :experimenter
+      can :show, User
+      can :edit, User, :id => user.id
+
+      can [:index, :show], Project do |project|
+        project.experimenter_id==user.id
+      end
+      can :set_experiments_complete, Project do |p|
+        p.samples_received?
+      end
+
+      can [:index, :show], Sample
+
+      can [:index, :show], Customer
     elsif user.role? :bioinformatician_admin
-      can :manage, User do |user|
-        user && user.role?(:bioinformatician)
+      can [:create, :destroy], User do |user|
+        user.role?(:bioinformatician)
       end
-      can :show,   User
-      can :edit,   User, :id => user.id
-      can :index,  Project
-      can :update, Project
-      can :set_bioinformatician, Project
-      can :index,  Sample
+      can [:show, :index], User
+      can :edit, User, :id => user.id
+
+      can [:index, :show, :set_bioinformatician], Project
+      can :set_analysis_complete, Project do |p|
+        p.experiments_done?
+      end
+
+      can [:index, :show], Sample
+
+      can :show, Customer
     elsif user.role? :bioinformatician
-      can :update, Project
-      can :show,   User
-      can :edit,   User, :id => user.id
-      can :index,  Sample
+      can :show, User
+      can :edit, User, :id => user.id
+
+      can [:index, :show], Project do |project|
+        project.bioinformatician_id==user.id
+      end
+      can :set_analysis_complete, Project do |p|
+        p.experiments_done?
+      end
+
+      can [:index, :show], Sample
+
+      can [:index, :show], Customer
     else
+      can :show, User
+
       can :show, Project
       can :search_projects, Project
-      can :show, User
+
+      can :show, Sample
+
+      can :show, Customer
     end
   end
 end

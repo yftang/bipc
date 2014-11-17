@@ -1,45 +1,55 @@
 %h2 All Projects
 %br
 
-- if can? :manage, @projects
-  .btn-toolbar{ :role => "toolbar" }
-    .btn-group
+.btn-toolbar{ :role => "toolbar" }
+  .btn-group
+    - if can?(:create, Project)
       %a.btn.btn-primary{ :href => new_project_path }
         %span.glyphicon.glyphicon-plus
         New project
+    - if can?(:destroy, Project)
       %button.btn.btn-primary#destroy-projects{:type => "button",
           :disabled => true,
           :onclick => "destroy_projects()"}
         %span.glyphicon.glyphicon-minus
         Remove project(s)
-  %br
+%br
 
-%table.table.table-striped#projects-table
-  %tr
-    - if can? :manage, Project
-      %th.col-sm-1
-    %th Acc.
-    %th Starts from
-    %th Deadline
-    %th Ends at
-    %th Samples received
-    %th Experiments
-    %th Analysis
-    %th Report sent
-  - @projects.each do |project|
-    = render 'project', :project => project
+.table-responsive
+  %table.table#projects-table
+    %tr
+      - if can? :destroy, Project
+        %th
+      %th Acc.
+      %th Starts from
+      %th Deadline
+      %th Ends at
+      %th Samples received
+      %th Experiments
+      %th Analysis
+      %th Report sent
+    - @projects.each do |project|
+      = render 'project', :project => project
 
 = paginate @projects
 
-= select_tag  "set-experimenter",
-              options_for_select(@exp_role.get_users_options),
-              :prompt => "Select one",
-              :class  => "form-control input-sm hidden"
-= select_tag  "set-bioinformatician",
-              options_for_select(@bin_role.get_users_options),
-              :prompt => "Select one",
-              :class  => "form-control input-sm hidden"
-= select_tag  "set-marketing",
-              options_for_select(@mkt_role.get_users_options),
-              :prompt => "Select one",
-              :class  => "form-control input-sm hidden"
+- if can? :set_samples_receiver, Project
+  = select_tag  "set-samples-receiver",
+                options_for_select(@mkt_role.get_users_options),
+                :prompt => "Select one",
+                :class  => "form-control input-sm hidden"
+- if can? :set_experimenter, Project
+  = select_tag  "set-experimenter",
+                options_for_select(@exp_role.get_users_options),
+                :prompt => "Select one",
+                :class  => "form-control input-sm hidden"
+- if can? :set_bioinformatician, Project
+  = select_tag  "set-bioinformatician",
+                options_for_select(@bin_role.get_users_options),
+                :prompt => "Select one",
+                :class  => "form-control input-sm hidden"
+- if can? :set_report_sender, Project
+  = select_tag  "set-report-sender",
+                options_for_select(@mkt_role.get_users_options),
+                :prompt => "Select one",
+                :class  => "form-control input-sm hidden"

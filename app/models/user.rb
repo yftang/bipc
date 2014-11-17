@@ -16,6 +16,8 @@
 #  last_sign_in_ip        :string(255)
 #  created_at             :datetime
 #  updated_at             :datetime
+#  phone                  :string(255)
+#  jd                     :text
 #
 # Indexes
 #
@@ -42,7 +44,16 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   def role?(role)
-    return !!self.roles.find_by_name(role.to_s.camelize)
+    my_roles = self.roles
+    my_roles.any? && (my_roles.first.name == role.to_s.camelize)
+  end
+
+  def role_one_of?(roles)
+    if my_roles = self.roles
+      roles.map(&:to_s).map(&:camelize).include? my_roles.first.name
+    else
+      return false
+    end
   end
 
   def to_param
