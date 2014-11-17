@@ -2,13 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 table#projects-table {
-  a {
-    text-decoration: underline;
-    &:hover {
-      background-color: transparent;
-      color: black;
-    }
-  }
   select {
     padding: 0px;
   }

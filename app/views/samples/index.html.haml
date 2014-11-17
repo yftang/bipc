@@ -1,18 +1,19 @@
 %h2 All Samples
 %br
 
-- if can?(:create, Sample) || can?(:destroy, Sample)
-  .btn-toolbar{ :role => "toolbar" }
-    .btn-group
+.btn-toolbar{ :role => "toolbar" }
+  .btn-group
+    - if can? :create, Sample
       %a.btn.btn-primary{ :href => new_sample_path }
         %span.glyphicon.glyphicon-plus
         New sample
+    - if can? :destroy, Sample
       %button.btn.btn-primary#destroy-samples{:type => "button",
           :disabled => true,
           :onclick => "destroy_samples()"}
         %span.glyphicon.glyphicon-minus
         Remove sample(s)
-  %br
+%br
 
 %table.table.table-striped#samples-table
   %tr

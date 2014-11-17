@@ -19,7 +19,7 @@ $(document).on("change", "table#projects-table select.action", function() {
   select_tag = $(this);
   option_tag = $(this).find("option:selected");
   select_name = $(this).attr("name");
-  set_action = select_name.replace("-", "_");
+  set_action = select_name.replace(/-/g, "_");
   user_name = option_tag.text();
   user_id = option_tag.attr("value");
   project_id = $(this).closest("tr").attr("id");
@@ -83,7 +83,7 @@ function destroy_projects() {
 
 function set_checkbox(obj) {
   tmp_class = $(obj).attr("class");
-  tmp_select = $("select[name="+tmp_class+"]").clone()
+  tmp_select = $("select[name="+tmp_class+"].hidden").clone()
     .removeClass("hidden").addClass("action")
   $(obj).replaceWith(tmp_select);
 }

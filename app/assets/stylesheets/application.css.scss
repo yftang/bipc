@@ -19,6 +19,14 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+    background-color: transparent;
+  }
+}
+
 .auth-nav-link {
   background-color: #5bc0de;
 }
@@ -35,3 +43,10 @@ body {
   margin: 20px 0;
 }
 
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}

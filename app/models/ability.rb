@@ -8,7 +8,7 @@ class Ability
       can :manage, :all
     elsif user.role? :salesman_admin
       can [:create, :destroy], User do |user|
-        user && user.role?(:salesman)
+        user.role?(:salesman)
       end
       can [:show, :index], User
       can :edit, User, :id => user.id
@@ -22,9 +22,8 @@ class Ability
       can :show, User
       can :edit, User, :id => user.id
 
-      can :index, Project
-      can :show, Project do |project|
-        project && project.salesman_id==user.id
+      can [:index, :show], Project do |project|
+        project.salesman_id==user.id
       end
 
       can :show, Customer
@@ -32,14 +31,17 @@ class Ability
       can :show, Sample
     elsif user.role? :marketing_admin
       can [:create, :destroy], User do |user|
-        user && user.role?(:marketing)
+        user.role?(:marketing)
       end
       can [:show, :index], User
       can :edit, User, :id => user.id
 
-      can [:index, :new, :edit, :show, :create, :update,
-           :set_samples_receiver, :set_report_sender,
-           :set_complete, :destroy], Project
+      can :manage, Project
+      can :set_samples_complete, Project
+      can :set_report_complete, Project do |p|
+        p.analysis_done?
+      end
+      cannot [:set_experiments_complete, :set_analysis_complete], Project
 
       can :manage, Sample
 
@@ -49,19 +51,25 @@ class Ability
       can :edit, User, :id => user.id
 
       can [:index, :new, :edit, :show,
-           :create, :update, :set_complete], Project
+           :create, :update, :set_samples_complete], Project
+      can :set_report_complete, Project do |p|
+        p.analysis_done?
+      end
 
       can :manage, Sample
 
       can [:index, :new, :edit, :show, :create, :update], Customer
     elsif user.role? :experimenter_admin
       can [:create, :destroy], User do |user|
-        user && user.role?(:experimentor)
+        user.role?(:experimenter)
       end
       can [:show, :index], User
       can :edit, User, :id => user.id
 
-      can [:index, :show, :set_experimenter, :set_complete], Project
+      can [:index, :show, :set_experimenter], Project
+      can :set_experiments_complete, Project do |p|
+        p.samples_received?
+      end
 
       can [:index, :show], Sample
 
@@ -70,19 +78,27 @@ class Ability
       can :show, User
       can :edit, User, :id => user.id
 
-      can [:index, :show, :set_complete], Project
+      can [:index, :show], Project do |project|
+        project.experimenter_id==user.id
+      end
+      can :set_experiments_complete, Project do |p|
+        p.samples_received?
+      end
 
       can [:index, :show], Sample
 
       can [:index, :show], Customer
     elsif user.role? :bioinformatician_admin
       can [:create, :destroy], User do |user|
-        user && user.role?(:bioinformatician)
+        user.role?(:bioinformatician)
       end
       can [:show, :index], User
       can :edit, User, :id => user.id
 
-      can [:index, :show, :set_bioinformatician, :set_complete], Project
+      can [:index, :show, :set_bioinformatician], Project
+      can :set_analysis_complete, Project do |p|
+        p.experiments_done?
+      end
 
       can [:index, :show], Sample
 
@@ -91,7 +107,12 @@ class Ability
       can :show, User
       can :edit, User, :id => user.id
 
-      can [:index, :show, :set_complete], Project
+      can [:index, :show], Project do |project|
+        project.bioinformatician_id==user.id
+      end
+      can :set_analysis_complete, Project do |p|
+        p.experiments_done?
+      end
 
       can [:index, :show], Sample
 

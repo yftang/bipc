@@ -44,15 +44,13 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   def role?(role)
-    return self.roles.any? && (self.roles.first.name == role.to_s.camelize)
+    my_roles = self.roles
+    my_roles.any? && (my_roles.first.name == role.to_s.camelize)
   end
 
   def role_one_of?(roles)
-    if self.roles.any?
-      roles.each do |role|
-        return true if self.roles.first.name == role.to_s.camelize
-      end
-      return false
+    if my_roles = self.roles
+      roles.map(&:to_s).map(&:camelize).include? my_roles.first.name
     else
       return false
     end

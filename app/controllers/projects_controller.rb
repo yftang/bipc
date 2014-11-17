@@ -23,8 +23,14 @@ class ProjectsController < ApplicationController
 
   def index
     @title = 'Projects management'
-    @projects = Project.all.page params[:page]
-    @project = Project.new
+    if current_user.role_one_of?([
+        :admin, :salesman_admin, :marketing_admin,
+        :experimenter_admin, :bioinformatician_admin])
+      @projects = Project.all.page params[:page]
+    else
+      @projects = current_user.projects.page params[:page]
+    end
+
     @exp_role = Role.find_by_name('Experimenter')
     @bin_role = Role.find_by_name('Bioinformatician')
     @mkt_role = Role.find_by_name('Marketing')
@@ -75,21 +81,20 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def set_complete
-    if current_user.role_one_of?(
-        [:marketing, :marketing_admin])
-      if self.analysis_done?
-        set_complete_date('report')
-      else
-        set_complete_date('sample')
-      end
-    elsif current_user.role_one_of?(
-        [:experimenter, :experimenter_admin])
-      set_complete_date('experiment')
-    elsif current_user.role_one_of?(
-        [:bioinformatician, :bioinformatician_admin])
-      set_complete_date('analysis')
-    end
+  def set_samples_complete
+    set_complete_date('sample')
+  end
+
+  def set_experiments_complete
+    set_complete_date('experiment')
+  end
+
+  def set_analysis_complete
+    set_complete_date('analysis')
+  end
+
+  def set_report_complete
+    set_complete_date('report')
   end
 
   def set_salesman
@@ -138,12 +143,10 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def set_participant(operator, params)
+  def set_participant(role, params)
     if params[:id] && params[:user_name] && params[:user_id]
       user_name, user_id = params[:user_name], params[:user_id]
       if tmp_project = Project.where(:id => params[:id]).first
-        role = ['samples_receiver', 'report_sender'].include?(operator) ? \
-            'marketing' : operator
         tmp_project.update_attributes(role.to_sym         => user_name,
                                       "#{role}_id".to_sym => user_id)
         UserProject.create(:user_id    => user_id,
@@ -171,7 +174,9 @@ class ProjectsController < ApplicationController
 
       case procedure
       when 'sample'
-        if project.update_attribute(:samples_received_date, complete_date)
+        if project.update_attributes(
+            :samples_received_date => complete_date,
+            :samples_receiver      => current_user.name)
           flash[:notice] = 'Well done!'
         end
       when 'experiment'

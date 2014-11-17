@@ -29,11 +29,30 @@
               %td= link_to project.acc, project
               %td= project.start_date
               %td= project.deadline
-              %td= link_to 'Finish', { :controller => 'projects',
-                  :action => 'set_complete',
-                  :id     => project.id },
-                :method => :post,
-                :data   => { :confirm => 'You sure?' }
+              - if !project.samples_received? && can?(:set_samples_complete, project)
+                %td= link_to 'Finish', { :controller => 'projects',
+                    :action => 'set_samples_complete',
+                    :id     => project.id },
+                  :method => :post,
+                  :data   => { :confirm => 'Samples ready?' }
+              - elsif project.samples_received? && !project.experiments_done? && can?(:set_experiments_complete, project)
+                %td= link_to 'Finish', { :controller => 'projects',
+                    :action => 'set_experiments_complete',
+                    :id     => project.id },
+                  :method => :post,
+                  :data   => { :confirm => 'Experiments done?' }
+              - elsif project.experiments_done? && !project.analysis_done? && can?(:set_analysis_complete, project)
+                %td= link_to 'Finish', { :controller => 'projects',
+                    :action => 'set_analysis_complete',
+                    :id     => project.id },
+                  :method => :post,
+                  :data   => { :confirm => 'Analysis done?' }
+              - elsif project.analysis_done? && !project.report_sent? && can?(:set_report_complete, project)
+                %td= link_to 'Finish', { :controller => 'projects',
+                    :action => 'set_report_complete',
+                    :id     => project.id },
+                  :method => :post,
+                  :data   => { :confirm => 'Report sent?' }
 - else
   .jumbotron
     %h2.text-center Welcome to Biocompany Integrative Projects Control (BIPC)
