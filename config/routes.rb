@@ -14,13 +14,17 @@ Rails.application.routes.draw do
       post :set_experimenter
       post :set_bioinformatician
       post :set_report_sender
-      post :set_complete
+      post :set_samples_complete
+      post :set_experiments_complete
+      post :set_analysis_complete
+      post :set_report_complete
     end
   end
   resources :customers
   resources :samples do
     collection do
-      post :receive
+      post :add_project
+      post :delete_project
     end
   end
 

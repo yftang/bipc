@@ -4,7 +4,6 @@
 .row
   .col-sm-8.col-sm-offset-2
     = form_for(@sample,:html => { :class => "form-horizontal",
-                                    :role  => "form" }) do |f|
+                                  :role  => "form" }) do |f|
       = render "sample_form", :f => f
 
-      = f.submit "Update", :class => "btn btn-primary btn-lg"
