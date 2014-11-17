@@ -143,12 +143,10 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def set_participant(operator, params)
+  def set_participant(role, params)
     if params[:id] && params[:user_name] && params[:user_id]
       user_name, user_id = params[:user_name], params[:user_id]
       if tmp_project = Project.where(:id => params[:id]).first
-        role = ['samples_receiver', 'report_sender'].include?(operator) ? \
-            'marketing' : operator
         tmp_project.update_attributes(role.to_sym         => user_name,
                                       "#{role}_id".to_sym => user_id)
         UserProject.create(:user_id    => user_id,
