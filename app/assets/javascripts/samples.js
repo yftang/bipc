@@ -12,7 +12,12 @@ $(document).ready(function() {
       }
     });
   });
-  
+
+  $('.btn-project').on('click', function(event) {
+    project_acc = $(this).text().trim();
+    alert(project_acc);
+  });
+
 });
 
 function destroy_samples() {
@@ -30,4 +35,3 @@ function destroy_samples() {
     location.reload();
   }
 }
-

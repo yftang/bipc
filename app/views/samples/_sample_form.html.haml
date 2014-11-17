@@ -37,7 +37,15 @@
           = f.submit "Save", :class => "btn btn-primary"
     #projects.tab-pane{ :role => "tabpanel" }
       .form-group
-        = label_tag "sample[project]", "Project",
+        = label_tag "sample[project]", "Belonging project(s)",
+                    :class => "col-sm-4 control-label"
+        .col-sm-6.input-group
+          - f.object.projects.each do |project|
+            %button.btn.btn-primary.btn-project{ :type => "button" }
+              = project.acc
+              %span.glyphicon.glyphicon-remove{ :aria => { :hidden => true } }
+      .form-group
+        = label_tag "sample[project]", "Add project(s)",
                     :class => "col-sm-4 control-label"
         .col-sm-6.input-group
           = text_field_tag "sampleprojects]", nil, :class => "form-control"

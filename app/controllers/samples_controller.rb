@@ -79,7 +79,8 @@ class SamplesController < ApplicationController
   end
 
   def create
-    @sample = Sample.new(sample_params)
+    @sample = Sample.new(sample_params.merge(:receiver => current_user.name,
+                                             :receiver_id => current_user.id))
     if @sample.save
       flash[:notice] = "Sample created!"
       redirect_to @sample
