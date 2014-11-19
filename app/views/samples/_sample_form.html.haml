@@ -41,14 +41,15 @@
                     :class => "col-sm-4 control-label"
         .col-sm-6.input-group
           - f.object.projects.each do |project|
-            %button.btn.btn-primary.btn-project{ :type => "button" }
+            %button.btn.btn-primary.btn-project{ :type => "button",
+                :data  => { :sample_id => "#{f.object.to_param}" } }
               = project.acc
               %span.glyphicon.glyphicon-remove{ :aria => { :hidden => true } }
       .form-group
         = label_tag "sample[project]", "Add project(s)",
                     :class => "col-sm-4 control-label"
         .col-sm-6.input-group
-          = text_field_tag "sampleprojects]", nil, :class => "form-control"
+          = text_field_tag "sample[project]", nil, :class => "form-control"
           %span.input-group-addon
             %span.glyphicon.glyphicon-file
         .project-objects{ :data => { :projects => @project_accs } }

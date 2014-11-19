@@ -15,9 +15,16 @@ $(document).ready(function() {
 
   $('.btn-project').on('click', function(event) {
     project_acc = $(this).text().trim();
-    alert(project_acc);
+    sample_id = $(this).attr("data-sample-id");
+    $.ajax({
+      type: "POST",
+      url:  "/samples/delete_project",
+      data: "id="+sample_id+"&project_acc="+project_acc,
+      success: function(data) {
+        alert(data.info);
+      }
+    });
   });
-
 });
 
 function destroy_samples() {

@@ -47,17 +47,19 @@ class SamplesController < ApplicationController
   def delete_project
     if @sample && params[:project_acc] && \
         project=Project.find_by_acc(params[:project_acc])
-      existing_accs = @sample.projects.pluck(:acc)
-      if !existing_accs.include?(params[:project_acc])
+      existing_projects = @sample.projects
+      if !existing_projects.include?(project)
         return render :json => {
             :success => false,
             :info    => 'Project not included, try to reload the page!' }
       else
-        ProjectSample.where(
-          "project_id = ? AND sample_id = ?",
-          project.id,
-          @sample.id
-        ).first.destroy
+        sample_projects = @sample.project_samples
+        sample_projects.delete sample_projects.find(params[:project_acc])
+        # ProjectSample.where(
+        #   "project_id = ? AND sample_id = ?",
+        #   project.id,
+        #   @sample.id
+        # ).first.destroy
         return render :json => { :success => true,
                                  :info    => 'Wonderful!' }
       end
@@ -82,8 +84,8 @@ class SamplesController < ApplicationController
     @sample = Sample.new(sample_params.merge(:receiver => current_user.name,
                                              :receiver_id => current_user.id))
     if @sample.save
-      flash[:notice] = "Sample created!"
-      redirect_to @sample
+      flash[:notice] = "Connect project now!"
+      redirect_to edit_sample_path(@sample)
     else
       flash[:notice] = "Sample not created!"
       render 'new'
