@@ -1,4 +1,9 @@
-%h2 #{@sample.name}
+%h2
+  = @sample.name
+  (
+  - if can? :edit, @sample
+    = link_to "Edit", edit_sample_path(@sample)
+  )
 
 %br
 %h4 Summary:
