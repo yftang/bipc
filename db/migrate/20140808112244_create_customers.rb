@@ -6,7 +6,7 @@ class CreateCustomers < ActiveRecord::Migration
       t.string :email
       t.string :address
       t.string :organization
-      t.string :province
+      t.string :district
 
       t.timestamps
     end
