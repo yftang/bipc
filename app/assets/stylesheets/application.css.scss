@@ -10,6 +10,47 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require jquery-ui/dialog
+ *= require jquery-ui/autocomplete
+ *= require bootstrap-datepicker3
  *= require_tree .
  *= require_self
  */
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+    background-color: transparent;
+  }
+}
+
+.auth-nav-link {
+  background-color: #5bc0de;
+}
+
+a.navbar-brand img {
+  height: 30px;
+}
+
+body {
+  padding-bottom: 70px;
+}
+
+.container .credit {
+  margin: 20px 0;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.btn-project {
+  margin-right: 10px;
+}

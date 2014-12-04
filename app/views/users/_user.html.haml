@@ -1,0 +1,14 @@
+%tr
+  - if can? :destroy, user
+    %td
+      - if not user.role?(:admin)
+        = check_box_tag "user_#{user.id}", user.id,
+                        false, :class => "user-selection"
+  - else
+    %td
+  %td= user.email
+  %td= user.name
+  %td
+    - user.roles.each do |role|
+      = role_tag(role.name, :disabled)
+

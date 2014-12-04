@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140810080253) do
+ActiveRecord::Schema.define(version: 20141014015454) do
 
   create_table "customers", force: true do |t|
     t.string   "name"
-    t.string   "tel"
+    t.string   "phone"
     t.string   "email"
-    t.string   "add"
-    t.string   "ins"
-    t.string   "city"
+    t.string   "address"
+    t.string   "organization"
+    t.string   "province"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -31,17 +31,91 @@ ActiveRecord::Schema.define(version: 20140810080253) do
     t.datetime "updated_at"
   end
 
-  create_table "projects", force: true do |t|
-    t.string   "acc"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.boolean  "samples_received_status"
-    t.boolean  "experiments_done_status"
-    t.boolean  "bioinformatics_done_status"
-    t.boolean  "report_finished_status"
-    t.boolean  "report_sent_status"
+  create_table "project_samples", force: true do |t|
+    t.integer  "project_id"
+    t.integer  "sample_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "projects", force: true do |t|
+    t.string   "acc"
+    t.date     "start_date"
+    t.date     "deadline"
+    t.string   "creater"
+    t.integer  "creater_id"
+    t.string   "salesman"
+    t.integer  "salesman_id"
+    t.date     "samples_received_date"
+    t.string   "samples_receiver"
+    t.integer  "samples_receiver_id"
+    t.date     "experiments_done_date"
+    t.string   "experimenter"
+    t.integer  "experimenter_id"
+    t.date     "analysis_done_date"
+    t.string   "bioinformatician"
+    t.integer  "bioinformatician_id"
+    t.date     "report_sent_date"
+    t.string   "report_sender"
+    t.string   "report_sender_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "role_users", id: false, force: true do |t|
+    t.integer  "role_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "role_users", ["role_id"], name: "index_role_users_on_role_id"
+  add_index "role_users", ["user_id"], name: "index_role_users_on_user_id"
+
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "samples", force: true do |t|
+    t.string   "name"
+    t.date     "received_date"
+    t.string   "receiver"
+    t.integer  "receiver_id"
+    t.string   "express_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_projects", id: false, force: true do |t|
+    t.integer "user_id"
+    t.integer "project_id"
+    t.string  "role_name"
+  end
+
+  add_index "user_projects", ["project_id"], name: "index_user_projects_on_project_id"
+  add_index "user_projects", ["user_id"], name: "index_user_projects_on_user_id"
+
+  create_table "users", force: true do |t|
+    t.string   "name"
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "phone"
+    t.text     "jd"
+  end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end

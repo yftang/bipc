@@ -1,23 +1,29 @@
 class CustomersController < ApplicationController
   before_filter :set_customer, only: [:show, :edit, :destroy, :update]
 
+  authorize_resource
+
   def index
-    @customers = Customer.all
+    @title = 'Customers management'
+    @customers = Customer.all.page params[:page]
   end
 
   def new
+    @title = 'Create new customer'
     @customer = Customer.new
   end
 
   def show
+    @title = @customer.name
   end
 
   def edit
+    @title = "Edit #{@customer.name}"
   end
 
   def update
     if @customer.update_attributes(customer_params)
-      flash[:success] = "Customer updated"
+      flash[:success] = "Customer updated!"
       redirect_to @customer
     else
       render 'edit'
@@ -27,20 +33,26 @@ class CustomersController < ApplicationController
   def create
     @customer = Customer.new(customer_params)
     if @customer.save
-      flash[:success] = "Customer created"
+      flash[:notice] = "Customer created!"
       redirect_to @customer
     else
+      flash[:notice] = "Customer not created!"
       render 'new'
     end
   end
 
   def destroy
+    if @customer.destroy
+      return render :json => { :success => true }
+    else
+      return render :json => { :success => false }
+    end
   end
 
   private
   def customer_params
-    params.require(:customer).permit(:name, :email, :tel,
-                                     :ins, :add, :city)
+    params.require(:customer).permit(:name, :email, :phone,
+                                     :organization, :address, :province)
   end
 
   def set_customer
