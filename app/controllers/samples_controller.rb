@@ -54,12 +54,10 @@ class SamplesController < ApplicationController
             :info    => 'Project not included, try to reload the page!' }
       else
         sample_projects = @sample.project_samples
-        sample_projects.delete sample_projects.find(params[:project_acc])
-        # ProjectSample.where(
-        #   "project_id = ? AND sample_id = ?",
-        #   project.id,
-        #   @sample.id
-        # ).first.destroy
+        ProjectSample.where(
+          :project_id => project.id,
+          :sample_id  => @sample.id
+        ).first.destroy
         return render :json => { :success => true,
                                  :info    => 'Wonderful!' }
       end

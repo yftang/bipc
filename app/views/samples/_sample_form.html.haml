@@ -5,7 +5,7 @@
           :role => "tab", :data => { :toggle => "tab" } }
         Main content
     %li{ :role => "presentation" }
-      %a{ :href => "#projects", :aria => { :controls => "projects" },
+      %a{ :href => "#associated_projects", :aria => { :controls => "projects" },
           :role => "tab", :data => { :toggle => "tab" } }
         Belonging projects
   %br
@@ -35,21 +35,20 @@
       .form-group
         .col-sm-offset-4.col-sm-6.input-group
           = f.submit "Save", :class => "btn btn-primary"
-    #projects.tab-pane{ :role => "tabpanel" }
+    #associated_projects.tab-pane{ :role => "tabpanel" }
       .form-group
         = label_tag "sample[project]", "Belonging project(s)",
                     :class => "col-sm-4 control-label"
-        .col-sm-6.input-group
+        #projects.col-sm-6.input-group
           - f.object.projects.each do |project|
-            %button.btn.btn-primary.btn-project{ :type => "button",
-                :data  => { :sample_id => "#{f.object.to_param}" } }
+            %button.btn.btn-primary.btn-project{ :type => "button" }
               = project.acc
               %span.glyphicon.glyphicon-remove{ :aria => { :hidden => true } }
       .form-group
         = label_tag "sample[project]", "Add project(s)",
                     :class => "col-sm-4 control-label"
         .col-sm-6.input-group
-          = text_field_tag "sample[project]", nil, :class => "form-control"
+          = text_field_tag "sample[project]", nil, :class => "form-control", :data => { :sample_id => f.object.to_param }
           %span.input-group-addon
             %span.glyphicon.glyphicon-file
         .project-objects{ :data => { :projects => @project_accs } }
