@@ -9,5 +9,12 @@
 #  updated_at :datetime
 #
 
+require 'yaml'
+
 class District < ActiveRecord::Base
+  def self.chinese_districts
+    root_path = Rails.root.to_s
+    districts_file = "#{root_path}/app/assets/chinese_districts.yaml"
+    districts = YAML.load_file(districts_file)
+  end
 end

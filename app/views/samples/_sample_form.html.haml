@@ -5,8 +5,10 @@
           :role => "tab", :data => { :toggle => "tab" } }
         Main content
     %li{ :role => "presentation" }
-      %a{ :href => "#associated_projects", :aria => { :controls => "projects" },
-          :role => "tab", :data => { :toggle => "tab" } }
+      %a{ :href => "#associated_projects",
+          :aria => { :controls => "projects" },
+          :role => "tab",
+          :data => { :toggle => "#{f.object.new_record? ? '' : 'tab'}" } }
         Belonging projects
   %br
   .tab-content

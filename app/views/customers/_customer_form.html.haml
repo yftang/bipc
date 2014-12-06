@@ -36,6 +36,10 @@
     .form-group
       = f.label :district, :class => "col-sm-4 control-label"
       .col-sm-6.input-group
-        = f.text_field :district, :class => "form-control"
+        %select.form-control{ :name => "customer[district]" }
+          %option
+          - District.chinese_districts.each do |district|
+            - selected_tag = (f.object.district == district) ? true : false
+            %option{ :value => district, :selected => selected_tag }= district
         %span.input-group-addon
           %span.glyphicon.glyphicon-globe
