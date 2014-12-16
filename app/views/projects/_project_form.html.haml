@@ -42,9 +42,9 @@
       .col-sm-6.input-group
         - current_customer_ids = @project.customers.pluck(:id)
         %select.form-control{ :name => "project[customer_ids][]", :multiple => true }
-          - @customers.pluck(:province).uniq.each do |pro|
-            %optgroup{ :label => pro }
-              - @customers.select { |c| c.province == pro }.each do |customer|
+          - @customers.pluck(:district).uniq.each do |district|
+            %optgroup{ :label => district }
+              - @customers.select { |c| c.district == district }.each do |customer|
                 - selected_tag = current_customer_ids.include?(customer.id)? true : false;
                 %option{ :value => customer.id, :selected => selected_tag } #{customer.name}
         %span.input-group-addon

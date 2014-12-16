@@ -8,7 +8,7 @@
 #  email        :string(255)
 #  address      :string(255)
 #  organization :string(255)
-#  province     :string(255)
+#  district     :string(255)
 #  created_at   :datetime
 #  updated_at   :datetime
 #
