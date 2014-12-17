@@ -39,6 +39,25 @@ class Project < ActiveRecord::Base
   validates_presence_of :start_date, :deadline, :creater, :creater_id
   validates :acc, :presence => true, :uniqueness => true
 
+  def complete_for?(user)
+    if user
+      case user.id
+      when samples_receiver_id
+        samples_received?
+      when experimenter_id
+        experiments_done?
+      when bioinformatician_id
+        analysis_done?
+      when report_sender_id
+        report_sent?
+      else
+        false
+      end
+    else
+      false
+    end
+  end
+
   def samples_received?
     samples_received_date
   end

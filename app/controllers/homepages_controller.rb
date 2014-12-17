@@ -4,7 +4,8 @@ class HomepagesController < ApplicationController
     if user_signed_in? && !current_user.role?(:admin)
       @project_accs = Project.all.pluck(:acc)
       @user_projects = current_user.projects
-      @ongoing_projects = @user_projects.reject(&:complete?)
+      @ongoing_projects = @user_projects.reject{ |p|
+        p.complete_for?(current_user) }
     end
   end
 
