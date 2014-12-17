@@ -7,7 +7,7 @@
     =link_to "View profile", user_path(user)
   %hr
   - tmp_projects = user.projects
-  - tmp_ongoing_projects = tmp_projects.reject(&:complete?)
+  - tmp_ongoing_projects = tmp_projects.reject{ |p| p.complete_for?(current_user) }
   \#{tmp_projects.count} project(s) in charge<br>
   \#{tmp_ongoing_projects.count} not complete
     
