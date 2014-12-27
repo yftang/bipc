@@ -65,7 +65,7 @@
                                            tmp_user.email].join("\n")},
                   :title => "Contact experimenter"
   - else
-    - if can? :set_experimenter, project
+    - if can?(:set_experimenter, project) && project.samples_received?
       %td= link_to "Set", "javscript:void(0)",
                           :onclick => "set_checkbox(this);",
                           :class   => "set-experimenter"
@@ -88,7 +88,7 @@
                                            tmp_user.email].join(" ")},
                   :title => "Contact bioinformatician"
   - else
-    - if can? :set_bioinformatician, project
+    - if can?(:set_bioinformatician, project) && project.experiments_done?
       %td= link_to "Set", "javscript:void(0)",
                           :onclick => "set_checkbox(this);",
                           :class   => "set-bioinformatician"
@@ -111,7 +111,7 @@
                                            tmp_user.email].join("\n")},
                   :title => "Contact marketing"
   - else
-    - if can? :set_report_sender, project
+    - if can?(:set_report_sender, project) && project.analysis_done?
       %td= link_to "Set", "javscript:void(0)",
                           :onclick => "set_checkbox(this);",
                           :class   => "set-report-sender"
