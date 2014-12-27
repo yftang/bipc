@@ -15,7 +15,7 @@
   - else
     - tmp_user = User.find_by_id project.creater_id
     %td= link_to  project.creater,
-                  "#",
+                  user_path(tmp_user),
                   :class => "pop-over",
                   :tabindex => "0",
                   :role => "button",
@@ -31,7 +31,7 @@
   - elsif project.samples_receiver && project.samples_receiver_id
     - tmp_user = User.find_by_id project.samples_receiver_id
     %td= link_to  project.samples_receiver,
-                  "#",
+                  user_path(tmp_user),
                   :class => "pop-over",
                   :tabindex => "0",
                   :role => "button",
@@ -54,7 +54,7 @@
   - elsif project.experimenter && project.experimenter_id
     - tmp_user = User.find_by_id project.experimenter_id
     %td= link_to  project.experimenter,
-                  "#",
+                  user_path(tmp_user),
                   :class => "pop-over",
                   :tabindex => "0",
                   :role => "button",
@@ -65,7 +65,7 @@
                                            tmp_user.email].join("\n")},
                   :title => "Contact experimenter"
   - else
-    - if can? :set_experimenter, project
+    - if can?(:set_experimenter, project) && project.samples_received?
       %td= link_to "Set", "javscript:void(0)",
                           :onclick => "set_checkbox(this);",
                           :class   => "set-experimenter"
@@ -77,7 +77,7 @@
   - elsif project.bioinformatician && project.bioinformatician_id
     - tmp_user = User.find_by_id project.bioinformatician_id
     %td= link_to  project.bioinformatician,
-                  "#",
+                  user_path(tmp_user),
                   :class => "pop-over",
                   :tabindex => "0",
                   :role => "button",
@@ -88,7 +88,7 @@
                                            tmp_user.email].join(" ")},
                   :title => "Contact bioinformatician"
   - else
-    - if can? :set_bioinformatician, project
+    - if can?(:set_bioinformatician, project) && project.experiments_done?
       %td= link_to "Set", "javscript:void(0)",
                           :onclick => "set_checkbox(this);",
                           :class   => "set-bioinformatician"
@@ -100,7 +100,7 @@
   - elsif project.report_sender && project.report_sender_id
     - tmp_user = User.find_by_id project.report_sender_id
     %td= link_to  project.report_sender,
-                  "#",
+                  user_path(tmp_user),
                   :class => "pop-over",
                   :tabindex => "0",
                   :role => "button",
@@ -111,7 +111,7 @@
                                            tmp_user.email].join("\n")},
                   :title => "Contact marketing"
   - else
-    - if can? :set_report_sender, project
+    - if can?(:set_report_sender, project) && project.analysis_done?
       %td= link_to "Set", "javscript:void(0)",
                           :onclick => "set_checkbox(this);",
                           :class   => "set-report-sender"
