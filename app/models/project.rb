@@ -24,9 +24,16 @@
 #  report_sender_id      :string(255)
 #  created_at            :datetime
 #  updated_at            :datetime
+#  slug                  :string(255)
+#
+# Indexes
+#
+#  index_projects_on_slug  (slug) UNIQUE
 #
 
 class Project < ActiveRecord::Base
+  extend FriendlyId
+
   has_many :project_customers
   has_many :customers, :through => :project_customers
 
@@ -37,7 +44,9 @@ class Project < ActiveRecord::Base
   has_many :users, :through => :user_projects
 
   validates_presence_of :start_date, :deadline, :creater, :creater_id
-  validates :acc, :presence => true, :uniqueness => true
+  validates :acc, :presence => true, :uniqueness => { case_sensitive: false }
+
+  friendly_id :acc, :use => :slugged
 
   def complete_for?(user)
     if user
@@ -72,10 +81,6 @@ class Project < ActiveRecord::Base
 
   def report_sent?
     analysis_done? && report_sent_date
-  end
-
-  def to_param
-    "#{id}-#{created_at.to_i}"
   end
 
   alias_method :complete?, :report_sent?

@@ -20,6 +20,7 @@ gem 'therubyracer',  platforms: :ruby
 gem 'bootstrap-datepicker-rails'
 gem 'devise'
 gem 'cancan'
+gem 'friendly_id'
 gem 'thin'
 
 # Use jquery as the JavaScript library
