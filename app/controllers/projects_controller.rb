@@ -136,7 +136,7 @@ class ProjectsController < ApplicationController
   end
 
   def set_project
-    @project = Project.where(id: params[:id]).first
+    @project = Project.friendly.find params[:id]
     if not @project
       flash[:alert] = "Project not found!"
       redirect_to projects_path
