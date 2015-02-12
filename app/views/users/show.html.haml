@@ -1,0 +1,31 @@
+%h2.text-center User profile
+%br
+
+.row
+  .col-sm-4
+    .media
+      %a.pull-left{ :href => "#{user_path(@user)}" }
+        %img.media-object{ :src => "http://static.oschina.net/uploads/user/279/558071_50.jpg?t=1372576765000" }
+      .media-body
+        .media-heading
+          %strong #{@user.name}<br>
+        Joined on #{@user.created_at.to_date}
+    %br
+    %span.glyphicon.glyphicon-envelope
+    = link_to @user.email.gsub('@', '(at)'), "mailto:#{@user.email}"
+    %br
+    %span.glyphicon.glyphicon-earphone
+    = @user.phone
+    %hr
+    \#{@user_projects.count} projects in charge<br>
+    \#{@ongoing_projects.count} not complete
+  .col-sm-8
+    %strong Job description
+    %br
+    - if @user.jd
+      %blockquote= @user.jd
+    - elsif user_signed_in? && (current_user == @user)
+      You have not described it, please 
+      \#{link_to "make one", edit_user_registration_path(@user)}.
+    - else
+      This person is too lazy, he hasn't make any description :(

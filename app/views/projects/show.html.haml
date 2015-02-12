@@ -1,0 +1,43 @@
+%h2
+  =@project.acc
+  - if can? :edit, @project
+    (#{link_to "Edit", edit_project_path(@project)})
+
+%p
+  %strong Customer:
+  - @project.customers.each do |customer|
+    = link_to customer.name, customer
+    ,
+%p
+  %strong Starting date:
+  =@project.start_date
+%p
+  %strong Deadline:
+  =@project.deadline
+%br
+
+#project-procedures.row
+  .col-sm-offset-1.col-sm-10
+    - samples_status = @project.samples_received? ? 'bg-success' : 'bg-danger'
+    .procedure.col-sm-2{ :class => samples_status }
+      = link_to "Samples", "javascript:void(0);"
+    .arrow.col-sm-1
+      \==>
+    - exp_status = @project.experiments_done? ? 'bg-success' : 'bg-danger'
+    .procedure.col-sm-2{ :class => exp_status }
+      = link_to "Experiments", "javascript:void(0);"
+    .arrow.col-sm-1
+      \==>
+    - bin_status = @project.analysis_done? ? 'bg-success' : 'bg-danger'
+    .procedure.col-sm-2{ :class => bin_status }
+      = link_to "Analysis", "javascript:void(0);"
+    .arrow.col-sm-1
+      \==>
+    - report_status = @project.report_sent? ? 'bg-success' : 'bg-danger'
+    .procedure.col-sm-2{ :class => report_status }
+      = link_to "Report", "javascript:void(0);"
+    .arrow.col-sm-1
+      \==>
+%br
+
+= render 'project_procedure_detail'

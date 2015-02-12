@@ -1,0 +1,57 @@
+%div{ :role => "tabpanel" }
+  %ul.nav.nav-tabs.nav-justified{ :role => "tablist" }
+    %li.active{ :role => "presentation" }
+      %a{ :href => "#main", :aria => { :controls => "main" },
+          :role => "tab", :data => { :toggle => "tab" } }
+        Main content
+    %li{ :role => "presentation" }
+      %a{ :href => "#associated_projects",
+          :aria => { :controls => "projects" },
+          :role => "tab",
+          :data => { :toggle => "#{f.object.new_record? ? '' : 'tab'}" } }
+        Belonging projects
+  %br
+  .tab-content
+    #main.tab-pane.active{ :role => "tabpanel" }
+      .form-group
+        = f.label :name, "Sample name",
+                  :class => "col-sm-4 control-label"
+        .col-sm-6.input-group
+          = f.text_field :name, :class => "form-control"
+          %span.input-group-addon
+            %span.glyphicon.glyphicon-pencil
+      .form-group
+        = f.label :received_date, :class => "col-sm-4 control-label"
+        .col-sm-6.input-group
+          = f.text_field :received_date, :class => "form-control datepicker"
+          %span.input-group-addon
+            %span.glyphicon.glyphicon-calendar
+      = f.hidden_field :receiver_id, :value => current_user.id
+      = f.hidden_field :receiver,    :value => current_user.name
+      .form-group
+        = f.label :express_number, "Express", :class => "col-sm-4 control-label"
+        .col-sm-6.input-group
+          = f.text_field :express_number, :class => "form-control"
+          %span.input-group-addon
+            %span.glyphicon.glyphicon-barcode
+      .form-group
+        .col-sm-offset-4.col-sm-6.input-group
+          = f.submit "Save", :class => "btn btn-primary"
+    #associated_projects.tab-pane{ :role => "tabpanel" }
+      .form-group
+        = label_tag "sample[project]", "Belonging project(s)",
+                    :class => "col-sm-4 control-label"
+        #projects.col-sm-6.input-group
+          - f.object.projects.each do |project|
+            %button.btn.btn-primary.btn-project{ :type => "button" }
+              = project.acc
+              %span.glyphicon.glyphicon-remove{ :aria => { :hidden => true } }
+      .form-group
+        = label_tag "sample[project]", "Add project(s)",
+                    :class => "col-sm-4 control-label"
+        .col-sm-6.input-group
+          = text_field_tag "sample[project]", nil, :class => "form-control", :data => { :sample_id => f.object.to_param }
+          %span.input-group-addon
+            %span.glyphicon.glyphicon-file
+        .project-objects{ :data => { :projects => @project_accs } }
+

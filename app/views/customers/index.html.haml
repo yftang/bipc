@@ -1,0 +1,29 @@
+%h2 All Customers
+%br
+
+- if can?(:create, Customer) || can?(:destroy, Customer)
+  .btn-toolbar{ :role => "toolbar" }
+    .btn-group
+      %a.btn.btn-primary{ :href => new_customer_path }
+        %span.glyphicon.glyphicon-plus
+        New customer
+      %button.btn.btn-primary#destroy-customers{:type => "button",
+          :disabled => true,
+          :onclick => "destroy_customers()"}
+        %span.glyphicon.glyphicon-minus
+        Remove customer(s)
+  %br
+
+%table.table.table-striped#customers-table
+  %tr
+    - if can? :destroy, Customer
+      %th.col-sm-1
+    %th Name
+    %th Phone number
+    %th Email
+    %th Organization
+    %th Province
+  - @customers.each do |customer|
+    = render 'customer', :customer => customer
+
+= paginate @customers

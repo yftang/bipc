@@ -1,0 +1,13 @@
+- if flash[:notice]
+  .alert.alert-warning.alert-dismissible{ :role => "alert" }
+    %button.close{ :type => "button", :data => { :dismiss => "alert" } }
+      %span{ :aria => { :hidden => "true" } } &times;
+      %span.sr-only Close
+    = flash[:notice]
+- if flash[:danger]
+  .alert.alert-danger.alert-dismissible{ :role => "alert" }
+    %button.close{ :type => "button", :data => { :dismiss => "alert" } }
+      %span{ :aria => { :hidden => "true" } } &times;
+      %span.sr-only Close
+    = flash[:danger]
+

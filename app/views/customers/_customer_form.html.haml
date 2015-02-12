@@ -1,0 +1,45 @@
+.panel.panel-primary
+  .panel-heading Setting properties
+  .panel-body
+    .form-group
+      = f.label :name, "Contact name",
+                :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.text_field :name, :class => "form-control"
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-user
+    .form-group
+      = f.label :phone, "Phone number", :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.telephone_field :phone, :class => "form-control"
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-earphone
+    .form-group
+      = f.label :email, "Email address",
+                :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.email_field :email, :class => "form-control"
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-envelope
+    .form-group
+      = f.label :address, :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.text_field :address, :class => "form-control"
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-home
+    .form-group
+      = f.label :organization, :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        = f.text_field :organization, :class => "form-control"
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-briefcase
+    .form-group
+      = f.label :district, :class => "col-sm-4 control-label"
+      .col-sm-6.input-group
+        %select.form-control{ :name => "customer[district]" }
+          %option
+          - District.chinese_districts.each do |district|
+            - selected_tag = (f.object.district == district) ? true : false
+            %option{ :value => district, :selected => selected_tag }= district
+        %span.input-group-addon
+          %span.glyphicon.glyphicon-globe

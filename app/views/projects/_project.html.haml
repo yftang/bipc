@@ -1,0 +1,119 @@
+%tr{ :class => "#{'success' if project.complete?}", :id => "#{project.id}" }
+  - if can? :destroy, project
+    %td
+      = check_box_tag "project_#{project.id}", project.id,
+                      false, :class => "project-selection"
+
+  %td= link_to project.acc, project
+
+  %td= project.start_date
+
+  %td= project.deadline
+
+  - if project.report_sent_date
+    %td= project.report_sent_date
+  - else
+    - tmp_user = User.find_by_id project.creater_id
+    %td= link_to  project.creater,
+                  user_path(tmp_user),
+                  :class => "pop-over",
+                  :tabindex => "0",
+                  :role => "button",
+                  :data => {:toggle    => "popover",
+                            :trigger   => "hover",
+                            :placement => "bottom",
+                            :content   => [tmp_user.phone,
+                                           tmp_user.email].join("\n")},
+                  :title => "Contact creater"
+
+  - if project.samples_received_date
+    %td= project.samples_received_date
+  - elsif project.samples_receiver && project.samples_receiver_id
+    - tmp_user = User.find_by_id project.samples_receiver_id
+    %td= link_to  project.samples_receiver,
+                  user_path(tmp_user),
+                  :class => "pop-over",
+                  :tabindex => "0",
+                  :role => "button",
+                  :data => {:toggle    => "popover",
+                            :trigger   => "hover",
+                            :placement => "bottom",
+                            :content   => [tmp_user.phone,
+                                           tmp_user.email].join("\n")},
+                  :title => "Contact marketing"
+  - else
+    - if can? :set_samples_receiver, project
+      %td= link_to "Set", "javscript:void(0)",
+                          :onclick => "set_checkbox(this);",
+                          :class   => "set-samples-receiver"
+    - else
+      %td Pending...
+
+  - if project.experiments_done_date
+    %td= project.experiments_done_date
+  - elsif project.experimenter && project.experimenter_id
+    - tmp_user = User.find_by_id project.experimenter_id
+    %td= link_to  project.experimenter,
+                  user_path(tmp_user),
+                  :class => "pop-over",
+                  :tabindex => "0",
+                  :role => "button",
+                  :data => {:toggle    => "popover",
+                            :trigger   => "hover",
+                            :placement => "bottom",
+                            :content   => [tmp_user.phone,
+                                           tmp_user.email].join("\n")},
+                  :title => "Contact experimenter"
+  - else
+    - if can?(:set_experimenter, project) && project.samples_received?
+      %td= link_to "Set", "javscript:void(0)",
+                          :onclick => "set_checkbox(this);",
+                          :class   => "set-experimenter"
+    - else
+      %td Pending...
+
+  - if project.analysis_done_date
+    %td= project.analysis_done_date
+  - elsif project.bioinformatician && project.bioinformatician_id
+    - tmp_user = User.find_by_id project.bioinformatician_id
+    %td= link_to  project.bioinformatician,
+                  user_path(tmp_user),
+                  :class => "pop-over",
+                  :tabindex => "0",
+                  :role => "button",
+                  :data => {:toggle    => "popover",
+                            :trigger   => "focus",
+                            :placement => "bottom",
+                            :content   => [tmp_user.phone,
+                                           tmp_user.email].join(" ")},
+                  :title => "Contact bioinformatician"
+  - else
+    - if can?(:set_bioinformatician, project) && project.experiments_done?
+      %td= link_to "Set", "javscript:void(0)",
+                          :onclick => "set_checkbox(this);",
+                          :class   => "set-bioinformatician"
+    - else
+      %td Pending...
+
+  - if project.report_sent_date
+    %td= project.report_sent_date
+  - elsif project.report_sender && project.report_sender_id
+    - tmp_user = User.find_by_id project.report_sender_id
+    %td= link_to  project.report_sender,
+                  user_path(tmp_user),
+                  :class => "pop-over",
+                  :tabindex => "0",
+                  :role => "button",
+                  :data => {:toggle    => "popover",
+                            :trigger   => "hover",
+                            :placement => "bottom",
+                            :content   => [tmp_user.phone,
+                                           tmp_user.email].join("\n")},
+                  :title => "Contact marketing"
+  - else
+    - if can?(:set_report_sender, project) && project.analysis_done?
+      %td= link_to "Set", "javscript:void(0)",
+                          :onclick => "set_checkbox(this);",
+                          :class   => "set-report-sender"
+    - else
+      %td Pending...

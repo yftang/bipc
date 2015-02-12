@@ -1,4 +1,4 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
+// This is a manifest file that"ll be compiled into application.js, which will include all the files
 // listed below.
 //
 // Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
@@ -12,5 +12,29 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//= require jquery-ui/dialog
+//= require jquery-ui/effect-fade
+//= require jquery-ui/effect-shake
+//= require jquery-ui/autocomplete
+//= require bootstrap-datepicker/core
+//= require bootstrap-sprockets
 //= require_tree .
+$(document).ready(function() {
+  $(".alert").fadeOut(3000);
+
+  $(".pop-over").hover(function() {
+    $(this).popover("show");
+  });
+  $(".pop-over").mouseleave(function() {
+    $(this).popover("hide");
+  });
+
+  $("input.datepicker").datepicker({
+    format: "yyyy-mm-dd",
+    autoclose: true,
+    todayHighlight: true,
+    todayBtn: true
+  });
+});
+
+

@@ -1,0 +1,31 @@
+%h2 All Users
+%br
+
+- if can?(:create, User) || can?(:destroy, User)
+  .btn-toolbar{ :role => "toolbar" }
+    .btn-group
+      %button.btn.btn-primary{ :type => "button",
+                               :data => { :toggle => "modal",
+                                          :target => "#new-user-modal" } }
+        %span.glyphicon.glyphicon-plus
+        New user
+      %button.btn.btn-primary#destroy-users{ :type => "button",
+                                             :disabled => true,
+                                             :onclick => "destroy_users()" }
+        %span.glyphicon.glyphicon-minus
+        Remove user
+  %br
+
+%table.table.table-hover#users-table
+  %tr
+    - if can? :destroy, User
+      %th.col-sm-1
+    %th Login email
+    %th Name
+    %th Roles
+  - @users.each do |user|
+    = render 'user', :user => user
+
+= paginate @users
+
+= render 'new_user_modal'

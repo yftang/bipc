@@ -1,0 +1,30 @@
+%h2
+  = @sample.name
+  (
+  - if can? :edit, @sample
+    = link_to "Edit", edit_sample_path(@sample)
+  )
+
+%br
+%h4 Summary:
+%p
+  Sample 
+  %strong #{@sample.name} 
+  was received by 
+  %strong
+    = link_to @sample.receiver, User.find_by_id(@sample.receiver_id)
+  , at 
+  %strong #{@sample.received_date}
+  , the express number is 
+  %strong #{@sample.express_number}
+  \.
+
+%br
+- related_projects = @sample.projects.uniq
+%h4
+  = related_projects.count
+  \  project(s) related.
+%p
+  - related_projects.each do |p|
+    = link_to p.acc, p
+    ,

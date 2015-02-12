@@ -1,4 +1,33 @@
 Rails.application.routes.draw do
+  resources :roles
+  devise_for :users, :controllers => { :sessions      => 'sessions',
+                                       :registrations => 'registrations' }
+  resources  :users
+  root 'homepages#welcome'
+  get 'homepages/welcome' => 'homepages#welcome'
+  get 'homepages/goto_project' => 'homepages#goto_project'
+  resources :projects do
+    collection do
+      get  :search_projects
+      post :set_salesman
+      post :set_samples_receiver
+      post :set_experimenter
+      post :set_bioinformatician
+      post :set_report_sender
+      post :set_samples_complete
+      post :set_experiments_complete
+      post :set_analysis_complete
+      post :set_report_complete
+    end
+  end
+  resources :customers
+  resources :samples do
+    collection do
+      post :add_project
+      post :delete_project
+    end
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
